@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+
+    <link href="./winjs/css/ui-light.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="./css/master.css">
+    <link rel="stylesheet" href="./themify-icons/themify-icons.css">
+  </head>
+  <body>
+
+    <main id="main" class="win-splitview splitView" data-win-control="WinJS.UI.SplitView">
+      <!-- panel -->
+      <menu id="pane" class="win-splitview-pane">
+        <button
+            class="menuButton win-splitviewpanetoggle"
+            data-win-control="WinJS.UI.SplitViewPaneToggle"
+            data-win-options="{ splitView: select('.splitView') }">
+        </button>
+        <div data-win-control="WinJS.UI.SplitViewCommand" data-win-options="{ label: 'Home', icon: 'home'}"></div>
+
+
+      </menu>
+      <!-- okno aplikacji -->
+      <section class="content win-splitview-content">
+        <!-- appbar -->
+        <div id="appBar" data-win-control="WinJS.UI.AppBar" data-win-options="{placement:'top'}">
+
+        </div>
+
+        <section class="contentBox">
+          <button type="button" onclick="" name="button">create File</button>
+        </section>
+      </section>
+    </main>
+    <script src="./winjs/js/base.js"></script>
+    <script src="./winjs/js/ui.js"></script>
+    <script src="./js/ui.js" charset="utf-8"></script>
+    <script src="./js/main.js" charset="utf-8"></script>
+  </body>
+</html>
