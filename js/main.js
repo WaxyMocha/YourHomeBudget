@@ -17,11 +17,12 @@ if (platform == "win32") {
 const filesPath = tempPath;
 
 
+//sprawdź czy folder roboczy programu istnieje w katalogu domowym
   fs.access(filesPath, fs.constants.R_OK | fs.constants.W_OK, (err) => {
     if (err) {
+      // neśli nie, stwórz go
       console.log('no access!');
       fs.mkdir(filesPath);
-
     }
     else {
       console.log('can read/write');
