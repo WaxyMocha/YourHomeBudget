@@ -44,7 +44,8 @@ function createSplash() {
   splash = new BrowserWindow({
     width: 250,
     height: 300,
-    frame:false
+    frame:false,
+    show:false
   });
   // and load the index.html of the app.
   splash.loadURL(url.format({
