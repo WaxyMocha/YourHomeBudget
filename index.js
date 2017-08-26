@@ -11,8 +11,12 @@ function now(){
 
   return ret;
 }
+function log(msg){
+  console.log(`[${now()}]> ${msg}`);
+}
 
-console.log(now()+">launching");
+log("launching");
+
 function createWindow () {
   // Create the browser window.
   mainWin = new BrowserWindow({
@@ -22,10 +26,13 @@ function createWindow () {
     webPreferences: { experimentalFeatures: true },
     autoHideMenuBar:true
   });
-  console.log(now()+">creating main window");
+
+  log("creating main window");
+
   createSplash();
   // and load the index.html of the app.
-  console.log(now()+">loading index.html to main window");
+  log("loading index.html to main window");
+
   mainWin.loadURL(url.format({
     pathname: path.join(__dirname, 'index.html'),
     protocol: 'file:',
@@ -38,7 +45,9 @@ function createWindow () {
 
   // Emitted when the window is closed.
   mainWin.on('closed', () => {
-    console.log(now()+">closing main window");
+
+    log("closing main window");
+
     // Dereference the window object, usually you would store windows
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.
@@ -47,14 +56,17 @@ function createWindow () {
 
   mainWin.once('ready-to-show', () => {
       mainWin.show();
-      console.log(now()+">showing main window");
+
+      log("showing main window");
+
       splash.close();
   })
 }
 
 function createSplash() {
   // Create the browser window.
-  console.log(now()+">creating splash screen");
+
+  log("creating splash screen");
   splash = new BrowserWindow({
     width: 250,
     height: 300,
@@ -62,7 +74,8 @@ function createSplash() {
     show:false
   });
   // and load the index.html of the app.
-  console.log(now()+">loading loading.html to splash");
+  log("loading loading.html to splash");
+
   splash.loadURL(url.format({
     pathname: path.join(__dirname, 'loading.html'),
     protocol: 'file:',
@@ -75,7 +88,8 @@ function createSplash() {
 
   // Emitted when the window is closed.
   splash.on('closed', () => {
-    console.log(now()+">closing splash screen");
+
+    log("closing splash screen");
     // Dereference the window object, usually you would store windows
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.
@@ -83,7 +97,7 @@ function createSplash() {
   })
 
   splash.on('ready-to-show', () => {
-      console.log(now()+">showing splash screen");
+      log("showing splash screen");
       splash.show()
   })
 }
@@ -95,7 +109,8 @@ app.on('ready', createWindow)
 
 // Quit when all windows are closed.
 app.on('window-all-closed', () => {
-  console.log(now()+">closing app");
+
+  log("closing app");
   // On macOS it is common for applications and their menu bar
   // to stay active until the user quits explicitly with Cmd + Q
   if (process.platform !== 'darwin') {
