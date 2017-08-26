@@ -4,6 +4,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "devDependencies": {
+    "devtron": "^1.4.0",
     "electron": "^1.7.5",
     "electron-packager": "^8.7.2"
   },
