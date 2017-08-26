@@ -12,7 +12,7 @@ function now(){
   return ret;
 }
 
-console.log("launching");
+console.log(now()+">launching");
 function createWindow () {
   // Create the browser window.
   mainWin = new BrowserWindow({
