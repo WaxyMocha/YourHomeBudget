@@ -3,7 +3,8 @@ const path = require('path');
 const url = require('url');
 
 let mainWin;
-let splash
+let splash;
+let workerWin;
 
 function now(){
   let date = new Date();
@@ -17,6 +18,58 @@ function log(msg){
 
 log("launching");
 
+function startup(){
+  createSplash();
+  createWindow();
+  createWorker();
+}
+
+
+function createWorker () {
+  // Create the browser window.
+  workerWin = new BrowserWindow({
+    width: 800,
+    height: 600,
+    show: false,
+    autoHideMenuBar:true
+  });
+
+  log("creating Worker window");
+
+  // and load the index.html of the app.
+  log("loading worker.html to worker window");
+
+  workerWin.loadURL(url.format({
+    pathname: path.join(__dirname, 'worker.html'),
+    protocol: 'file:',
+    slashes: true
+  }))
+
+  // Open the DevTools.
+  workerWin.webContents.openDevTools()
+
+
+  // Emitted when the window is closed.
+  workerWin.on('closed', () => {
+
+    log("closing worker window");
+
+    // Dereference the window object, usually you would store windows
+    // in an array if your app supports multi windows, this is the time
+    // when you should delete the corresponding element.
+    win = null
+  })
+
+  workerWin.once('ready-to-show', () => {
+      workerWin.show();
+
+      log("showing Worker window");
+
+  })
+}
+
+
+
 function createWindow () {
   // Create the browser window.
   mainWin = new BrowserWindow({
@@ -29,7 +82,6 @@ function createWindow () {
 
   log("creating main window");
 
-  createSplash();
   // and load the index.html of the app.
   log("loading index.html to main window");
 
@@ -104,7 +156,7 @@ function createSplash() {
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on('ready', createWindow)
+app.on('ready', startup)
 
 
 // Quit when all windows are closed.
