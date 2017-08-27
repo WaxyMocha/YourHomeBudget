@@ -5,6 +5,7 @@ const url = require('url');
 let mainWin;
 let splash;
 let workerWin;
+let workerWC;
 
 function now(){
   let date = new Date();
@@ -31,8 +32,11 @@ function createWorker () {
     width: 800,
     height: 600,
     show: false,
+    icon:__dirname+'/res/ico/wallet.png',
     autoHideMenuBar:true
   });
+
+  workerWC = workerWin.webContents;
 
   log("creating Worker window");
 
@@ -76,6 +80,7 @@ function createWindow () {
     width: 800,
     height: 600,
     show: false,
+    icon:__dirname+'/res/ico/wallet.png',
     webPreferences: { experimentalFeatures: true },
     autoHideMenuBar:true
   });
@@ -123,6 +128,7 @@ function createSplash() {
     width: 250,
     height: 300,
     frame:false,
+    icon:__dirname+'/res/ico/wallet.png',
     show:false
   });
   // and load the index.html of the app.
@@ -179,3 +185,8 @@ app.on('activate', () => {
 })
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
+
+ipcMain.on('async',function(e, arg1,arg2){
+  log(arg1);
+  log(arg2);
+});
