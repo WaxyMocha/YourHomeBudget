@@ -102,7 +102,7 @@ function createWindow () {
 
   // Emitted when the window is closed.
   mainWin.on('closed', () => {
-
+    workerWin.close();
     log("closing main window");
 
     // Dereference the window object, usually you would store windows

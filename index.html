@@ -3,41 +3,35 @@
   <head>
     <meta charset="utf-8">
     <title>Main Window</title>
-
-    <link href="./winjs/css/ui-light.css" rel="stylesheet" />
-
     <link rel="stylesheet" href="./css/master.css">
     <link rel="stylesheet" href="./themify-icons/themify-icons.css">
   </head>
   <body>
+    <section class="headerBar">
+      <button id="menuButton" class="headerBarButton"></button>
 
-    <main id="main" class="win-splitview splitView" data-win-control="WinJS.UI.SplitView">
-      <!-- panel -->
-      <menu id="pane" class="win-splitview-pane">
-        <button
-            class="menuButton win-splitviewpanetoggle"
-            data-win-control="WinJS.UI.SplitViewPaneToggle"
-            data-win-options="{ splitView: select('.splitView') }">
-        </button>
-        <div data-win-control="WinJS.UI.SplitViewCommand" data-win-options="{ label: 'Home', icon: 'home'}"></div>
-
-
-      </menu>
-      <!-- okno aplikacji -->
-      <section class="content win-splitview-content">
-        <!-- appbar -->
-        <div id="appBar" data-win-control="WinJS.UI.AppBar" data-win-options="{placement:'top'}">
-
-        </div>
-
-        <section class="contentBox">
-          <button type="button" onclick="" name="button">create File</button>
-          <img src="./tezd.jpg" alt="">
-        </section>
+    </section><!-- /header -->
+    <menu id="mainMenu" class="mainMenu">
+      <button class="mainMenuItem" id="mMI1"></button>
+      <button class="mainMenuItem" id="mMI2"></button>
+      <button class="mainMenuItem" id="mMI3"></button>
+      <button class="mainMenuItem" id="mMI4"></button>
+      <button class="mainMenuItem" id="mMI5"></button>
+    </menu>
+    <!-- /mainMenu -->
+    <main class="contentWrapper">
+      <section class="epCCont">
+        <div class="img"></div>
+        <p class="epCContTitle">Lorem ipsum dolor sit.</p>
+        <p class="epCContTxt">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
+      </section>
+      <section class="epCCont">
+        <div class="img"></div>
+        <p class="epCContTitle">Lorem ipsum dolor sit.</p>
+        <p class="epCContTxt">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti tempore explicabo voluptates corporis, rem, provident sint voluptatem accusantium, tenetur cum laborum dolores labore, cupiditate consectetur deserunt! Dolores dolorem in quod cupiditate, qui natus non molestias minus necessitatibus deserunt, distinctio asperiores porro velit nemo, explicabo debitis totam nulla. Ad saepe iure cupiditate eum, odio iusto libero veniam nulla sit molestias facilis suscipit distinctio omnis quos laborum sequi laboriosam! Porro qui quo assumenda aperiam dolorum libero, repudiandae adipisci quam autem praesentium, ratione illum, repellat ad. Rerum recusandae nobis dolorem optio, voluptatum, at labore dolorum deleniti ex sed iure ullam alias illum hic.</p>
       </section>
     </main>
-    <script src="./winjs/js/base.js"></script>
-    <script src="./winjs/js/ui.js"></script>
+    <!-- <div>Icons made by <a href="https://www.flaticon.com/authors/madebyoliver" title="Madebyoliver">Madebyoliver</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div> -->
     <script src="./js/ui.js" charset="utf-8"></script>
     <script src="./js/main.js" charset="utf-8"></script>
   </body>

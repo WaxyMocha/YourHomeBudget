@@ -3,61 +3,68 @@
   padding:0;
 }
 
-html{
+:root{
   /*kolory*/
   --masterColor: rgba(245, 245, 245, 1);
   --masterTransparentColor:rgba(245, 245, 245, 0.7);
   --masterAccentColor:rgb(0, 102, 207);
   /*filter*/
   --masterBlur:blur(10px);
+  /*wielkości*/
+  --headerBarHeight:50px;
 }
 
 body{
   width: 100%;
-  height:100vh;
   font-family: calibri,arial , sans-serif;
 }
 
-.content{
+.headerBar{
+  width:100%;
+  height:var(--headerBarHeight);
+  background-color: var(--masterAccentColor);
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+.headerBarButton{
+  height:var(--headerBarHeight);
+  width: var(--headerBarHeight);
   background-color: transparent;
+  outline: none;
+}
+.mainMenu{
+  bottom: 0;
+  left: -100vw;
+  width:70vw;
+  max-width: 400px;
+  position: fixed;
+  height:Calc(100vh - var(--headerBarHeight));
+  background-color: cyan;
+  z-index: 1000;
+  transition: left .2s;
+}
+.mainMenuItem{
+  width:100%;
+  height:var(--headerBarHeight);
+  margin-top: 1px;
+  height:var
+}
+.contentWrapper{
+  margin-top: var(--headerBarHeight);
+  margin-bottom: 0;
+  width: Calc(100% - 10px);
+  min-height:Calc(100vh - (var(--headerBarHeight) + 10px));
+  background-color: rgb(223, 219, 219);
+  padding: 5px;
+
 }
 
-#pane{
-}
-
-#appBar{
-  background-color: var(--masterAccentColor);
-
-}
-#appBar div{
-  background-color: var(--masterAccentColor);
-}
-
-.win-splitviewpanetoggle{
-  background-color: var(--masterAccentColor);
-}
-
-.contentBox{
-  margin-left: 30px;
-  margin-top: 300px;
-}
-
-@supports ((-webkit-backdrop-filter: blur()) or (backdrop-filter: blur())){
-  #pane{
-    background-color: var(--masterTransparentColor);
-    -webkit-backdrop-filter:var(--masterBlur);
-            backdrop-filter:var(--masterBlur);
-  }
-
-  #appBar{
-    background-color: var(--masterAccentColor);
-
-  }
-  #appBar div{
-    background-color: var(--masterAccentColor);
-  }
-
-  .win-splitviewpanetoggle{
-    background-color: var(--masterAccentColor);
-  }
+.epCCont{
+  border: solid 0px;
+  padding:4px;
+  background-color: white;
+  border-radius: 5px;
+  max-width: 900px;
+  margin: 5px auto;
 }
