@@ -67,4 +67,22 @@ body{
   border-radius: 5px;
   max-width: 900px;
   margin: 5px auto;
+  position: relative;
+  min-height: 60px;
+}
+.epCimg{
+  width:60px;
+  height:60px;
+  background-color: red;
+  border-radius: 50%;
+  margin 5px;
+  display: inline-block;
+  top:5px;
+  position: absolute;
+}
+.epCCC{
+  display: inline-block;
+  margin-left: 70px;
+  width:calc(100% - 70px);
+
 }
