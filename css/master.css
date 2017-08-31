@@ -1,25 +1,25 @@
-*{
+* {
   margin: 0;
   padding:0;
 }
 
-:root{
+:root {
   /*kolory*/
   --masterColor: rgba(245, 245, 245, 1);
-  --masterTransparentColor:rgba(245, 245, 245, 0.7);
-  --masterAccentColor:rgb(0, 102, 207);
+  --masterTransparentColor: rgba(245, 245, 245, 0.7);
+  --masterAccentColor: rgb(0, 102, 207);
   /*filter*/
-  --masterBlur:blur(10px);
+  --masterBlur: blur(10px);
   /*wielkości*/
-  --headerBarHeight:50px;
+  --headerBarHeight: 50px;
 }
 
-body{
+body {
   width: 100%;
   font-family: calibri,arial , sans-serif;
 }
 
-.headerBar{
+.headerBar {
   width:100%;
   height:var(--headerBarHeight);
   background-color: var(--masterAccentColor);
@@ -27,13 +27,13 @@ body{
   top: 0;
   left: 0;
 }
-.headerBarButton{
+.headerBarButton {
   height:var(--headerBarHeight);
   width: var(--headerBarHeight);
   background-color: transparent;
   outline: none;
 }
-.mainMenu{
+.mainMenu {
   bottom: 0;
   left: -100vw;
   width:70vw;
@@ -44,13 +44,12 @@ body{
   z-index: 1000;
   transition: left .2s;
 }
-.mainMenuItem{
-  width:100%;
+.mainMenuItem {
   height:var(--headerBarHeight);
   margin-top: 1px;
-  height:var
+  width:100%;
 }
-.contentWrapper{
+.contentWrapper {
   margin-top: var(--headerBarHeight);
   margin-bottom: 0;
   width: Calc(100% - 10px);
@@ -75,7 +74,7 @@ body{
   height:60px;
   background-color: red;
   border-radius: 50%;
-  margin 5px;
+  margin: 5px;
   display: inline-block;
   top:5px;
   position: absolute;
