@@ -1,67 +1,72 @@
 * {
   margin: 0;
-  padding:0;
+  padding: 0;
 }
 
 :root {
-  /*kolory*/
+  /* kolory */
   --masterColor: rgba(245, 245, 245, 1);
   --masterTransparentColor: rgba(245, 245, 245, 0.7);
   --masterAccentColor: rgb(0, 102, 207);
-  /*filter*/
+
+  /* filter */
   --masterBlur: blur(10px);
-  /*wielkości*/
+
+  /* wielkości */
   --headerBarHeight: 50px;
 }
 
 body {
   width: 100%;
-  font-family: calibri,arial , sans-serif;
+  font-family: calibri, arial, sans-serif;
 }
 
 .headerBar {
-  width:100%;
-  height:var(--headerBarHeight);
+  width: 100%;
+  height: var(--headerBarHeight);
   background-color: var(--masterAccentColor);
   position: fixed;
   top: 0;
   left: 0;
 }
+
 .headerBarButton {
-  height:var(--headerBarHeight);
+  height: var(--headerBarHeight);
   width: var(--headerBarHeight);
   background-color: transparent;
   outline: none;
 }
+
 .mainMenu {
   bottom: 0;
   left: -100vw;
-  width:70vw;
+  width: 70vw;
   max-width: 400px;
   position: fixed;
-  height:Calc(100vh - var(--headerBarHeight));
+  height: calc(100vh - var(--headerBarHeight));
   background-color: cyan;
   z-index: 1000;
-  transition: left .2s;
+  transition: left 0.2s;
 }
+
 .mainMenuItem {
-  height:var(--headerBarHeight);
+  height: var(--headerBarHeight);
   margin-top: 1px;
-  width:100%;
+  width: 100%;
 }
+
 .contentWrapper {
   margin-top: var(--headerBarHeight);
   margin-bottom: 0;
-  width: Calc(100% - 10px);
-  min-height:Calc(100vh - (var(--headerBarHeight) + 10px));
+  width: calc(100% - 10px);
+  min-height: calc(100vh - (var(--headerBarHeight) + 10px));
   background-color: rgb(223, 219, 219);
   padding: 5px;
-
 }
 
-.epCCont{
-  border: solid 0px;
-  padding:4px;
+.epCCont {
+  border: solid 0;
+  padding: 4px;
   background-color: white;
   border-radius: 5px;
   max-width: 900px;
@@ -69,19 +74,20 @@ body {
   position: relative;
   min-height: 60px;
 }
-.epCimg{
-  width:60px;
-  height:60px;
+
+.epCimg {
+  width: 60px;
+  height: 60px;
   background-color: red;
   border-radius: 50%;
   margin: 5px;
   display: inline-block;
-  top:5px;
+  top: 5px;
   position: absolute;
 }
-.epCCC{
+
+.epCCC {
   display: inline-block;
   margin-left: 70px;
-  width:calc(100% - 70px);
-
+  width: calc(100% - 70px);
 }
