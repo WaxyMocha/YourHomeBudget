@@ -1,5 +1,8 @@
 /*jshint esversion: 6 */
-const { app, BrowserWindow, ipcMain } = require('electron');
+const electron = require('electron');
+const app = electron.app;
+const BrowserWindow = electron.BrowserWindow;
+const ipcMain = electron.ipcMain;
 const path = require('path');
 const url = require('url');
 
@@ -67,12 +70,15 @@ function createWorker() {
     // Dereference the window object, usually you would store windows
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.
-    win = null;
+    workerWin = null;
+    if (mainWin != null) {
+      createWorker();
+    }
   });
 
   workerWin.once('ready-to-show', () => {
       workerWin.show();
-
+      workerWin.webContents.send('manipulatedData', 'test');
       log('showing Worker window');
     });
 }
@@ -105,13 +111,14 @@ function createWindow() {
 
   // Emitted when the window is closed.
   mainWin.on('closed', () => {
-    workerWin.close();
+
     log('closing main window');
 
     // Dereference the window object, usually you would store windows
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.
-    win = null;
+    mainWin = null;
+    workerWin.close();
   });
 
   mainWin.once('ready-to-show', () => {
@@ -192,7 +199,10 @@ app.on('activate', () => {
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
 
-ipcMain.on('async', function (e, arg1, arg2) {
-  log(arg1);
-  log(arg2);
+ipcMain.on('manipulatedData', (e, arg) => {
+  log(`ODEBRANE DANE (worker): ${arg}`);
+});
+
+ipcMain.on('user-data', (e, arg) => {
+  log(`ODEBRANE DANE (main): ${arg}`);
 });
