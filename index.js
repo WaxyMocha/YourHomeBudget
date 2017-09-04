@@ -78,7 +78,6 @@ function createWorker() {
 
   workerWin.once('ready-to-show', () => {
       workerWin.show();
-      workerWin.webContents.send('manipulatedData', 'test');
       log('showing Worker window');
     });
 }
@@ -199,10 +198,25 @@ app.on('activate', () => {
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
 
+function send(to, data) {
+  let ch;
+  if (to == workerWin) {
+    ch = 'manipulatedData';
+  } else if (to == mainWin) {
+    ch = 'user-data';
+  } else {
+    return 'illegal channel';
+  }
+
+  to.webContents.send(ch, data);
+}
+
 ipcMain.on('manipulatedData', (e, arg) => {
-  log(`ODEBRANE DANE (worker): ${arg}`);
+  log('Odebrano (worker): ' + arg);
+  send(mainWin, arg);
 });
 
 ipcMain.on('user-data', (e, arg) => {
-  log(`ODEBRANE DANE (main): ${arg}`);
+  log('Odebrano (main): ' + arg);
+  send(workerWin, arg);
 });
