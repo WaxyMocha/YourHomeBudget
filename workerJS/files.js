@@ -20,6 +20,7 @@ function progDir() {
 }
 
 function read(relPath) {
+  progDir();
   let path = filesPath + relPath;
   let appRootPath = `${appRoot}/${relPath}`;
   if (fs.existsSync(path)) {
@@ -35,6 +36,7 @@ function read(relPath) {
 }
 
 function write(relPath, data) {
+  progDir();
   let path = filesPath + relPath;
   fs.writeFileSync(path, data, 'utf8');
 }
