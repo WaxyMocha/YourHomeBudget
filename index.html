@@ -7,8 +7,12 @@
     <link rel="stylesheet" href="./themify-icons/themify-icons.css">
   </head>
   <body>
+
     <section class="headerBar">
-      <button id="menuButton" class="headerBarButton"></button>
+      <div id="electron-titlebar" class="drag"></div>
+      <section class="buttonsWraper">
+        <button id="menuButton" class="headerBarButton"></button>
+      </section>
 
     </section><!-- /header -->
     <menu id="mainMenu" class="mainMenu">
@@ -33,6 +37,9 @@
       </section>
     </main>
     <!-- <div>Icons made by <a href="https://www.flaticon.com/authors/madebyoliver" title="Madebyoliver">Madebyoliver</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div> -->
+    <script type="text/javascript">
+      const electronTitlebar = require('electron-titlebar');
+    </script>
     <script src="./indexJS/requires.js" charset="utf-8"></script>
     <script src="./indexJS/com.js" charset="utf-8"></script>
     <script src="./indexJS/ui.js" charset="utf-8"></script>

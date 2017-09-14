@@ -88,6 +88,7 @@ function createWindow() {
     width: 800,
     height: 600,
     show: false,
+    frame: false,
     icon: __dirname + '/res/ico/wallet.png',
     webPreferences: { experimentalFeatures: true },
     autoHideMenuBar: true,

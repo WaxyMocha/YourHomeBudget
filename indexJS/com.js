@@ -1,9 +1,9 @@
 /* jshint esversion:6 */
 
 function send(data) {
-  if (typeof data == 'object') {
-    data = JSON.stringify(data);
-  }
+  // if (typeof data == 'object') {
+  //   data = JSON.stringify(data);
+  // }
 
   ipcRenderer.send('user-data', data);
 }

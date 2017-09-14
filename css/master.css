@@ -13,7 +13,8 @@
   --masterBlur: blur(10px);
 
   /* wielkości */
-  --headerBarHeight: 50px;
+  --headerBarHeight: 79px;
+  --headerButtonSize: 50px;
 }
 
 body {
@@ -32,10 +33,14 @@ body {
 }
 
 .headerBarButton {
-  height: var(--headerBarHeight);
-  width: var(--headerBarHeight);
+  height: var(--headerButtonSize);
+  width: var(--headerButtonSize);
   background-color: transparent;
   outline: none;
+}
+
+.buttonsWraper {
+  margin-top: 29px;
 }
 
 .mainMenu {
@@ -51,7 +56,7 @@ body {
 }
 
 .mainMenuItem {
-  height: var(--headerBarHeight);
+  height: var(--headerButtonSize);
   margin-top: 1px;
   width: 100%;
 }
@@ -91,4 +96,8 @@ body {
   display: inline-block;
   margin-left: 70px;
   width: calc(100% - 70px);
+}
+
+#electron-titlebar {
+  max-height: 29px;
 }

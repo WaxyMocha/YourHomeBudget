@@ -37,6 +37,10 @@ function read(relPath) {
 
 function write(relPath, data) {
   progDir();
+  if (typeof data == 'object') {
+    data = jsonParser(false, data);
+  }
+
   let path = filesPath + relPath;
   fs.writeFileSync(path, data, 'utf8');
 }
