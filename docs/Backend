@@ -1,0 +1,33 @@
+files:{
+  com.js -communication between processes
+    send (data) {
+      sends data to main window
+    }
+
+  files.js -file system support
+    progDir (){
+      check that the file exists
+    }
+
+    read (relPath){
+      read from file using 'utf-8'
+      filename is last part of 'relPath'
+        -check if that file is in user's homedir
+        -if it doesn't check if that file is in dir where app is installed
+    }
+
+    write (relPath, data){
+      writes 'data' into file using 'utf-8'
+      filename is last part of 'relPath'
+
+    }
+
+  main.js -main process' file
+    checkArg (arg){
+      arg is object and have 'task' property
+      check what backend is going to do ( arg.task )
+      calls function assigned to that task
+      returns result of that function
+      if to task isn't assigned any function returns 'invalid task'
+    }
+}
