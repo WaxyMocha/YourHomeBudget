@@ -30,4 +30,11 @@ files:{
       returns result of that function
       if to task isn't assigned any function returns 'invalid task'
     }
+
+    jsonParser (mode, data){
+      if mode is true and 'data' is a JSON object then it parse 'data' to JS object
+      if mode is false and 'data' is an JS object then it stringify 'data' to JSON object
+    }
+
+  requires.js -contains require node modules
 }
