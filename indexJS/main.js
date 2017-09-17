@@ -7,6 +7,7 @@ let budget = {
   monthsIDs: [
     0,
   ],
+  lastMonthID: 0,
 };
 
 let month = {
