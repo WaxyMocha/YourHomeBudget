@@ -1,7 +1,7 @@
 {
   "name": "YourHomeBudget",
   "productName": "YourHomeBudget",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "main": "index.js",
   "icon": "res\\ico\\wallet.png",
   "devDependencies": {
