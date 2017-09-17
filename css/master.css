@@ -114,3 +114,15 @@ body {
 .cItemDesc {
   grid-area: desc;
 }
+
+.incomesForm {
+  position: fixed;
+  display: grid;
+  width: 70vw;
+  height: 70vh;
+  top: 15vh;
+  left: 30vh;
+  background-color: red;
+  padding: 8px;
+  border-radius: 5px;
+}
