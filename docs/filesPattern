@@ -1,0 +1,31 @@
+let mth = {
+  amount: 0,
+  profits: 'path to profits',
+  loss: 'path to loss',
+};
+
+let profits = [
+  {
+    amount: 0,
+    name: '',
+    description: '',
+    cat: 1,
+    id: 0,
+    flags: {
+      del: false,
+    },
+  },
+];
+
+let loss = [
+  {
+    amount: 0,
+    name: '',
+    description: '',
+    cat: 1,
+    id: 0,
+    flags: {
+      del: false,
+    },
+  }
+];
