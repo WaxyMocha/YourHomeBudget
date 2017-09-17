@@ -7,14 +7,44 @@
     <link rel="stylesheet" href="./themify-icons/themify-icons.css">
   </head>
   <body>
+    <main id="main">
+      <section class="headerBar">
+        <div id="electron-titlebar" class="drag"></div>
+        <section class="buttonsWraper">
+          <button id="menuButton" class="headerBarButton"></button>
+        </section>
 
-    <section class="headerBar">
-      <div id="electron-titlebar" class="drag"></div>
-      <section class="buttonsWraper">
-        <button id="menuButton" class="headerBarButton"></button>
-      </section>
+      </section><!-- /header -->
 
-    </section><!-- /header -->
+      <main class="content">
+        <section class="contentItem">
+          <div class="cItemImg"></div>
+          <div class="cItemTitle">TITLE</div>
+          <div class="cItemAmount">Amount: <span>120.00</span></div>
+          <div class="cItemCat">CATEGORY</div>
+          <div class="cItemDesc">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad nemo obcaecati fugiat omnis accusamus voluptas nobis, laboriosam harum id recusandae.
+          </div>
+        </section><section class="contentItem">
+          <div class="cItemImg"></div>
+          <div class="cItemTitle">TITLE</div>
+          <div class="cItemAmount">Amount: <span>120.00</span></div>
+          <div class="cItemCat">CATEGORY</div>
+          <div class="cItemDesc">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad nemo obcaecati fugiat omnis accusamus voluptas nobis, laboriosam harum id recusandae.
+          </div>
+        </section><section class="contentItem">
+          <div class="cItemImg"></div>
+          <div class="cItemTitle">TITLE</div>
+          <div class="cItemAmount">Amount: <span>120.00</span></div>
+          <div class="cItemCat">CATEGORY</div>
+          <div class="cItemDesc">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad nemo obcaecati fugiat omnis accusamus voluptas nobis, laboriosam harum id recusandae.
+          </div>
+        </section>
+      </main>
+    </main>
+
     <menu id="mainMenu" class="mainMenu">
       <button class="mainMenuItem" id="mMI1"></button>
       <button class="mainMenuItem" id="mMI2"></button>
@@ -23,19 +53,7 @@
       <button class="mainMenuItem" id="mMI5"></button>
     </menu>
     <!-- /mainMenu -->
-    <main class="contentWrapper">
-      <section class="epCCont">
-        <div class="epCimg"></div>
-        <div class="epCCC"><p class="epCContTitle">Lorem ipsum dolor sit.</p>
-        <p class="epCContTxt">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti tempore explicabo voluptates corporis, rem, provident sint voluptatem accusantium, tenetur cum laborum dolores labore, cupiditate consectetur deserunt!</p></div>
-      </section>
-      <section class="epCCont">
-        <div class="epCimg"></div>
-        <div class="epCCC"><p class="epCContTitle">Lorem ipsum dolor sit.</p>
-        <p class="epCContTxt">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti tempore explicabo voluptates corporis, rem, provident sint voluptatem accusantium, tenetur cum laborum dolores labore, cupiditate consectetur deserunt! Dolores dolorem in quod cupiditate, qui natus non molestias minus necessitatibus deserunt, distinctio asperiores porro velit nemo, explicabo debitis totam nulla. Ad saepe iure cupiditate eum, odio iusto libero veniam nulla sit molestias facilis suscipit distinctio omnis quos laborum sequi laboriosam! Porro qui quo assumenda aperiam dolorum libero, repudiandae adipisci quam autem praesentium, ratione illum, repellat ad. Rerum recusandae nobis dolorem optio, voluptatum, at labore dolorum deleniti ex sed iure ullam alias illum hic.</p></div>
 
-      </section>
-    </main>
     <!-- <div>Icons made by <a href="https://www.flaticon.com/authors/madebyoliver" title="Madebyoliver">Madebyoliver</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div> -->
     <script type="text/javascript">
       const electronTitlebar = require('electron-titlebar');

@@ -11,6 +11,13 @@ let splash;
 let workerWin;
 let workerWC;
 
+function startup() {
+  createSplash();
+  createMainWindow();
+  createWorker();
+
+}
+
 function now() {
   let date = new Date();
   let hr = String('0' + date.getHours()).slice(-2);
@@ -28,39 +35,43 @@ function log(msg) {
   console.log(`[${now()}]> ${msg}`);
 }
 
-log('launching');
-
-function startup() {
-  createSplash();
-  createWindow();
-  createWorker();
-}
-
-function createWorker() {
+function crWin(win, htmlFile, frame, icon, devTools, width, height, name) {
   // Create the browser window.
-  workerWin = new BrowserWindow({
-    width: 800,
-    height: 600,
+  win = new BrowserWindow({
+    width: width,
+    height: height,
     show: false,
-    icon: __dirname + '/res/ico/wallet.png',
+    frame: frame,
+    icon: __dirname + icon,
+    webPreferences: { experimentalFeatures: true },
     autoHideMenuBar: true,
   });
 
-  workerWC = workerWin.webContents;
-
-  log('creating Worker window');
+  log(`creating ${name}`);
 
   // and load the index.html of the app.
-  log('loading worker.html to worker window');
+  log(`loading ${htmlFile} to ${name}`);
 
-  workerWin.loadURL(url.format({
-    pathname: path.join(__dirname, 'worker.html'),
+  win.loadURL(url.format({
+    pathname: path.join(__dirname, htmlFile),
     protocol: 'file:',
     slashes: true,
   }));
 
   // Open the DevTools.
-  workerWin.webContents.openDevTools();
+  if (devTools) {
+    win.webContents.openDevTools();
+  }
+
+  return win;
+}
+
+log('launching');
+
+function createWorker() {
+  // Create the browser window.
+  let name = 'workerWin';
+  workerWin = crWin(workerWin, 'worker.html', true, '/res/ico/wallet.png', true, 800, 600, name);
 
   // Emitted when the window is closed.
   workerWin.on('closed', () => {
@@ -82,32 +93,10 @@ function createWorker() {
     });
 }
 
-function createWindow() {
+function createMainWindow() {
   // Create the browser window.
-  mainWin = new BrowserWindow({
-    width: 800,
-    height: 600,
-    show: false,
-    frame: false,
-    icon: __dirname + '/res/ico/wallet.png',
-    webPreferences: { experimentalFeatures: true },
-    autoHideMenuBar: true,
-  });
 
-  log('creating main window');
-
-  // and load the index.html of the app.
-  log('loading index.html to main window');
-
-  mainWin.loadURL(url.format({
-    pathname: path.join(__dirname, 'index.html'),
-    protocol: 'file:',
-    slashes: true,
-  }));
-
-  // Open the DevTools.
-
-  // mainWin.webContents.openDevTools()
+  mainWin = crWin(mainWin, 'index.html', false, '/res/ico/wallet.png', true, 800, 600, 'MainWin');
 
   // Emitted when the window is closed.
   mainWin.on('closed', () => {
@@ -132,27 +121,8 @@ function createWindow() {
 
 function createSplash() {
   // Create the browser window.
-
-  log('creating splash screen');
-  splash = new BrowserWindow({
-    width: 250,
-    height: 300,
-    frame: false,
-    icon: __dirname + '/res/ico/wallet.png',
-    show: false,
-  });
-
-  // and load the index.html of the app.
-  log('loading loading.html to splash');
-
-  splash.loadURL(url.format({
-    pathname: path.join(__dirname, 'loading.html'),
-    protocol: 'file:',
-    slashes: true,
-  }));
-
-  // Open the DevTools.
-  // mainWin.webContents.openDevTools()
+  let nameSp = 'splash';
+  splash = crWin(splash, 'loading.html', false, '/res/ico/wallet.png', false, 250, 300, nameSp);
 
   // Emitted when the window is closed.
   splash.on('closed', () => {

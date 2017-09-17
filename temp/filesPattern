@@ -17,13 +17,15 @@ let profits = [
   },
 ];
 
-let loss = {
-  amount: 0,
-  name: '',
-  description: '',
-  cat: 1,
-  id: 0,
-  flags: {
-    del: false,
-  },
-};
+let loss = [
+  {
+    amount: 0,
+    name: '',
+    description: '',
+    cat: 1,
+    id: 0,
+    flags: {
+      del: false,
+    },
+  }
+];
