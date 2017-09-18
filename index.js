@@ -12,6 +12,7 @@ let workerWin;
 let workerWC;
 
 function startup() {
+  require('events').EventEmitter.prototype._maxListeners = 30;
   createSplash();
   createMainWindow();
   createWorker();
@@ -27,7 +28,6 @@ function now() {
   let mth = String('0' + String(Number(date.getMonth()) + 1)).slice(-2);
   let day = String('0' + date.getDate()).slice(-2);
   let ret =  `${day}-${mth}-${yr} ${hr}:${min}:${sec}`;
-
   return ret;
 }
 
@@ -77,10 +77,6 @@ function createWorker() {
   workerWin.on('closed', () => {
 
     log('closing worker window');
-
-    // Dereference the window object, usually you would store windows
-    // in an array if your app supports multi windows, this is the time
-    // when you should delete the corresponding element.
     workerWin = null;
     if (mainWin != null) {
       createWorker();
