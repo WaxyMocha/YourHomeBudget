@@ -1,3 +1,11 @@
+let budget = {
+  ID: 0,
+  monthsIDs: [
+    { id: 0, path: 'path' },
+  ],
+  lastMonthID: 0,
+};
+
 let mth = {
   amount: 0,
   profits: 'path to profits',
