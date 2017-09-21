@@ -19,6 +19,16 @@ function progDir() {
   console.log('folder already exists');
 }
 
+function directory(path) {
+  if (!fs.existsSync(filesPath + path)) {
+    console.log('creating folder');
+    fs.mkdirSync(filesPath + path);
+    return;
+  }
+
+  console.log('folder already exists');
+}
+
 function read(relPath) {
   progDir();
   let path = filesPath + relPath;

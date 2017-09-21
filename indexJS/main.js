@@ -5,7 +5,7 @@ let loss = [];
 let budget = {
   ID: 0,
   monthsIDs: [
-    { id: 0, path: 'path' },
+    { id: 0, path: `budget${buget.id}/` },
   ],
   lastMonthID: 0,
 };
@@ -15,7 +15,7 @@ let month = {
   id: 0,
   name: '',
   descr: '',
-  profits: 'profits.json',
+  profits: `month${this.id}/`,
   loss: 'loss.json',
 };
 
@@ -24,13 +24,15 @@ function saveMonth() {
   send({
     task: 'save',
     data: month,
-    path: 'month.json',
+    path: `budget0/month${month.id}`,
+    name: 'month.json',
   });
 
   send({
     task: 'save',
     data: profits,
-    path: month.profits,
+    name: month.profits,
+    path:
   });
 
   send({

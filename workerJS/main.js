@@ -4,6 +4,8 @@ function checkArg(arg) {
   let task = arg.task;
   if (task == 'save') {
     write(arg.path, jsonParser(false, arg.data));
+  } else if (task == 'read') {
+    read();
   } else {
     return 'invalid task';
   }
