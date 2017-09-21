@@ -32,7 +32,7 @@ function saveMonth() {
     task: 'save',
     data: profits,
     name: month.profits,
-    path:
+    path: '',
   });
 
   send({
