@@ -1,5 +1,5 @@
 /*jshint esversion: 6 */
-const fs = require('fs');
+const fs = require('fs-extra');
 const electron = require('electron');
 const remote = electron.remote;
 const app = remote.app;
@@ -8,3 +8,4 @@ const os = require('os');
 const platform = os.platform();
 const readline = require('readline');
 const path = require('path');
+const mkdirp = require('mkdirp');

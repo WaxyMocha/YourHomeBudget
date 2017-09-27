@@ -1,7 +1,19 @@
 files:{
   com.js -communication between processes
-    send (data) {
-      sends data to worker window
+    send ({ task, data, addProps }) {
+
+      task (string) - contain task which backend will do
+
+      data - contain data which will be processed
+
+      addProps (e.g. ({ task: 'save', data: 'text to save', prop1: 'path to file', prop2: 'mode' })) properties (one or more) needed to do a task.
+
+      Tasks:{
+          'save' - saves data to file ( addProps:
+            relative path to file
+          )
+          
+      }
     }
 
   main.js -main file
@@ -9,5 +21,5 @@ files:{
   requires.js -contains require node modules
 
   ui.js -file -modifying user interface
-    
+
 }

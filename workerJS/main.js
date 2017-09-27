@@ -3,7 +3,8 @@
 function checkArg(arg) {
   let task = arg.task;
   if (task == 'save') {
-    write(arg.path, jsonParser(false, arg.data));
+    write(arg.path, jsonParser(false, arg.data), arg.name);
+    send({ done: 'saved', to: arg.path });
   } else if (task == 'read') {
     read();
   } else {

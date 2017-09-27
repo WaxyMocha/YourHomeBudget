@@ -10,6 +10,7 @@ log(msg){
 
 crWin(win, htmlFile, frame, icon, devTools, width, height, name){
   creates new browser window
+
     win: variable which will contain the window object
 
     htmlFile: relative path to html file that will be loaded to the window (string)

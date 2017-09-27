@@ -20,9 +20,9 @@ function progDir() {
 }
 
 function directory(path) {
-  if (!fs.existsSync(filesPath + path)) {
+  if (!fs.existsSync(path)) {
     console.log('creating folder');
-    fs.mkdirSync(filesPath + path);
+    fs.mkdirsSync(path);
     return;
   }
 
@@ -45,12 +45,14 @@ function read(relPath) {
   }
 }
 
-function write(relPath, data) {
+function write(relPath, data, name) {
   progDir();
   if (typeof data == 'object') {
     data = jsonParser(false, data);
   }
 
   let path = filesPath + relPath;
-  fs.writeFileSync(path, data, 'utf8');
+  directory(filesPath);
+  directory(path);
+  fs.writeFileSync(path + name, data, 'utf8');
 }
