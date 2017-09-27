@@ -7,7 +7,7 @@ let budget = {
   monthsID: [
     {
       id: 0,
-      path: `budgets/budget0/month0/`,
+      path: `budgets/budget-0/month-0/`,
     },
   ],
   lastMonthID: 0,
