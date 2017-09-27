@@ -4,6 +4,7 @@ let profits = [];
 let loss = [];
 let budget = {
   id: 0,
+  path: `budgets/budget-0`,
   monthsID: [
     {
       id: 0,
