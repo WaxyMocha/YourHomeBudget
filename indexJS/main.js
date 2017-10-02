@@ -4,7 +4,7 @@ let profits = [];
 let loss = [];
 let budget = {
   id: 0,
-  path: `budgets/budget-0`,
+  path: `budgets/budget-0/`,
   monthsID: [
     {
       id: 0,
@@ -27,6 +27,13 @@ function saveMonth() {
 
   send({
     task: 'save',
+    data: budget,
+    path: budget.path,
+    name: 'budget.json',
+  });
+
+  send({
+    task: 'save',
     data: month,
     path: budget.monthsID[budget.monthsID.length - 1].path,
     name: 'month.json',
@@ -46,6 +53,10 @@ function saveMonth() {
     name: 'loss.json',
   });
 
+}
+
+function checkArg(arg) {
+  console.log(arg);
 }
 
 function addIncome(incomeType, name, desc, amount, cat) {

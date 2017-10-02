@@ -10,6 +10,7 @@ ipcRenderer.on('user-data', (e, arg) => {
     arg = JSON.parse(arg);
   }
 
+  checkArg(arg);
   console.log('Odebrano: ');
   console.log(arg);
   return;
