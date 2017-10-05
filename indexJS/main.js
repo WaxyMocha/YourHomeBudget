@@ -27,28 +27,28 @@ function saveMonth() {
 
   send({
     task: 'save',
-    data: budget,
+    data: { name: 'budget', data: budget },
     path: budget.path,
     name: 'budget.json',
   });
 
   send({
     task: 'save',
-    data: month,
+    data: { name: 'month', data: month },
     path: budget.monthsID[budget.monthsID.length - 1].path,
     name: 'month.json',
   });
 
   send({
     task: 'save',
-    data: profits,
+    data: { name: 'profits', data: profits },
     path: budget.monthsID[budget.monthsID.length - 1].path,
     name: 'profits.json',
   });
 
   send({
     task: 'save',
-    data: loss,
+    data: { name: 'loss', data: loss },
     path: budget.monthsID[budget.monthsID.length - 1].path,
     name: 'loss.json',
   });
@@ -57,6 +57,10 @@ function saveMonth() {
 
 function checkArg(arg) {
   console.log(arg);
+
+  // if (arg.task = 'read') {
+  //
+  // }
 }
 
 function addIncome(incomeType, name, desc, amount, cat) {
