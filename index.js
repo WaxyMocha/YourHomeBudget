@@ -179,13 +179,15 @@ function send(to, data) {
 }
 
 ipcMain.on('manipulatedData', (e, arg) => {
-  log('Odebrano (worker): ' + arg);
+  log('Odebrano (worker): ');
   console.log(arg);
+  console.log('');
   send(mainWin, arg);
 });
 
 ipcMain.on('user-data', (e, arg) => {
   log('Odebrano (main): ');
   console.log(arg);
+  console.log('');
   send(workerWin, arg);
 });

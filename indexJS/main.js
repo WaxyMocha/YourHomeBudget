@@ -2,29 +2,29 @@
 
 let stop = true;
 let config = {
-  // lastBudget: 'budgets/budget-0/',
+  lastBudget: 'budgets/budget-0/',
 };
 let incomes = [];
 let outcomes = [];
 let budget = {
-  // id: 0,
-  // path: `budgets/budget-0/`,
-  // monthsID: [
-  //   {
-  //     id: 0,
-  //     path: `budgets/budget-0/month-0/`,
-  //   },
-  // ],
-  // lastMonthID: 0,
+  id: 0,
+  path: `budgets/budget-0/`,
+  monthsID: [
+    {
+      id: 0,
+      path: `budgets/budget-0/month-0/`,
+    },
+  ],
+  lastMonthID: 0,
 };
 
 let month = {
-  // amount: 0,
-  // id: 0,
-  // name: '',
-  // descr: '',
-  // incomes: '',
-  // outcomes: '',
+  amount: 0,
+  id: 0,
+  name: '',
+  descr: '',
+  incomes: '',
+  outcomes: '',
 };
 
 function saveAll() {
@@ -74,17 +74,22 @@ function checkArg(arg) {
     if (name == 'budget') {
       budget = data;
       startup('month');
+
     } else if (name == 'month') {
       month = data;
       startup('incomes');
       startup('outcomes');
+
     } else if (name == 'incomes') {
       incomes = data;
+
     } else if (name == 'outcomes') {
       outcomes = data;
+
     } else if (name == 'config') {
       config = data;
       startup('budget');
+
     } else {
       console.log('invalid name');
     }
@@ -95,7 +100,7 @@ function checkArg(arg) {
 
 function startup(arg) {
 
-  if (arg == 'config' || typeof arg == 'undefined') {
+  if (arg == 'config' || arg == undefined) {
     send({
       task: 'read',
       path: '',
@@ -131,9 +136,9 @@ function startup(arg) {
 
 function addIncome(incomeType, name, desc, amount, cat) {
   let tmpArr;
-  if (incomeType == 'profit') {
+  if (incomeType == 'income') {
     tmpArr = incomes;
-  } else if (incomeType == 'outcomes') {
+  } else if (incomeType == 'outcome') {
     tmpArr = outcomes;
   } else {
     console.log('Invalid incomeType');
@@ -152,4 +157,17 @@ function addIncome(incomeType, name, desc, amount, cat) {
   };
 
   tmpArr.push(tmpObj);
+
+  if (incomeType == 'income') {
+    incomes = tmpArr;
+  } else if (incomeType == 'outcome') {
+    outcomes = tmpArr;
+  } else {
+    console.log('Invalid incomeType');
+    return;
+  }
+}
+
+if ((document.getElementById('if')) !== null) {
+  alert('lol');
 }
