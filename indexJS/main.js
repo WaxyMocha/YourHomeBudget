@@ -4,8 +4,8 @@ let stop = true;
 let config = {
   // lastBudget: 'budgets/budget-0/',
 };
-let profits = [];
-let loss = [];
+let incomes = [];
+let outcomes = [];
 let budget = {
   // id: 0,
   // path: `budgets/budget-0/`,
@@ -23,8 +23,8 @@ let month = {
   // id: 0,
   // name: '',
   // descr: '',
-  // profits: '',
-  // loss: '',
+  // incomes: '',
+  // outcomes: '',
 };
 
 function saveAll() {
@@ -52,16 +52,16 @@ function saveAll() {
 
   send({
     task: 'save',
-    data: { name: 'profits', data: profits },
+    data: { name: 'incomes', data: incomes },
     path: budget.monthsID[budget.monthsID.length - 1].path,
-    name: 'profits.json',
+    name: 'incomes.json',
   });
 
   send({
     task: 'save',
-    data: { name: 'loss', data: loss },
+    data: { name: 'outcomes', data: outcomes },
     path: budget.monthsID[budget.monthsID.length - 1].path,
-    name: 'loss.json',
+    name: 'outcomes.json',
   });
 
 }
@@ -73,14 +73,18 @@ function checkArg(arg) {
     let data = arg.data.data;
     if (name == 'budget') {
       budget = data;
+      startup('month');
     } else if (name == 'month') {
       month = data;
-    } else if (name == 'profits') {
-      profits = data;
-    } else if (name == 'loss') {
-      loss = data;
+      startup('incomes');
+      startup('outcomes');
+    } else if (name == 'incomes') {
+      incomes = data;
+    } else if (name == 'outcomes') {
+      outcomes = data;
     } else if (name == 'config') {
       config = data;
+      startup('budget');
     } else {
       console.log('invalid name');
     }
@@ -89,20 +93,9 @@ function checkArg(arg) {
   }
 }
 
-function wait() {
-  do {
-    console.log('xd');
-    if (stop == false) {
-      stop = true;
-      console.log('lol');
-      return;
-    }
-  } while (true);
-}
-
 function startup(arg) {
 
-  if (arg == 'config') {
+  if (arg == 'config' || typeof arg == 'undefined') {
     send({
       task: 'read',
       path: '',
@@ -117,20 +110,20 @@ function startup(arg) {
   } else if (arg == 'month') {
     send({
       task: 'read',
-      path: budget.monthsID[lastMonthID].path,
+      path: budget.monthsID[budget.lastMonthID].path,
       name: 'month.json',
     });
-  } else if (arg == 'profits') {
+  } else if (arg == 'incomes') {
     send({
       task: 'read',
-      path: budget.monthsID[lastMonthID].path,
-      name: 'profits.json',
+      path: budget.monthsID[budget.lastMonthID].path,
+      name: 'incomes.json',
     });
-  } else if (arg == 'loss') {
+  } else if (arg == 'outcomes') {
     send({
       task: 'read',
-      path: budget.monthsID[lastMonthID].path,
-      name: 'loss.json',
+      path: budget.monthsID[budget.lastMonthID].path,
+      name: 'outcomes.json',
     });
   }
 
@@ -139,9 +132,9 @@ function startup(arg) {
 function addIncome(incomeType, name, desc, amount, cat) {
   let tmpArr;
   if (incomeType == 'profit') {
-    tmpArr = profits;
-  } else if (incomeType == 'loss') {
-    tmpArr = loss;
+    tmpArr = incomes;
+  } else if (incomeType == 'outcomes') {
+    tmpArr = outcomes;
   } else {
     console.log('Invalid incomeType');
     return;

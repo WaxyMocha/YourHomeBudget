@@ -6,7 +6,6 @@ function checkArg(arg) {
     write(arg.path, jsonParser(false, arg.data), arg.name);
     send({ done: 'saved', to: arg.path });
   } else if (task == 'read') {
-
     send({ task: 'read', data: jsonParser(true, read(arg.path, arg.name)) });
   } else {
     return 'invalid task';
