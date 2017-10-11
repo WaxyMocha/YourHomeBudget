@@ -168,6 +168,6 @@ function addIncome(incomeType, name, desc, amount, cat) {
   }
 }
 
-if ((document.getElementById('if')) !== null) {
-  alert('lol');
+if ((document.getElementById('')) !== null) {
+  send({ task: '' });
 }
