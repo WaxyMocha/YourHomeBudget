@@ -1,18 +1,48 @@
 /*jshint esversion: 6 */
+/**
+ * @ignore
+ */
 const electron = require('electron');
+/**
+ * @ignore
+ */
 const app = electron.app;
+/**
+ * @ignore
+ */
 const BrowserWindow = electron.BrowserWindow;
+/**
+ * @ignore
+ */
 const ipcMain = electron.ipcMain;
+/**
+ * @ignore
+ */
 const path = require('path');
+/**
+ * @ignore
+ */
 const url = require('url');
-
+/**
+ * @ignore
+ */
 let mainWin;
+/**
+ * @ignore
+ */
 let splash;
-let workerWin;
-let workerWC;
+/**
+ * @ignore
+ */
+let backendWin;
+/**
+ * @ignore
+ */
+let backendWC;
 
 /**
- * This is main function.
+ * Main function, called at startup (Main process)
+ * @ignore
  */
 function main() {
   require('events').EventEmitter.prototype._maxListeners = 30;
@@ -22,8 +52,8 @@ function main() {
 }
 
 /**
- * now()
- * @return {string} current date and time
+ * Returns current date and time (Main process)
+ * @return {string} current date and time (dd-mm-yyyy hh:mm:ss)
  */
 function now() {
   let date = new Date();
@@ -37,10 +67,32 @@ function now() {
   return ret;
 }
 
+/**
+ * Logs in console current date and time followed by message (Main process)
+ * @param {string} msg message to log in console
+ * @example <JavaScript>
+ * log('example message');
+ * @example Console
+ * [dd-mm-yyyy hh:mm:ss]> example message
+ */
 function log(msg) {
   console.log(`[${now()}]> ${msg}`);
 }
 
+/**
+ * Create new browser window (Main process)
+ * @param {undefined} win Variable which will contain BrowserWindow object
+ * @param {string} htmlFile Relative path to file to load
+ * @param {boolean} frame Specifies whether the window frame is displayed
+ * @param {string} icon Relative path to icon for a window
+ * @param {boolean} devTools Specifies whether the developer tools are displayed when the window is opened
+ * @param {number} width Width of a window
+ * @param {number} height Height of a window
+ * @param {string} name Name of a window
+ * @return {object} Object containing opened window
+ * @example <JavaScript>
+ * crWin(mainWindow, 'index.html', true, 'res/icon.ico', false, 800, 600, 'Main Window')
+ */
 function crWin(win, htmlFile, frame, icon, devTools, width, height, name) {
   // Create the browser window.
   win = new BrowserWindow({
@@ -72,25 +124,31 @@ function crWin(win, htmlFile, frame, icon, devTools, width, height, name) {
 
 log('launching');
 
+/**
+ * @ignore
+ */
 function createWorker() {
-  let name = 'workerWin';
-  let html = 'worker.html';
-  workerWin = crWin(workerWin, html, true, './../res/ico/wallet.png', true, 800, 600, name);
+  let name = 'backendWin';
+  let html = 'backend.html';
+  backendWin = crWin(backendWin, html, true, './../res/ico/wallet.png', true, 800, 600, name);
 
-  workerWin.on('closed', () => {
-    log('closing worker window');
-    workerWin = null;
+  backendWin.on('closed', () => {
+    log('closing backend window');
+    backendWin = null;
     if (mainWin != null) {
       createWorker();
     }
   });
 
-  workerWin.once('ready-to-show', () => {
-      workerWin.show();
+  backendWin.once('ready-to-show', () => {
+      backendWin.show();
       log('showing Worker window');
     });
 }
 
+/**
+ * @ignore
+ */
 function createMainWindow() {
   // Create the browser window.
   let name = 'MainWin';
@@ -99,7 +157,7 @@ function createMainWindow() {
 
     log('closing main window');
     mainWin = null;
-    workerWin.close();
+    backendWin.close();
   });
 
   mainWin.once('ready-to-show', () => {
@@ -111,6 +169,9 @@ function createMainWindow() {
     });
 }
 
+/**
+ * @ignore
+ */
 function createSplash() {
   // Create the browser window.
   let nameSp = 'splash';
@@ -151,9 +212,16 @@ app.on('activate', () => {
   }
 });
 
+/**
+ * Sends data to Browser Window (Main process)
+ * @param {object} to Specifies destination of data (BrowserWindow object)
+ * @param data Contains data to send
+ * @example <JavaScript>
+ * send(mainWin, 'data');
+ */
 function send(to, data) {
   let ch;
-  if (to == workerWin) {
+  if (to == backendWin) {
     ch = 'manipulatedData';
   } else if (to == mainWin) {
     ch = 'user-data';
@@ -165,7 +233,7 @@ function send(to, data) {
 }
 
 ipcMain.on('manipulatedData', (e, arg) => {
-  log('Odebrano (worker): ');
+  log('Odebrano (backend): ');
   console.log(arg);
   console.log('');
   send(mainWin, arg);
@@ -175,5 +243,5 @@ ipcMain.on('user-data', (e, arg) => {
   log('Odebrano (main): ');
   console.log(arg);
   console.log('');
-  send(workerWin, arg);
+  send(backendWin, arg);
 });

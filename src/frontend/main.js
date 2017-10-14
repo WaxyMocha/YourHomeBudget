@@ -1,11 +1,23 @@
 /*jshint esversion: 6 */
-
-let stop = true;
+/**
+ * @type {object}
+ * @desc Contains configuration (frontend window)
+ */
 let config = {
   lastBudget: 'budgets/budget-0/',
 };
+/**
+ * @type {array}
+ */
 let incomes = [];
+/**
+ * @type {array}
+ */
 let outcomes = [];
+/**
+ * @type {object}
+ * @desc Contains informations about budget (frontend window)
+ */
 let budget = {
   id: 0,
   path: `budgets/budget-0/`,
@@ -18,6 +30,10 @@ let budget = {
   lastMonthID: 0,
 };
 
+/**
+ * @type {object}
+ * @desc Contains informations about settlement period (frontend window)
+ */
 let month = {
   amount: 0,
   id: 0,
@@ -27,6 +43,9 @@ let month = {
   outcomes: '',
 };
 
+/**
+ * Saves all informations about budget and config (frontend window)
+ */
 function saveAll() {
 
   send({
@@ -66,6 +85,10 @@ function saveAll() {
 
 }
 
+/**
+ * Checks argument sended from backend (frontend window)
+ * @param arg argument to check
+ */
 function checkArg(arg) {
 
   if (arg.task == 'read') {
@@ -93,11 +116,13 @@ function checkArg(arg) {
     } else {
       console.log('invalid name');
     }
-
-    stop = false;
   }
 }
 
+/**
+ * @ignore
+ * @param {string} arg Determines what needs to be loaded (called by checkArg) (frontend window)
+ */
 function startup(arg) {
 
   if (arg == 'config' || arg == undefined) {
@@ -134,11 +159,21 @@ function startup(arg) {
 
 }
 
-function addIncome(incomeType, name, desc, amount, cat) {
+/**
+ * Add an income or an outcome
+ * @param {string} type income or outcome
+ * @param {string} name Name / title of income or outcome
+ * @param {string} desc Description of income or outcome
+ * @param {number} amount Value of income or outcome
+ * @param {number} cat Id of category
+ * @example <JavaScript>
+ * addIncome('income', 'Payment', 'From my employer', 2000, 1);
+ */
+function addIncome(type, name, desc, amount, cat) {
   let tmpArr;
-  if (incomeType == 'income') {
+  if (type == 'income') {
     tmpArr = incomes;
-  } else if (incomeType == 'outcome') {
+  } else if (type == 'outcome') {
     tmpArr = outcomes;
   } else {
     console.log('Invalid incomeType');

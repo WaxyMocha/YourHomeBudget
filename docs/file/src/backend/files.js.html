@@ -2,8 +2,8 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <base data-ice="baseUrl">
-  <title data-ice="title">Home | YourHomeBudget</title>
+  <base data-ice="baseUrl" href="../../../">
+  <title data-ice="title">src/backend/files.js | YourHomeBudget</title>
   <link type="text/css" rel="stylesheet" href="css/style.css">
   <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
   <script src="script/prettify/prettify.js"></script>
@@ -72,7 +72,67 @@
 </div>
 </nav>
 
-<div class="content" data-ice="content"><div data-ice="index" class="github-markdown"><h1 id="your-home-budget">Your home budget</h1></div>
+<div class="content" data-ice="content"><h1 data-ice="title">src/backend/files.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">/*jshint esversion: 6 */
+const appRoot = path.dirname(require.main.filename);
+
+if (platform == &apos;win32&apos;) {
+  var tempPath = os.homedir() + &apos;\\.YourHomeBudget\\&apos;;
+} else {
+  var tempPath = os.homedir() + &apos;/.YourHomeBudget/&apos;;
+}
+
+const filesPath = tempPath;
+
+function progDir() {
+  if (!fs.existsSync(filesPath)) {
+    console.log(&apos;creating folder for program&apos;);
+    fs.mkdirSync(filesPath);
+    return;
+  }
+
+  console.log(&apos;folder already exists&apos;);
+}
+
+function directory(path) {
+  if (!fs.existsSync(path)) {
+    console.log(&apos;creating folder&apos;);
+    fs.mkdirsSync(path);
+    return;
+  }
+
+  console.log(&apos;folder already exists&apos;);
+}
+
+function read(relPath, name) {
+  progDir();
+  let path = filesPath + relPath;
+  let appRootPath = `${appRoot}/${relPath}`;
+  if (fs.existsSync(`${path}/${name}`)) {
+    console.log(`File is in: ${path}`);
+    return fs.readFileSync(`${path}/${name}`, &apos;utf8&apos;);
+  } else if (fs.existsSync(`${appRootPath}/${name}`)) {
+    console.log(`File is in: ${appRootPath}`);
+    return (fs.readFileSync(`${appRootPath}/${name}`, &apos;utf8&apos;));
+  } else {
+    console.log(&apos;File does not exists&apos;);
+    return &apos;&apos;;
+  }
+}
+
+function write(relPath, data, name) {
+  progDir();
+  if (typeof data == &apos;object&apos;) {
+    data = jsonParser(false, data);
+  }
+
+  let path = filesPath + relPath;
+  directory(filesPath);
+  directory(path);
+  fs.writeFileSync(path + name, data, &apos;utf8&apos;);
+}
+</code></pre>
+
 </div>
 
 <footer class="footer">

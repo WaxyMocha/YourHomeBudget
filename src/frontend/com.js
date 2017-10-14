@@ -1,7 +1,12 @@
 /* jshint esversion:6 */
 
+/**
+ * Sends data to main process and backend
+ * @param data Contains data to send
+ * @example <JavaScript>
+ * send('data');
+ */
 function send(data) {
-
   ipcRenderer.send('user-data', data);
 }
 
