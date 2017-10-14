@@ -2,7 +2,7 @@
   "name": "YourHomeBudget",
   "productName": "YourHomeBudget",
   "version": "0.0.1",
-  "main": "index.js",
+  "main": "src/index.js",
   "icon": "res\\ico\\wallet.png",
   "devDependencies": {
     "devtron": "^1.4.0",

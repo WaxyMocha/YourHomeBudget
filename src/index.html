@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Main Window</title>
+    <link rel="stylesheet" href="./css/master.css">
+    <link rel="stylesheet" href="./../themify-icons/themify-icons.css">
+  </head>
+  <body>
+    <main id="main">
+      <section class="headerBar">
+        <div id="electron-titlebar" class="drag"></div>
+        <section class="buttonsWraper">
+          <button id="menuButton" class="headerBarButton"></button>
+        </section>
+
+      </section><!-- /header -->
+
+      <main id="balanceContent" class="content">
+
+      </main>
+    </main>
+
+    <menu id="mainMenu" class="mainMenu">
+      <button class="mainMenuItem" id="mMI1"></button>
+      <button class="mainMenuItem" id="mMI2"></button>
+      <button class="mainMenuItem" id="mMI3"></button>
+      <button class="mainMenuItem" id="mMI4"></button>
+      <button class="mainMenuItem" id="mMI5"></button>
+    </menu>
+    <!-- /mainMenu -->
+
+    <section class="incomesForm" id="profitsForm">
+      <p id="profitsFormName">Name</p>
+      <input type="text" id="profitsFormNameInput">
+      <p id="profitsFormAmount">Amount</p>
+      <input type="number" id="ProfitsFormAmountInput" name="" value="">
+      <p id="profitsFormCategory">Category</p>
+      <input type="text" id="profitsFormCategoryInput">
+      <p id="profitsFormDesc">Description</p>
+      <textarea name="name" id="profitsFormDescInput" rows="8" cols="80"></textarea>
+      <button id="profitsFormSubmit">Submit</button>
+      <button id="profitsFormCancel">Cancel</button>
+    </section>
+
+    <!-- <div>Icons made by <a href="https://www.flaticon.com/authors/madebyoliver" title="Madebyoliver">Madebyoliver</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div> -->
+    <script src="./indexJS/requires.js" charset="utf-8"></script>
+    <script src="./indexJS/com.js" charset="utf-8"></script>
+    <script src="./indexJS/ui.js" charset="utf-8"></script>
+    <script src="./indexJS/main.js" charset="utf-8"></script>
+  </body>
+</html>

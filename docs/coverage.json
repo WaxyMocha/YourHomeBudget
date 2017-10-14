@@ -1,0 +1,110 @@
+{
+  "coverage": "3.92%",
+  "expectCount": 51,
+  "actualCount": 2,
+  "files": {
+    "src/index.js": {
+      "expectCount": 14,
+      "actualCount": 2,
+      "undocumentLines": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        40,
+        44,
+        75,
+        94,
+        114,
+        154
+      ]
+    },
+    "src/indexJS/com.js": {
+      "expectCount": 1,
+      "actualCount": 0,
+      "undocumentLines": [
+        3
+      ]
+    },
+    "src/indexJS/main.js": {
+      "expectCount": 10,
+      "actualCount": 0,
+      "undocumentLines": [
+        3,
+        4,
+        7,
+        8,
+        9,
+        21,
+        30,
+        69,
+        101,
+        137
+      ]
+    },
+    "src/indexJS/requires.js": {
+      "expectCount": 5,
+      "actualCount": 0,
+      "undocumentLines": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
+    },
+    "src/indexJS/ui.js": {
+      "expectCount": 2,
+      "actualCount": 0,
+      "undocumentLines": [
+        3,
+        4
+      ]
+    },
+    "src/workerJS/com.js": {
+      "expectCount": 1,
+      "actualCount": 0,
+      "undocumentLines": [
+        3
+      ]
+    },
+    "src/workerJS/files.js": {
+      "expectCount": 6,
+      "actualCount": 0,
+      "undocumentLines": [
+        2,
+        10,
+        12,
+        22,
+        32,
+        48
+      ]
+    },
+    "src/workerJS/main.js": {
+      "expectCount": 2,
+      "actualCount": 0,
+      "undocumentLines": [
+        3,
+        16
+      ]
+    },
+    "src/workerJS/requires.js": {
+      "expectCount": 10,
+      "actualCount": 0,
+      "undocumentLines": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ]
+    }
+  }
+}
