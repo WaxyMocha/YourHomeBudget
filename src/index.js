@@ -42,20 +42,25 @@ let backendWC;
 
 /**
  * Main function, called at startup (Main process)
+ *
  * @ignore
  */
 function main() {
+
   require('events').EventEmitter.prototype._maxListeners = 30;
   createSplash();
   createMainWindow();
   createWorker();
+
 }
 
 /**
  * Returns current date and time (Main process)
+ *
  * @return {string} current date and time (dd-mm-yyyy hh:mm:ss)
  */
 function now() {
+
   let date = new Date();
   let hr = String('0' + date.getHours()).slice(-2);
   let min = String('0' + date.getMinutes()).slice(-2);
@@ -69,6 +74,7 @@ function now() {
 
 /**
  * Logs in console current date and time followed by message (Main process)
+ *
  * @param {string} msg message to log in console
  * @example <JavaScript>
  * log('example message');
@@ -91,28 +97,28 @@ function log(msg) {
  * @param {string} name Name of a window
  * @return {object} Object containing opened window
  * @example <JavaScript>
- * crWin(mainWindow, 'index.html', true, 'res/icon.ico', false, 800, 600, 'Main Window')
+ *mainWindow = crWin(mainWindow, 'index.html', true, 'res/icon.ico', false, 800, 600, 'Main Window')
  */
 function crWin(win, htmlFile, frame, icon, devTools, width, height, name) {
   // Create the browser window.
   win = new BrowserWindow({
-    width: width,
-    height: height,
-    show: false,
-    frame: frame,
-    icon: __dirname + icon,
-    webPreferences: { experimentalFeatures: true },
-    autoHideMenuBar: true,
-  });
+      width: width,
+      height: height,
+      show: false,
+      frame: frame,
+      icon: __dirname + icon,
+      webPreferences: { experimentalFeatures: true },
+      autoHideMenuBar: true,
+    });
 
   log(`creating ${name}`);
   log(`loading ${htmlFile} to ${name}`);
 
   win.loadURL(url.format({
-    pathname: path.join(__dirname, htmlFile),
-    protocol: 'file:',
-    slashes: true,
-  }));
+      pathname: path.join(__dirname, htmlFile),
+      protocol: 'file:',
+      slashes: true,
+    }));
 
   // Open the DevTools.
   if (devTools) {
@@ -133,12 +139,12 @@ function createWorker() {
   backendWin = crWin(backendWin, html, true, './../res/ico/wallet.png', true, 800, 600, name);
 
   backendWin.on('closed', () => {
-    log('closing backend window');
-    backendWin = null;
-    if (mainWin != null) {
-      createWorker();
-    }
-  });
+      log('closing backend window');
+      backendWin = null;
+      if (mainWin != null) {
+        createWorker();
+      }
+    });
 
   backendWin.once('ready-to-show', () => {
       backendWin.show();
@@ -150,15 +156,16 @@ function createWorker() {
  * @ignore
  */
 function createMainWindow() {
+
   // Create the browser window.
   let name = 'MainWin';
   mainWin = crWin(mainWin, 'index.html', false, './../res/ico/wallet.png', true, 800, 600, name);
   mainWin.on('closed', () => {
 
-    log('closing main window');
-    mainWin = null;
-    backendWin.close();
-  });
+      log('closing main window');
+      mainWin = null;
+      backendWin.close();
+    });
 
   mainWin.once('ready-to-show', () => {
       mainWin.show();
@@ -173,6 +180,7 @@ function createMainWindow() {
  * @ignore
  */
 function createSplash() {
+
   // Create the browser window.
   let nameSp = 'splash';
   splash = crWin(splash, 'loading.html', false, './../res/ico/wallet.png', false, 250, 300, nameSp);
@@ -180,9 +188,9 @@ function createSplash() {
   // Emitted when the window is closed.
   splash.on('closed', () => {
 
-    log('closing splash screen');
-    splash = null;
-  });
+      log('closing splash screen');
+      splash = null;
+    });
 
   splash.on('ready-to-show', () => {
       log('showing splash screen');
@@ -195,22 +203,22 @@ app.on('ready', main);
 // Quit when all windows are closed.
 app.on('window-all-closed', () => {
 
-  log('closing app');
+    log('closing app');
 
-  // On macOS it is common for applications and their menu bar
-  // to stay active until the user quits explicitly with Cmd + Q
-  if (process.platform !== 'darwin') {
-    app.quit();
-  }
-});
+    // On macOS it is common for applications and their menu bar
+    // to stay active until the user quits explicitly with Cmd + Q
+    if (process.platform !== 'darwin') {
+      app.quit();
+    }
+  });
 
 app.on('activate', () => {
-  // On macOS it's common to re-create a window in the app when the
-  // dock icon is clicked and there are no other windows open.
-  if (win === null) {
-    createWindow();
-  }
-});
+    // On macOS it's common to re-create a window in the app when the
+    // dock icon is clicked and there are no other windows open.
+    if (win === null) {
+      createWindow();
+    }
+  });
 
 /**
  * Sends data to Browser Window (Main process)
@@ -233,15 +241,15 @@ function send(to, data) {
 }
 
 ipcMain.on('manipulatedData', (e, arg) => {
-  log('Odebrano (backend): ');
-  console.log(arg);
-  console.log('');
-  send(mainWin, arg);
-});
+    log('Odebrano (backend): ');
+    console.log(arg);
+    console.log('');
+    send(mainWin, arg);
+  });
 
 ipcMain.on('user-data', (e, arg) => {
-  log('Odebrano (main): ');
-  console.log(arg);
-  console.log('');
-  send(backendWin, arg);
-});
+    log('Odebrano (main): ');
+    console.log(arg);
+    console.log('');
+    send(backendWin, arg);
+  });
