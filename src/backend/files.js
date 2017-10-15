@@ -1,4 +1,7 @@
 /*jshint esversion: 6 */
+/**
+ * @ignore
+ */
 const appRoot = path.dirname(require.main.filename);
 
 if (platform == 'win32') {
@@ -6,19 +9,23 @@ if (platform == 'win32') {
 } else {
   var tempPath = os.homedir() + '/.YourHomeBudget/';
 }
-
+/**
+ * @ignore
+ */
 const filesPath = tempPath;
 
+/**
+ * Checks if main program directory exists, if it doesn't it creates it. You should use {@link directory} (backend window)
+ * @deprecated
+ */
 function progDir() {
-  if (!fs.existsSync(filesPath)) {
-    console.log('creating folder for program');
-    fs.mkdirSync(filesPath);
-    return;
-  }
-
-  console.log('folder already exists');
+  directory(filesPath);
 }
 
+/**
+ * Checks if main program directory exists, if it doesn't it creates it (backend window)
+ * @param {string} path Path to directory
+ */
 function directory(path) {
   if (!fs.existsSync(path)) {
     console.log('creating folder');
@@ -29,6 +36,12 @@ function directory(path) {
   console.log('folder already exists');
 }
 
+/**
+ * Get file content (backend window)
+ * @param {string} relPath Relative path to parent directory of the file
+ * @param {string} name Name of file
+ * @return {string} content of loaded file
+ */
 function read(relPath, name) {
   progDir();
   let path = filesPath + relPath;
@@ -45,6 +58,12 @@ function read(relPath, name) {
   }
 }
 
+/**
+ * Save informations to filesPath (backend window)
+ * @param {string} relPath Relative path to parent directory of the file
+ * @param {string} data Content which will be saved to file
+ * @param {string} name Name of file
+ */
 function write(relPath, data, name) {
   progDir();
   if (typeof data == 'object') {

@@ -1,1 +1,39 @@
-[]
+[
+  {
+    "name": "jsonParser",
+    "filePath": "src/backend/main.js",
+    "lines": [
+      {
+        "lineNumber": 19,
+        "line": "/**"
+      },
+      {
+        "lineNumber": 20,
+        "line": " *Parse or stringify JSON"
+      },
+      {
+        "lineNumber": 21,
+        "line": " * @param {boolean} mode If it's true, it will parse JSON to Object or Array, if it's false it will stringify Object or Array to JSON"
+      },
+      {
+        "lineNumber": 22,
+        "line": " * @return  if mode is set to true {object}, if mode is set to false {string}"
+      },
+      {
+        "lineNumber": 23,
+        "line": " */"
+      },
+      {
+        "lineNumber": 24,
+        "line": "function jsonParser(mode, arg) { //true parse, false stringify"
+      }
+    ],
+    "codeParams": [
+      "mode",
+      "arg"
+    ],
+    "docParams": [
+      "mode"
+    ]
+  }
+]

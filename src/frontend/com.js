@@ -1,7 +1,7 @@
 /* jshint esversion:6 */
 
 /**
- * Sends data to main process and backend
+ * Sends data to main process and backend (frontend window)
  * @param data Contains data to send
  * @example <JavaScript>
  * send('data');

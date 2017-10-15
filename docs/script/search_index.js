@@ -6,24 +6,6 @@ window.esdocSearchIndex = [
     "function"
   ],
   [
-    "yourhomebudget/src/backend/requires.js~app",
-    "variable/index.html#static-variable-app",
-    "<span>app</span> <span class=\"search-result-import-path\">YourHomeBudget/src/backend/requires.js</span>",
-    "variable"
-  ],
-  [
-    "yourhomebudget/src/frontend/requires.js~app",
-    "variable/index.html#static-variable-app",
-    "<span>app</span> <span class=\"search-result-import-path\">YourHomeBudget/src/frontend/requires.js</span>",
-    "variable"
-  ],
-  [
-    "yourhomebudget/src/backend/files.js~approot",
-    "variable/index.html#static-variable-appRoot",
-    "<span>appRoot</span> <span class=\"search-result-import-path\">YourHomeBudget/src/backend/files.js</span>",
-    "variable"
-  ],
-  [
     "yourhomebudget/src/frontend/main.js~budget",
     "variable/index.html#static-variable-budget",
     "<span>budget</span> <span class=\"search-result-import-path\">YourHomeBudget/src/frontend/main.js</span>",
@@ -60,51 +42,9 @@ window.esdocSearchIndex = [
     "function"
   ],
   [
-    "yourhomebudget/src/backend/requires.js~electron",
-    "variable/index.html#static-variable-electron",
-    "<span>electron</span> <span class=\"search-result-import-path\">YourHomeBudget/src/backend/requires.js</span>",
-    "variable"
-  ],
-  [
-    "yourhomebudget/src/frontend/requires.js~electron",
-    "variable/index.html#static-variable-electron",
-    "<span>electron</span> <span class=\"search-result-import-path\">YourHomeBudget/src/frontend/requires.js</span>",
-    "variable"
-  ],
-  [
-    "yourhomebudget/src/frontend/requires.js~electrontitlebar",
-    "variable/index.html#static-variable-electronTitlebar",
-    "<span>electronTitlebar</span> <span class=\"search-result-import-path\">YourHomeBudget/src/frontend/requires.js</span>",
-    "variable"
-  ],
-  [
-    "yourhomebudget/src/backend/files.js~filespath",
-    "variable/index.html#static-variable-filesPath",
-    "<span>filesPath</span> <span class=\"search-result-import-path\">YourHomeBudget/src/backend/files.js</span>",
-    "variable"
-  ],
-  [
-    "yourhomebudget/src/backend/requires.js~fs",
-    "variable/index.html#static-variable-fs",
-    "<span>fs</span> <span class=\"search-result-import-path\">YourHomeBudget/src/backend/requires.js</span>",
-    "variable"
-  ],
-  [
     "yourhomebudget/src/frontend/main.js~incomes",
     "variable/index.html#static-variable-incomes",
     "<span>incomes</span> <span class=\"search-result-import-path\">YourHomeBudget/src/frontend/main.js</span>",
-    "variable"
-  ],
-  [
-    "yourhomebudget/src/backend/requires.js~ipcrenderer",
-    "variable/index.html#static-variable-ipcRenderer",
-    "<span>ipcRenderer</span> <span class=\"search-result-import-path\">YourHomeBudget/src/backend/requires.js</span>",
-    "variable"
-  ],
-  [
-    "yourhomebudget/src/frontend/requires.js~ipcrenderer",
-    "variable/index.html#static-variable-ipcRenderer",
-    "<span>ipcRenderer</span> <span class=\"search-result-import-path\">YourHomeBudget/src/frontend/requires.js</span>",
     "variable"
   ],
   [
@@ -120,24 +60,6 @@ window.esdocSearchIndex = [
     "function"
   ],
   [
-    "yourhomebudget/src/frontend/ui.js~mainmenu",
-    "variable/index.html#static-variable-mainMenu",
-    "<span>mainMenu</span> <span class=\"search-result-import-path\">YourHomeBudget/src/frontend/ui.js</span>",
-    "variable"
-  ],
-  [
-    "yourhomebudget/src/frontend/ui.js~menubutton",
-    "variable/index.html#static-variable-menuButton",
-    "<span>menuButton</span> <span class=\"search-result-import-path\">YourHomeBudget/src/frontend/ui.js</span>",
-    "variable"
-  ],
-  [
-    "yourhomebudget/src/backend/requires.js~mkdirp",
-    "variable/index.html#static-variable-mkdirp",
-    "<span>mkdirp</span> <span class=\"search-result-import-path\">YourHomeBudget/src/backend/requires.js</span>",
-    "variable"
-  ],
-  [
     "yourhomebudget/src/frontend/main.js~month",
     "variable/index.html#static-variable-month",
     "<span>month</span> <span class=\"search-result-import-path\">YourHomeBudget/src/frontend/main.js</span>",
@@ -150,27 +72,9 @@ window.esdocSearchIndex = [
     "function"
   ],
   [
-    "yourhomebudget/src/backend/requires.js~os",
-    "variable/index.html#static-variable-os",
-    "<span>os</span> <span class=\"search-result-import-path\">YourHomeBudget/src/backend/requires.js</span>",
-    "variable"
-  ],
-  [
     "yourhomebudget/src/frontend/main.js~outcomes",
     "variable/index.html#static-variable-outcomes",
     "<span>outcomes</span> <span class=\"search-result-import-path\">YourHomeBudget/src/frontend/main.js</span>",
-    "variable"
-  ],
-  [
-    "yourhomebudget/src/backend/requires.js~path",
-    "variable/index.html#static-variable-path",
-    "<span>path</span> <span class=\"search-result-import-path\">YourHomeBudget/src/backend/requires.js</span>",
-    "variable"
-  ],
-  [
-    "yourhomebudget/src/backend/requires.js~platform",
-    "variable/index.html#static-variable-platform",
-    "<span>platform</span> <span class=\"search-result-import-path\">YourHomeBudget/src/backend/requires.js</span>",
     "variable"
   ],
   [
@@ -184,24 +88,6 @@ window.esdocSearchIndex = [
     "function/index.html#static-function-read",
     "<span>read</span> <span class=\"search-result-import-path\">YourHomeBudget/src/backend/files.js</span>",
     "function"
-  ],
-  [
-    "yourhomebudget/src/backend/requires.js~readline",
-    "variable/index.html#static-variable-readline",
-    "<span>readline</span> <span class=\"search-result-import-path\">YourHomeBudget/src/backend/requires.js</span>",
-    "variable"
-  ],
-  [
-    "yourhomebudget/src/backend/requires.js~remote",
-    "variable/index.html#static-variable-remote",
-    "<span>remote</span> <span class=\"search-result-import-path\">YourHomeBudget/src/backend/requires.js</span>",
-    "variable"
-  ],
-  [
-    "yourhomebudget/src/frontend/requires.js~remote",
-    "variable/index.html#static-variable-remote",
-    "<span>remote</span> <span class=\"search-result-import-path\">YourHomeBudget/src/frontend/requires.js</span>",
-    "variable"
   ],
   [
     "yourhomebudget/src/frontend/main.js~saveall",

@@ -40,18 +40,6 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-write">write</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-checkArg">checkArg</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-jsonParser">jsonParser</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-appRoot">appRoot</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-filesPath">filesPath</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-app">app</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-electron">electron</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-fs">fs</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-ipcRenderer">ipcRenderer</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-mkdirp">mkdirp</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-os">os</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-path">path</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-platform">platform</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-readline">readline</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-remote">remote</a></span></span></li>
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#frontend">frontend</a><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-send">send</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-addIncome">addIncome</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-checkArg">checkArg</a></span></span></li>
@@ -61,13 +49,6 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-incomes">incomes</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-month">month</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-outcomes">outcomes</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-app">app</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-electron">electron</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-electronTitlebar">electronTitlebar</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-ipcRenderer">ipcRenderer</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-remote">remote</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-mainMenu">mainMenu</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-menuButton">menuButton</a></span></span></li>
 </ul>
 </div>
 </nav>
@@ -229,7 +210,8 @@
       <div>
         
         
-        
+        <div data-ice="description"><p>Sends data to main process and frontend (backend window)</p>
+</div>
       </div>
     </td>
     <td>
@@ -251,13 +233,14 @@
           <span data-ice="kind-icon" class="kind-function">F</span>
           
           
-          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-directory">directory</a></span></span><span class="code" data-ice="signature">(path: <span>*</span>)</span>
+          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-directory">directory</a></span></span><span class="code" data-ice="signature">(path: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>)</span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Checks if main program directory exists, if it doesn&apos;t it creates it (backend window)</p>
+</div>
       </div>
     </td>
     <td>
@@ -283,9 +266,10 @@
         </p>
       </div>
       <div>
+        <div class="deprecated" data-ice="deprecated">this function was deprecated.</div>
         
-        
-        
+        <div data-ice="description"><p>Checks if main program directory exists, if it doesn&apos;t it creates it. You should use <span><a href="function/index.html#static-function-directory">directory</a></span> (backend window)</p>
+</div>
       </div>
     </td>
     <td>
@@ -307,13 +291,14 @@
           <span data-ice="kind-icon" class="kind-function">F</span>
           
           
-          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-read">read</a></span></span><span class="code" data-ice="signature">(relPath: <span>*</span>, name: <span>*</span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></span>
+          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-read">read</a></span></span><span class="code" data-ice="signature">(relPath: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, name: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Get file content (backend window)</p>
+</div>
       </div>
     </td>
     <td>
@@ -335,13 +320,14 @@
           <span data-ice="kind-icon" class="kind-function">F</span>
           
           
-          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-write">write</a></span></span><span class="code" data-ice="signature">(relPath: <span>*</span>, data: <span>*</span>, name: <span>*</span>)</span>
+          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-write">write</a></span></span><span class="code" data-ice="signature">(relPath: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, data: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, name: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>)</span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Save informations to filesPath (backend window)</p>
+</div>
       </div>
     </td>
     <td>
@@ -363,13 +349,14 @@
           <span data-ice="kind-icon" class="kind-function">F</span>
           
           
-          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-checkArg">checkArg</a></span></span><span class="code" data-ice="signature">(arg: <span>*</span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></span>
+          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-checkArg">checkArg</a></span></span><span class="code" data-ice="signature">(arg: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Checks argument sended from backend (backend window)</p>
+</div>
       </div>
     </td>
     <td>
@@ -391,349 +378,14 @@
           <span data-ice="kind-icon" class="kind-function">F</span>
           
           
-          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-jsonParser">jsonParser</a></span></span><span class="code" data-ice="signature">(mode: <span>*</span>, arg: <span>*</span>): <span>*</span></span>
+          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-jsonParser">jsonParser</a></span></span><span class="code" data-ice="signature">(mode: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>): <span>*</span></span>
         </p>
       </div>
       <div>
         
         
-        
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-          <span data-ice="kind-icon" class="kind-variable">V</span>
-          
-          
-          <span class="code" data-ice="name"><span><a href="variable/index.html#static-variable-appRoot">appRoot</a></span></span><span class="code" data-ice="signature">: <span>*</span></span>
-        </p>
-      </div>
-      <div>
-        
-        
-        
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-          <span data-ice="kind-icon" class="kind-variable">V</span>
-          
-          
-          <span class="code" data-ice="name"><span><a href="variable/index.html#static-variable-filesPath">filesPath</a></span></span><span class="code" data-ice="signature">: <span>*</span></span>
-        </p>
-      </div>
-      <div>
-        
-        
-        
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-          <span data-ice="kind-icon" class="kind-variable">V</span>
-          
-          
-          <span class="code" data-ice="name"><span><a href="variable/index.html#static-variable-app">app</a></span></span><span class="code" data-ice="signature">: <span>*</span></span>
-        </p>
-      </div>
-      <div>
-        
-        
-        
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-          <span data-ice="kind-icon" class="kind-variable">V</span>
-          
-          
-          <span class="code" data-ice="name"><span><a href="variable/index.html#static-variable-electron">electron</a></span></span><span class="code" data-ice="signature">: <span>*</span></span>
-        </p>
-      </div>
-      <div>
-        
-        
-        
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-          <span data-ice="kind-icon" class="kind-variable">V</span>
-          
-          
-          <span class="code" data-ice="name"><span><a href="variable/index.html#static-variable-fs">fs</a></span></span><span class="code" data-ice="signature">: <span>*</span></span>
-        </p>
-      </div>
-      <div>
-        
-        
-        
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-          <span data-ice="kind-icon" class="kind-variable">V</span>
-          
-          
-          <span class="code" data-ice="name"><span><a href="variable/index.html#static-variable-ipcRenderer">ipcRenderer</a></span></span><span class="code" data-ice="signature">: <span>*</span></span>
-        </p>
-      </div>
-      <div>
-        
-        
-        
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-          <span data-ice="kind-icon" class="kind-variable">V</span>
-          
-          
-          <span class="code" data-ice="name"><span><a href="variable/index.html#static-variable-mkdirp">mkdirp</a></span></span><span class="code" data-ice="signature">: <span>*</span></span>
-        </p>
-      </div>
-      <div>
-        
-        
-        
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-          <span data-ice="kind-icon" class="kind-variable">V</span>
-          
-          
-          <span class="code" data-ice="name"><span><a href="variable/index.html#static-variable-os">os</a></span></span><span class="code" data-ice="signature">: <span>*</span></span>
-        </p>
-      </div>
-      <div>
-        
-        
-        
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-          <span data-ice="kind-icon" class="kind-variable">V</span>
-          
-          
-          <span class="code" data-ice="name"><span><a href="variable/index.html#static-variable-path">path</a></span></span><span class="code" data-ice="signature">: <span>*</span></span>
-        </p>
-      </div>
-      <div>
-        
-        
-        
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-          <span data-ice="kind-icon" class="kind-variable">V</span>
-          
-          
-          <span class="code" data-ice="name"><span><a href="variable/index.html#static-variable-platform">platform</a></span></span><span class="code" data-ice="signature">: <span>*</span></span>
-        </p>
-      </div>
-      <div>
-        
-        
-        
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-          <span data-ice="kind-icon" class="kind-variable">V</span>
-          
-          
-          <span class="code" data-ice="name"><span><a href="variable/index.html#static-variable-readline">readline</a></span></span><span class="code" data-ice="signature">: <span>*</span></span>
-        </p>
-      </div>
-      <div>
-        
-        
-        
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-          <span data-ice="kind-icon" class="kind-variable">V</span>
-          
-          
-          <span class="code" data-ice="name"><span><a href="variable/index.html#static-variable-remote">remote</a></span></span><span class="code" data-ice="signature">: <span>*</span></span>
-        </p>
-      </div>
-      <div>
-        
-        
-        
+        <div data-ice="description"><p>Parse or stringify JSON</p>
+</div>
       </div>
     </td>
     <td>
@@ -771,7 +423,7 @@
       <div>
         
         
-        <div data-ice="description"><p>Sends data to main process and backend</p>
+        <div data-ice="description"><p>Sends data to main process and backend (frontend window)</p>
 </div>
       </div>
     </td>
@@ -823,7 +475,7 @@
           <span data-ice="kind-icon" class="kind-function">F</span>
           
           
-          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-checkArg">checkArg</a></span></span><span class="code" data-ice="signature">(arg: <span>*</span>)</span>
+          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-checkArg">checkArg</a></span></span><span class="code" data-ice="signature">(arg: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span>)</span>
         </p>
       </div>
       <div>
@@ -997,202 +649,6 @@
           
           
           <span class="code" data-ice="name"><span><a href="variable/index.html#static-variable-outcomes">outcomes</a></span></span><span class="code" data-ice="signature">: <span>array</span></span>
-        </p>
-      </div>
-      <div>
-        
-        
-        
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-          <span data-ice="kind-icon" class="kind-variable">V</span>
-          
-          
-          <span class="code" data-ice="name"><span><a href="variable/index.html#static-variable-app">app</a></span></span><span class="code" data-ice="signature">: <span>*</span></span>
-        </p>
-      </div>
-      <div>
-        
-        
-        
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-          <span data-ice="kind-icon" class="kind-variable">V</span>
-          
-          
-          <span class="code" data-ice="name"><span><a href="variable/index.html#static-variable-electron">electron</a></span></span><span class="code" data-ice="signature">: <span>*</span></span>
-        </p>
-      </div>
-      <div>
-        
-        
-        
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-          <span data-ice="kind-icon" class="kind-variable">V</span>
-          
-          
-          <span class="code" data-ice="name"><span><a href="variable/index.html#static-variable-electronTitlebar">electronTitlebar</a></span></span><span class="code" data-ice="signature">: <span>*</span></span>
-        </p>
-      </div>
-      <div>
-        
-        
-        
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-          <span data-ice="kind-icon" class="kind-variable">V</span>
-          
-          
-          <span class="code" data-ice="name"><span><a href="variable/index.html#static-variable-ipcRenderer">ipcRenderer</a></span></span><span class="code" data-ice="signature">: <span>*</span></span>
-        </p>
-      </div>
-      <div>
-        
-        
-        
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-          <span data-ice="kind-icon" class="kind-variable">V</span>
-          
-          
-          <span class="code" data-ice="name"><span><a href="variable/index.html#static-variable-remote">remote</a></span></span><span class="code" data-ice="signature">: <span>*</span></span>
-        </p>
-      </div>
-      <div>
-        
-        
-        
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-          <span data-ice="kind-icon" class="kind-variable">V</span>
-          
-          
-          <span class="code" data-ice="name"><span><a href="variable/index.html#static-variable-mainMenu">mainMenu</a></span></span><span class="code" data-ice="signature">: <span>*</span></span>
-        </p>
-      </div>
-      <div>
-        
-        
-        
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-          <span data-ice="kind-icon" class="kind-variable">V</span>
-          
-          
-          <span class="code" data-ice="name"><span><a href="variable/index.html#static-variable-menuButton">menuButton</a></span></span><span class="code" data-ice="signature">: <span>*</span></span>
         </p>
       </div>
       <div>

@@ -87,7 +87,7 @@ function saveAll() {
 
 /**
  * Checks argument sended from backend (frontend window)
- * @param arg argument to check
+ * @param {object} arg argument to check
  */
 function checkArg(arg) {
 

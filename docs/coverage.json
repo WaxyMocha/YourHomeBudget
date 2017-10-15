@@ -1,50 +1,27 @@
 {
-  "coverage": "48%",
+  "coverage": "100%",
   "expectCount": 50,
-  "actualCount": 24,
+  "actualCount": 50,
   "files": {
     "src/backend/com.js": {
       "expectCount": 1,
-      "actualCount": 0,
-      "undocumentLines": [
-        3
-      ]
+      "actualCount": 1,
+      "undocumentLines": []
     },
     "src/backend/files.js": {
       "expectCount": 6,
-      "actualCount": 0,
-      "undocumentLines": [
-        2,
-        10,
-        12,
-        22,
-        32,
-        48
-      ]
+      "actualCount": 6,
+      "undocumentLines": []
     },
     "src/backend/main.js": {
       "expectCount": 2,
-      "actualCount": 0,
-      "undocumentLines": [
-        3,
-        16
-      ]
+      "actualCount": 2,
+      "undocumentLines": []
     },
     "src/backend/requires.js": {
       "expectCount": 10,
-      "actualCount": 0,
-      "undocumentLines": [
-        2,
-        3,
-        4,
-        5,
-        6,
-        7,
-        8,
-        9,
-        10,
-        11
-      ]
+      "actualCount": 10,
+      "undocumentLines": []
     },
     "src/frontend/com.js": {
       "expectCount": 1,
@@ -58,22 +35,13 @@
     },
     "src/frontend/requires.js": {
       "expectCount": 5,
-      "actualCount": 0,
-      "undocumentLines": [
-        2,
-        3,
-        4,
-        5,
-        6
-      ]
+      "actualCount": 5,
+      "undocumentLines": []
     },
     "src/frontend/ui.js": {
       "expectCount": 2,
-      "actualCount": 0,
-      "undocumentLines": [
-        3,
-        4
-      ]
+      "actualCount": 2,
+      "undocumentLines": []
     },
     "src/index.js": {
       "expectCount": 14,

@@ -1,6 +1,11 @@
 /*jshint esversion: 6 */
-
+/**
+ * @ignore
+ */
 const menuButton = document.getElementById('menuButton');
+/**
+ * @ignore
+ */
 const mainMenu = document.getElementById('mainMenu');
 
 menuButton.addEventListener('click', (e) => {
