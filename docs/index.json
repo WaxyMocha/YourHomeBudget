@@ -1582,7 +1582,7 @@
     "__docId__": 94,
     "kind": "file",
     "name": "src/index.js",
-    "content": "/*jshint esversion: 6 */\n/**\n * @ignore\n */\nconst electron = require('electron');\n/**\n * @ignore\n */\nconst app = electron.app;\n/**\n * @ignore\n */\nconst BrowserWindow = electron.BrowserWindow;\n/**\n * @ignore\n */\nconst ipcMain = electron.ipcMain;\n/**\n * @ignore\n */\nconst path = require('path');\n/**\n * @ignore\n */\nconst url = require('url');\n/**\n * @ignore\n */\nlet mainWin;\n/**\n * @ignore\n */\nlet splash;\n/**\n * @ignore\n */\nlet backendWin;\n/**\n * @ignore\n */\nlet backendWC;\n\n/**\n * Main function, called at startup (Main process)\n * @ignore\n */\nfunction main() {\n  require('events').EventEmitter.prototype._maxListeners = 30;\n  createSplash();\n  createMainWindow();\n  createWorker();\n}\n\n/**\n * Returns current date and time (Main process)\n * @return {string} current date and time (dd-mm-yyyy hh:mm:ss)\n */\nfunction now() {\n  let date = new Date();\n  let hr = String('0' + date.getHours()).slice(-2);\n  let min = String('0' + date.getMinutes()).slice(-2);\n  let sec = String('0' + date.getSeconds()).slice(-2);\n  let yr = date.getFullYear();\n  let mth = String('0' + String(Number(date.getMonth()) + 1)).slice(-2);\n  let day = String('0' + date.getDate()).slice(-2);\n  let ret =  `${day}-${mth}-${yr} ${hr}:${min}:${sec}`;\n  return ret;\n}\n\n/**\n * Logs in console current date and time followed by message (Main process)\n * @param {string} msg message to log in console\n * @example <JavaScript>\n * log('example message');\n * @example Console\n * [dd-mm-yyyy hh:mm:ss]> example message\n */\nfunction log(msg) {\n  console.log(`[${now()}]> ${msg}`);\n}\n\n/**\n * Create new browser window (Main process)\n * @param {undefined} win Variable which will contain BrowserWindow object\n * @param {string} htmlFile Relative path to file to load\n * @param {boolean} frame Specifies whether the window frame is displayed\n * @param {string} icon Relative path to icon for a window\n * @param {boolean} devTools Specifies whether the developer tools are displayed when the window is opened\n * @param {number} width Width of a window\n * @param {number} height Height of a window\n * @param {string} name Name of a window\n * @return {object} Object containing opened window\n * @example <JavaScript>\n *mainWindow = crWin(mainWindow, 'index.html', true, 'res/icon.ico', false, 800, 600, 'Main Window')\n */\nfunction crWin(win, htmlFile, frame, icon, devTools, width, height, name) {\n  // Create the browser window.\n  win = new BrowserWindow({\n    width: width,\n    height: height,\n    show: false,\n    frame: frame,\n    icon: __dirname + icon,\n    webPreferences: { experimentalFeatures: true },\n    autoHideMenuBar: true,\n  });\n\n  log(`creating ${name}`);\n  log(`loading ${htmlFile} to ${name}`);\n\n  win.loadURL(url.format({\n    pathname: path.join(__dirname, htmlFile),\n    protocol: 'file:',\n    slashes: true,\n  }));\n\n  // Open the DevTools.\n  if (devTools) {\n    win.webContents.openDevTools();\n  }\n\n  return win;\n}\n\nlog('launching');\n\n/**\n * @ignore\n */\nfunction createWorker() {\n  let name = 'backendWin';\n  let html = 'backend.html';\n  backendWin = crWin(backendWin, html, true, './../res/ico/wallet.png', true, 800, 600, name);\n\n  backendWin.on('closed', () => {\n    log('closing backend window');\n    backendWin = null;\n    if (mainWin != null) {\n      createWorker();\n    }\n  });\n\n  backendWin.once('ready-to-show', () => {\n      backendWin.show();\n      log('showing Worker window');\n    });\n}\n\n/**\n * @ignore\n */\nfunction createMainWindow() {\n  // Create the browser window.\n  let name = 'MainWin';\n  mainWin = crWin(mainWin, 'index.html', false, './../res/ico/wallet.png', true, 800, 600, name);\n  mainWin.on('closed', () => {\n\n    log('closing main window');\n    mainWin = null;\n    backendWin.close();\n  });\n\n  mainWin.once('ready-to-show', () => {\n      mainWin.show();\n\n      log('showing main window');\n\n      splash.close();\n    });\n}\n\n/**\n * @ignore\n */\nfunction createSplash() {\n  // Create the browser window.\n  let nameSp = 'splash';\n  splash = crWin(splash, 'loading.html', false, './../res/ico/wallet.png', false, 250, 300, nameSp);\n\n  // Emitted when the window is closed.\n  splash.on('closed', () => {\n\n    log('closing splash screen');\n    splash = null;\n  });\n\n  splash.on('ready-to-show', () => {\n      log('showing splash screen');\n      splash.show();\n    });\n}\n\napp.on('ready', main);\n\n// Quit when all windows are closed.\napp.on('window-all-closed', () => {\n\n  log('closing app');\n\n  // On macOS it is common for applications and their menu bar\n  // to stay active until the user quits explicitly with Cmd + Q\n  if (process.platform !== 'darwin') {\n    app.quit();\n  }\n});\n\napp.on('activate', () => {\n  // On macOS it's common to re-create a window in the app when the\n  // dock icon is clicked and there are no other windows open.\n  if (win === null) {\n    createWindow();\n  }\n});\n\n/**\n * Sends data to Browser Window (Main process)\n * @param {object} to Specifies destination of data (BrowserWindow object)\n * @param data Contains data to send\n * @example <JavaScript>\n * send(mainWin, 'data');\n */\nfunction send(to, data) {\n  let ch;\n  if (to == backendWin) {\n    ch = 'manipulatedData';\n  } else if (to == mainWin) {\n    ch = 'user-data';\n  } else {\n    return 'illegal channel';\n  }\n\n  to.webContents.send(ch, data);\n}\n\nipcMain.on('manipulatedData', (e, arg) => {\n  log('Odebrano (backend): ');\n  console.log(arg);\n  console.log('');\n  send(mainWin, arg);\n});\n\nipcMain.on('user-data', (e, arg) => {\n  log('Odebrano (main): ');\n  console.log(arg);\n  console.log('');\n  send(backendWin, arg);\n});\n",
+    "content": "/*jshint esversion: 6 */\n/**\n * @ignore\n */\nconst electron = require('electron');\n/**\n * @ignore\n */\nconst app = electron.app;\n/**\n * @ignore\n */\nconst BrowserWindow = electron.BrowserWindow;\n/**\n * @ignore\n */\nconst ipcMain = electron.ipcMain;\n/**\n * @ignore\n */\nconst path = require('path');\n/**\n * @ignore\n */\nconst url = require('url');\n/**\n * @ignore\n */\nlet mainWin;\n/**\n * @ignore\n */\nlet splash;\n/**\n * @ignore\n */\nlet backendWin;\n/**\n * @ignore\n */\nlet backendWC;\n\n/**\n * Main function, called at startup (Main process)\n *\n * @ignore\n */\nfunction main() {\n\n  require('events').EventEmitter.prototype._maxListeners = 30;\n  createSplash();\n  createMainWindow();\n  createWorker();\n\n}\n\n/**\n * Returns current date and time (Main process)\n *\n * @return {string} current date and time (dd-mm-yyyy hh:mm:ss)\n */\nfunction now() {\n\n  let date = new Date();\n  let hr = String('0' + date.getHours()).slice(-2);\n  let min = String('0' + date.getMinutes()).slice(-2);\n  let sec = String('0' + date.getSeconds()).slice(-2);\n  let yr = date.getFullYear();\n  let mth = String('0' + String(Number(date.getMonth()) + 1)).slice(-2);\n  let day = String('0' + date.getDate()).slice(-2);\n  let ret =  `${day}-${mth}-${yr} ${hr}:${min}:${sec}`;\n  return ret;\n}\n\n/**\n * Logs in console current date and time followed by message (Main process)\n *\n * @param {string} msg message to log in console\n * @example <JavaScript>\n * log('example message');\n * @example Console\n * [dd-mm-yyyy hh:mm:ss]> example message\n */\nfunction log(msg) {\n  console.log(`[${now()}]> ${msg}`);\n}\n\n/**\n * Create new browser window (Main process)\n * @param {undefined} win Variable which will contain BrowserWindow object\n * @param {string} htmlFile Relative path to file to load\n * @param {boolean} frame Specifies whether the window frame is displayed\n * @param {string} icon Relative path to icon for a window\n * @param {boolean} devTools Specifies whether the developer tools are displayed when the window is opened\n * @param {number} width Width of a window\n * @param {number} height Height of a window\n * @param {string} name Name of a window\n * @return {object} Object containing opened window\n * @example <JavaScript>\n *mainWindow = crWin(mainWindow, 'index.html', true, 'res/icon.ico', false, 800, 600, 'Main Window')\n */\nfunction crWin(win, htmlFile, frame, icon, devTools, width, height, name) {\n  // Create the browser window.\n  win = new BrowserWindow({\n      width: width,\n      height: height,\n      show: false,\n      frame: frame,\n      icon: __dirname + icon,\n      webPreferences: { experimentalFeatures: true },\n      autoHideMenuBar: true,\n    });\n\n  log(`creating ${name}`);\n  log(`loading ${htmlFile} to ${name}`);\n\n  win.loadURL(url.format({\n      pathname: path.join(__dirname, htmlFile),\n      protocol: 'file:',\n      slashes: true,\n    }));\n\n  // Open the DevTools.\n  if (devTools) {\n    win.webContents.openDevTools();\n  }\n\n  return win;\n}\n\nlog('launching');\n\n/**\n * @ignore\n */\nfunction createWorker() {\n  let name = 'backendWin';\n  let html = 'backend.html';\n  backendWin = crWin(backendWin, html, true, './../res/ico/wallet.png', true, 800, 600, name);\n\n  backendWin.on('closed', () => {\n      log('closing backend window');\n      backendWin = null;\n      if (mainWin != null) {\n        createWorker();\n      }\n    });\n\n  backendWin.once('ready-to-show', () => {\n      backendWin.show();\n      log('showing Worker window');\n    });\n}\n\n/**\n * @ignore\n */\nfunction createMainWindow() {\n\n  // Create the browser window.\n  let name = 'MainWin';\n  mainWin = crWin(mainWin, 'index.html', false, './../res/ico/wallet.png', true, 800, 600, name);\n  mainWin.on('closed', () => {\n\n      log('closing main window');\n      mainWin = null;\n      backendWin.close();\n    });\n\n  mainWin.once('ready-to-show', () => {\n      mainWin.show();\n\n      log('showing main window');\n\n      splash.close();\n    });\n}\n\n/**\n * @ignore\n */\nfunction createSplash() {\n\n  // Create the browser window.\n  let nameSp = 'splash';\n  splash = crWin(splash, 'loading.html', false, './../res/ico/wallet.png', false, 250, 300, nameSp);\n\n  // Emitted when the window is closed.\n  splash.on('closed', () => {\n\n      log('closing splash screen');\n      splash = null;\n    });\n\n  splash.on('ready-to-show', () => {\n      log('showing splash screen');\n      splash.show();\n    });\n}\n\napp.on('ready', main);\n\n// Quit when all windows are closed.\napp.on('window-all-closed', () => {\n\n    log('closing app');\n\n    // On macOS it is common for applications and their menu bar\n    // to stay active until the user quits explicitly with Cmd + Q\n    if (process.platform !== 'darwin') {\n      app.quit();\n    }\n  });\n\napp.on('activate', () => {\n    // On macOS it's common to re-create a window in the app when the\n    // dock icon is clicked and there are no other windows open.\n    if (win === null) {\n      createWindow();\n    }\n  });\n\n/**\n * Sends data to Browser Window (Main process)\n * @param {object} to Specifies destination of data (BrowserWindow object)\n * @param data Contains data to send\n * @example <JavaScript>\n * send(mainWin, 'data');\n */\nfunction send(to, data) {\n  let ch;\n  if (to == backendWin) {\n    ch = 'manipulatedData';\n  } else if (to == mainWin) {\n    ch = 'user-data';\n  } else {\n    return 'illegal channel';\n  }\n\n  to.webContents.send(ch, data);\n}\n\nipcMain.on('manipulatedData', (e, arg) => {\n    log('Odebrano (backend): ');\n    console.log(arg);\n    console.log('');\n    send(mainWin, arg);\n  });\n\nipcMain.on('user-data', (e, arg) => {\n    log('Odebrano (main): ');\n    console.log(arg);\n    console.log('');\n    send(backendWin, arg);\n  });\n",
     "static": true,
     "longname": "F:/Programowanie/JS/YourHomeBudget/src/index.js",
     "access": "public",
@@ -1723,7 +1723,7 @@
     "importPath": "YourHomeBudget",
     "importStyle": null,
     "description": "Main function, called at startup (Main process)",
-    "lineNumber": 47,
+    "lineNumber": 48,
     "ignore": true,
     "params": [],
     "return": null
@@ -1742,7 +1742,7 @@
     "importPath": "YourHomeBudget",
     "importStyle": null,
     "description": "Returns current date and time (Main process)",
-    "lineNumber": 58,
+    "lineNumber": 62,
     "return": {
       "nullable": null,
       "types": [
@@ -1771,7 +1771,7 @@
       "<JavaScript>\nlog('example message');",
       "Console\n[dd-mm-yyyy hh:mm:ss]> example message"
     ],
-    "lineNumber": 78,
+    "lineNumber": 84,
     "params": [
       {
         "nullable": null,
@@ -1803,7 +1803,7 @@
     "examples": [
       "<JavaScript>\nmainWindow = crWin(mainWindow, 'index.html', true, 'res/icon.ico', false, 800, 600, 'Main Window')"
     ],
-    "lineNumber": 96,
+    "lineNumber": 102,
     "params": [
       {
         "nullable": null,
@@ -1909,7 +1909,7 @@
     "importPath": "YourHomeBudget",
     "importStyle": null,
     "description": "",
-    "lineNumber": 130,
+    "lineNumber": 136,
     "ignore": true,
     "params": [],
     "return": null
@@ -1928,7 +1928,7 @@
     "importPath": "YourHomeBudget",
     "importStyle": null,
     "description": "",
-    "lineNumber": 152,
+    "lineNumber": 158,
     "ignore": true,
     "params": [],
     "return": null
@@ -1947,7 +1947,7 @@
     "importPath": "YourHomeBudget",
     "importStyle": null,
     "description": "",
-    "lineNumber": 175,
+    "lineNumber": 182,
     "ignore": true,
     "params": [],
     "return": null
@@ -1969,7 +1969,7 @@
     "examples": [
       "<JavaScript>\nsend(mainWin, 'data');"
     ],
-    "lineNumber": 222,
+    "lineNumber": 230,
     "params": [
       {
         "nullable": null,
