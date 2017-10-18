@@ -33,6 +33,12 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-log">log</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-now">now</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-send">send</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-BrowserWindow">BrowserWindow</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-app">app</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-electron">electron</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-ipcMain">ipcMain</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-path">path</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-url">url</a></span></span></li>
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#backend">backend</a><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-send">send</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-directory">directory</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-progDir">progDir</a></span></span></li>
@@ -54,25 +60,27 @@
 </nav>
 
 <div class="content" data-ice="content"><h1 data-ice="title">src/frontend/main.js</h1>
-<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">/*jshint esversion: 6 */
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">/* jshint esversion: 6 */
 /**
  * @type {object}
- * @desc Contains configuration (frontend window)
+ * @desc Contains configuration (frontend)
  */
 let config = {
   lastBudget: &apos;budgets/budget-0/&apos;,
 };
 /**
  * @type {array}
+ * @desc Contains informations about incomes (frontend)
  */
 let incomes = [];
 /**
  * @type {array}
+ * @desc Contains informations about outcomes (frontend)
  */
 let outcomes = [];
 /**
  * @type {object}
- * @desc Contains informations about budget (frontend window)
+ * @desc Contains informations about budget (frontend)
  */
 let budget = {
   id: 0,
@@ -88,7 +96,7 @@ let budget = {
 
 /**
  * @type {object}
- * @desc Contains informations about settlement period (frontend window)
+ * @desc Contains informations about settlement period (frontend)
  */
 let month = {
   amount: 0,
@@ -100,7 +108,7 @@ let month = {
 };
 
 /**
- * Saves all informations about budget and config (frontend window)
+ * Saves all informations about budget and config (frontend)
  */
 function saveAll() {
 

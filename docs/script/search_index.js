@@ -1,9 +1,21 @@
 window.esdocSearchIndex = [
   [
+    "yourhomebudget~browserwindow",
+    "variable/index.html#static-variable-BrowserWindow",
+    "<span>BrowserWindow</span> <span class=\"search-result-import-path\">YourHomeBudget</span>",
+    "variable"
+  ],
+  [
     "yourhomebudget/src/frontend/main.js~addincome",
     "function/index.html#static-function-addIncome",
     "<span>addIncome</span> <span class=\"search-result-import-path\">YourHomeBudget/src/frontend/main.js</span>",
     "function"
+  ],
+  [
+    "yourhomebudget~app",
+    "variable/index.html#static-variable-app",
+    "<span>app</span> <span class=\"search-result-import-path\">YourHomeBudget</span>",
+    "variable"
   ],
   [
     "yourhomebudget/src/frontend/main.js~budget",
@@ -42,9 +54,21 @@ window.esdocSearchIndex = [
     "function"
   ],
   [
+    "yourhomebudget~electron",
+    "variable/index.html#static-variable-electron",
+    "<span>electron</span> <span class=\"search-result-import-path\">YourHomeBudget</span>",
+    "variable"
+  ],
+  [
     "yourhomebudget/src/frontend/main.js~incomes",
     "variable/index.html#static-variable-incomes",
     "<span>incomes</span> <span class=\"search-result-import-path\">YourHomeBudget/src/frontend/main.js</span>",
+    "variable"
+  ],
+  [
+    "yourhomebudget~ipcmain",
+    "variable/index.html#static-variable-ipcMain",
+    "<span>ipcMain</span> <span class=\"search-result-import-path\">YourHomeBudget</span>",
     "variable"
   ],
   [
@@ -75,6 +99,12 @@ window.esdocSearchIndex = [
     "yourhomebudget/src/frontend/main.js~outcomes",
     "variable/index.html#static-variable-outcomes",
     "<span>outcomes</span> <span class=\"search-result-import-path\">YourHomeBudget/src/frontend/main.js</span>",
+    "variable"
+  ],
+  [
+    "yourhomebudget~path",
+    "variable/index.html#static-variable-path",
+    "<span>path</span> <span class=\"search-result-import-path\">YourHomeBudget</span>",
     "variable"
   ],
   [
@@ -112,6 +142,12 @@ window.esdocSearchIndex = [
     "function/index.html#static-function-send",
     "<span>send</span> <span class=\"search-result-import-path\">YourHomeBudget</span>",
     "function"
+  ],
+  [
+    "yourhomebudget~url",
+    "variable/index.html#static-variable-url",
+    "<span>url</span> <span class=\"search-result-import-path\">YourHomeBudget</span>",
+    "variable"
   ],
   [
     "yourhomebudget/src/backend/files.js~write",

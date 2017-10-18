@@ -33,6 +33,12 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-log">log</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-now">now</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-send">send</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-BrowserWindow">BrowserWindow</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-app">app</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-electron">electron</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-ipcMain">ipcMain</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-path">path</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-url">url</a></span></span></li>
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#backend">backend</a><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-send">send</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-directory">directory</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-progDir">progDir</a></span></span></li>
@@ -56,45 +62,50 @@
 <div class="content" data-ice="content"><h1 data-ice="title">src/index.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">/*jshint esversion: 6 */
 /**
- * @ignore
+ * @type {node_module}
+ * @desc Main electron module (main process)
  */
 const electron = require(&apos;electron&apos;);
 /**
- * @ignore
+ * @type {node_module}
+ * @desc (main process)
  */
 const app = electron.app;
 /**
- * @ignore
+ * @type {node_module}
+ * @desc windows creating and management (main process)
  */
 const BrowserWindow = electron.BrowserWindow;
 /**
- * @ignore
+ * @type {node_module}
+ * @desc Communication between proceses (main process)
  */
 const ipcMain = electron.ipcMain;
 /**
- * @ignore
+ * @type {node_module}
+ * @desc main process
  */
 const path = require(&apos;path&apos;);
 /**
- * @ignore
+ * @type {node_module}
+ * @desc main process
  */
 const url = require(&apos;url&apos;);
 /**
  * @ignore
+ * @desc frontend browser window object
  */
 let mainWin;
 /**
  * @ignore
+ * @desc splashscreen
  */
 let splash;
 /**
  * @ignore
+ * @desc backend browser window object
  */
 let backendWin;
-/**
- * @ignore
- */
-let backendWC;
 
 /**
  * Main function, called at startup (Main process)
@@ -153,7 +164,7 @@ function log(msg) {
  * @param {string} name Name of a window
  * @return {object} Object containing opened window
  * @example &lt;JavaScript&gt;
- *mainWindow = crWin(mainWindow, &apos;index.html&apos;, true, &apos;res/icon.ico&apos;, false, 800, 600, &apos;Main Window&apos;)
+ *mainWindow = crWin(mainWindow, &apos;index.html&apos;, true, &apos;res/icon.ico&apos;, false, 800, 600, &apos;Main Window&apos;);
  */
 function crWin(win, htmlFile, frame, icon, devTools, width, height, name) {
   // Create the browser window.
@@ -192,7 +203,7 @@ log(&apos;launching&apos;);
 function createWorker() {
   let name = &apos;backendWin&apos;;
   let html = &apos;backend.html&apos;;
-  backendWin = crWin(backendWin, html, true, &apos;./../res/ico/wallet.png&apos;, true, 800, 600, name);
+  backendWin = crWin(backendWin, html, true, &apos;/../res/ico/wallet.png&apos;, true, 800, 600, name);
 
   backendWin.on(&apos;closed&apos;, () =&gt; {
       log(&apos;closing backend window&apos;);
@@ -215,7 +226,7 @@ function createMainWindow() {
 
   // Create the browser window.
   let name = &apos;MainWin&apos;;
-  mainWin = crWin(mainWin, &apos;index.html&apos;, false, &apos;./../res/ico/wallet.png&apos;, true, 800, 600, name);
+  mainWin = crWin(mainWin, &apos;index.html&apos;, false, &apos;/../res/ico/wallet.png&apos;, true, 800, 600, name);
   mainWin.on(&apos;closed&apos;, () =&gt; {
 
       log(&apos;closing main window&apos;);
@@ -239,7 +250,7 @@ function createSplash() {
 
   // Create the browser window.
   let nameSp = &apos;splash&apos;;
-  splash = crWin(splash, &apos;loading.html&apos;, false, &apos;./../res/ico/wallet.png&apos;, false, 250, 300, nameSp);
+  splash = crWin(splash, &apos;loading.html&apos;, false, &apos;/../res/ico/wallet.png&apos;, false, 250, 300, nameSp);
 
   // Emitted when the window is closed.
   splash.on(&apos;closed&apos;, () =&gt; {
@@ -271,8 +282,8 @@ app.on(&apos;window-all-closed&apos;, () =&gt; {
 app.on(&apos;activate&apos;, () =&gt; {
     // On macOS it&apos;s common to re-create a window in the app when the
     // dock icon is clicked and there are no other windows open.
-    if (win === null) {
-      createWindow();
+    if (mainWin === null) {
+      main();
     }
   });
 
@@ -282,6 +293,7 @@ app.on(&apos;activate&apos;, () =&gt; {
  * @param data Contains data to send
  * @example &lt;JavaScript&gt;
  * send(mainWin, &apos;data&apos;);
+ * send(mainWin, {name: &apos;data&apos;, task:&apos;save&apos;})
  */
 function send(to, data) {
   let ch;

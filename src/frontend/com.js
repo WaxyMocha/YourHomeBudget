@@ -5,6 +5,8 @@
  * @param data Contains data to send
  * @example <JavaScript>
  * send('data');
+ * send({task:'save', data: 'data', name:'file.json' path:'relative/path/to/parent/folder'});
+ * send({task:'read', name:'file.json' path:'relative/path/to/parent/folder'});
  */
 function send(data) {
   ipcRenderer.send('user-data', data);

@@ -1,44 +1,49 @@
 /*jshint esversion: 6 */
 /**
- * @ignore
+ * @type {node_module}
+ * @desc Main electron module (main process)
  */
 const electron = require('electron');
 /**
- * @ignore
+ * @type {node_module}
+ * @desc (main process)
  */
 const app = electron.app;
 /**
- * @ignore
+ * @type {node_module}
+ * @desc windows creating and management (main process)
  */
 const BrowserWindow = electron.BrowserWindow;
 /**
- * @ignore
+ * @type {node_module}
+ * @desc Communication between proceses (main process)
  */
 const ipcMain = electron.ipcMain;
 /**
- * @ignore
+ * @type {node_module}
+ * @desc main process
  */
 const path = require('path');
 /**
- * @ignore
+ * @type {node_module}
+ * @desc main process
  */
 const url = require('url');
 /**
  * @ignore
+ * @desc frontend browser window object
  */
 let mainWin;
 /**
  * @ignore
+ * @desc splashscreen
  */
 let splash;
 /**
  * @ignore
+ * @desc backend browser window object
  */
 let backendWin;
-/**
- * @ignore
- */
-let backendWC;
 
 /**
  * Main function, called at startup (Main process)
@@ -97,7 +102,7 @@ function log(msg) {
  * @param {string} name Name of a window
  * @return {object} Object containing opened window
  * @example <JavaScript>
- *mainWindow = crWin(mainWindow, 'index.html', true, 'res/icon.ico', false, 800, 600, 'Main Window')
+ *mainWindow = crWin(mainWindow, 'index.html', true, 'res/icon.ico', false, 800, 600, 'Main Window');
  */
 function crWin(win, htmlFile, frame, icon, devTools, width, height, name) {
   // Create the browser window.
@@ -136,7 +141,7 @@ log('launching');
 function createWorker() {
   let name = 'backendWin';
   let html = 'backend.html';
-  backendWin = crWin(backendWin, html, true, './../res/ico/wallet.png', true, 800, 600, name);
+  backendWin = crWin(backendWin, html, true, '/../res/ico/wallet.png', true, 800, 600, name);
 
   backendWin.on('closed', () => {
       log('closing backend window');
@@ -159,7 +164,7 @@ function createMainWindow() {
 
   // Create the browser window.
   let name = 'MainWin';
-  mainWin = crWin(mainWin, 'index.html', false, './../res/ico/wallet.png', true, 800, 600, name);
+  mainWin = crWin(mainWin, 'index.html', false, '/../res/ico/wallet.png', true, 800, 600, name);
   mainWin.on('closed', () => {
 
       log('closing main window');
@@ -183,7 +188,7 @@ function createSplash() {
 
   // Create the browser window.
   let nameSp = 'splash';
-  splash = crWin(splash, 'loading.html', false, './../res/ico/wallet.png', false, 250, 300, nameSp);
+  splash = crWin(splash, 'loading.html', false, '/../res/ico/wallet.png', false, 250, 300, nameSp);
 
   // Emitted when the window is closed.
   splash.on('closed', () => {
@@ -215,8 +220,8 @@ app.on('window-all-closed', () => {
 app.on('activate', () => {
     // On macOS it's common to re-create a window in the app when the
     // dock icon is clicked and there are no other windows open.
-    if (win === null) {
-      createWindow();
+    if (mainWin === null) {
+      main();
     }
   });
 
@@ -226,6 +231,7 @@ app.on('activate', () => {
  * @param data Contains data to send
  * @example <JavaScript>
  * send(mainWin, 'data');
+ * send(mainWin, {name: 'data', task:'save'})
  */
 function send(to, data) {
   let ch;

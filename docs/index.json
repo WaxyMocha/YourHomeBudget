@@ -1107,7 +1107,7 @@
     "__docId__": 73,
     "kind": "file",
     "name": "src/frontend/com.js",
-    "content": "/* jshint esversion:6 */\n\n/**\n * Sends data to main process and backend (frontend window)\n * @param data Contains data to send\n * @example <JavaScript>\n * send('data');\n */\nfunction send(data) {\n  ipcRenderer.send('user-data', data);\n}\n\nipcRenderer.on('user-data', (e, arg) => {\n  if ((typeof arg == 'string') && (arg.slice(0, 1) == '{' || arg.slice(0, 1) == '[')) {\n    arg = JSON.parse(arg);\n  }\n\n  checkArg(arg);\n  console.log('Odebrano: ');\n  console.log(arg);\n  return;\n});\n",
+    "content": "/* jshint esversion:6 */\n\n/**\n * Sends data to main process and backend (frontend window)\n * @param data Contains data to send\n * @example <JavaScript>\n * send('data');\n * send({task:'save', data: 'data', name:'file.json' path:'relative/path/to/parent/folder'});\n * send({task:'read', name:'file.json' path:'relative/path/to/parent/folder'});\n */\nfunction send(data) {\n  ipcRenderer.send('user-data', data);\n}\n\nipcRenderer.on('user-data', (e, arg) => {\n  if ((typeof arg == 'string') && (arg.slice(0, 1) == '{' || arg.slice(0, 1) == '[')) {\n    arg = JSON.parse(arg);\n  }\n\n  checkArg(arg);\n  console.log('Odebrano: ');\n  console.log(arg);\n  return;\n});\n",
     "static": true,
     "longname": "/home/epat/Dokumenty/GitHub/YourHomeBudget/src/frontend/com.js",
     "access": "public",
@@ -1129,9 +1129,9 @@
     "importStyle": null,
     "description": "Sends data to main process and backend (frontend window)",
     "examples": [
-      "<JavaScript>\nsend('data');"
+      "<JavaScript>\nsend('data');\nsend({task:'save', data: 'data', name:'file.json' path:'relative/path/to/parent/folder'});\nsend({task:'read', name:'file.json' path:'relative/path/to/parent/folder'});"
     ],
-    "lineNumber": 9,
+    "lineNumber": 11,
     "params": [
       {
         "nullable": null,
@@ -1150,7 +1150,7 @@
     "__docId__": 75,
     "kind": "file",
     "name": "src/frontend/main.js",
-    "content": "/*jshint esversion: 6 */\n/**\n * @type {object}\n * @desc Contains configuration (frontend window)\n */\nlet config = {\n  lastBudget: 'budgets/budget-0/',\n};\n/**\n * @type {array}\n */\nlet incomes = [];\n/**\n * @type {array}\n */\nlet outcomes = [];\n/**\n * @type {object}\n * @desc Contains informations about budget (frontend window)\n */\nlet budget = {\n  id: 0,\n  path: `budgets/budget-0/`,\n  monthsID: [\n    {\n      id: 0,\n      path: `budgets/budget-0/month-0/`,\n    },\n  ],\n  lastMonthID: 0,\n};\n\n/**\n * @type {object}\n * @desc Contains informations about settlement period (frontend window)\n */\nlet month = {\n  amount: 0,\n  id: 0,\n  name: '',\n  descr: '',\n  incomes: '',\n  outcomes: '',\n};\n\n/**\n * Saves all informations about budget and config (frontend window)\n */\nfunction saveAll() {\n\n  send({\n    task: 'save',\n    data: { name: 'config', data: config },\n    path: '',\n    name: 'config.json',\n  });\n\n  send({\n    task: 'save',\n    data: { name: 'budget', data: budget },\n    path: budget.path,\n    name: 'budget.json',\n  });\n\n  send({\n    task: 'save',\n    data: { name: 'month', data: month },\n    path: budget.monthsID[budget.monthsID.length - 1].path,\n    name: 'month.json',\n  });\n\n  send({\n    task: 'save',\n    data: { name: 'incomes', data: incomes },\n    path: budget.monthsID[budget.monthsID.length - 1].path,\n    name: 'incomes.json',\n  });\n\n  send({\n    task: 'save',\n    data: { name: 'outcomes', data: outcomes },\n    path: budget.monthsID[budget.monthsID.length - 1].path,\n    name: 'outcomes.json',\n  });\n\n}\n\n/**\n * Checks argument sended from backend (frontend window)\n * @param {object} arg argument to check\n */\nfunction checkArg(arg) {\n\n  if (arg.task == 'read') {\n    let name = arg.data.name;\n    let data = arg.data.data;\n    if (name == 'budget') {\n      budget = data;\n      startup('month');\n\n    } else if (name == 'month') {\n      month = data;\n      startup('incomes');\n      startup('outcomes');\n\n    } else if (name == 'incomes') {\n      incomes = data;\n\n    } else if (name == 'outcomes') {\n      outcomes = data;\n\n    } else if (name == 'config') {\n      config = data;\n      startup('budget');\n\n    } else {\n      console.log('invalid name');\n    }\n  }\n}\n\n/**\n * @ignore\n * @param {string} arg Determines what needs to be loaded (called by checkArg) (frontend window)\n */\nfunction startup(arg) {\n\n  if (arg == 'config' || arg == undefined) {\n    send({\n      task: 'read',\n      path: '',\n      name: 'config.json',\n    });\n  } else if (arg == 'budget') {\n    send({\n      task: 'read',\n      path: config.lastBudget,\n      name: 'budget.json',\n    });\n  } else if (arg == 'month') {\n    send({\n      task: 'read',\n      path: budget.monthsID[budget.lastMonthID].path,\n      name: 'month.json',\n    });\n  } else if (arg == 'incomes') {\n    send({\n      task: 'read',\n      path: budget.monthsID[budget.lastMonthID].path,\n      name: 'incomes.json',\n    });\n  } else if (arg == 'outcomes') {\n    send({\n      task: 'read',\n      path: budget.monthsID[budget.lastMonthID].path,\n      name: 'outcomes.json',\n    });\n  }\n\n}\n\n/**\n * Add an income or an outcome\n * @param {string} type income or outcome\n * @param {string} name Name / title of income or outcome\n * @param {string} desc Description of income or outcome\n * @param {number} amount Value of income or outcome\n * @param {number} cat Id of category\n * @example <JavaScript>\n * addIncome('income', 'Payment', 'From my employer', 2000, 1);\n */\nfunction addIncome(type, name, desc, amount, cat) {\n  let tmpArr;\n  if (type == 'income') {\n    tmpArr = incomes;\n  } else if (type == 'outcome') {\n    tmpArr = outcomes;\n  } else {\n    console.log('Invalid incomeType');\n    return;\n  }\n\n  let tmpObj = {\n    amount: amount,\n    name: name,\n    description: desc,\n    cat: cat,\n    id: (tmpArr.length),\n    flags: {\n      del: false,\n    },\n  };\n\n  tmpArr.push(tmpObj);\n\n  if (incomeType == 'income') {\n    incomes = tmpArr;\n  } else if (incomeType == 'outcome') {\n    outcomes = tmpArr;\n  } else {\n    console.log('Invalid incomeType');\n    return;\n  }\n}\n\nif ((document.getElementById('')) !== null) {\n  send({ task: '' });\n}\n",
+    "content": "/* jshint esversion: 6 */\n/**\n * @type {object}\n * @desc Contains configuration (frontend)\n */\nlet config = {\n  lastBudget: 'budgets/budget-0/',\n};\n/**\n * @type {array}\n * @desc Contains informations about incomes (frontend)\n */\nlet incomes = [];\n/**\n * @type {array}\n * @desc Contains informations about outcomes (frontend)\n */\nlet outcomes = [];\n/**\n * @type {object}\n * @desc Contains informations about budget (frontend)\n */\nlet budget = {\n  id: 0,\n  path: `budgets/budget-0/`,\n  monthsID: [\n    {\n      id: 0,\n      path: `budgets/budget-0/month-0/`,\n    },\n  ],\n  lastMonthID: 0,\n};\n\n/**\n * @type {object}\n * @desc Contains informations about settlement period (frontend)\n */\nlet month = {\n  amount: 0,\n  id: 0,\n  name: '',\n  descr: '',\n  incomes: '',\n  outcomes: '',\n};\n\n/**\n * Saves all informations about budget and config (frontend)\n */\nfunction saveAll() {\n\n  send({\n    task: 'save',\n    data: { name: 'config', data: config },\n    path: '',\n    name: 'config.json',\n  });\n\n  send({\n    task: 'save',\n    data: { name: 'budget', data: budget },\n    path: budget.path,\n    name: 'budget.json',\n  });\n\n  send({\n    task: 'save',\n    data: { name: 'month', data: month },\n    path: budget.monthsID[budget.monthsID.length - 1].path,\n    name: 'month.json',\n  });\n\n  send({\n    task: 'save',\n    data: { name: 'incomes', data: incomes },\n    path: budget.monthsID[budget.monthsID.length - 1].path,\n    name: 'incomes.json',\n  });\n\n  send({\n    task: 'save',\n    data: { name: 'outcomes', data: outcomes },\n    path: budget.monthsID[budget.monthsID.length - 1].path,\n    name: 'outcomes.json',\n  });\n\n}\n\n/**\n * Checks argument sended from backend (frontend window)\n * @param {object} arg argument to check\n */\nfunction checkArg(arg) {\n\n  if (arg.task == 'read') {\n    let name = arg.data.name;\n    let data = arg.data.data;\n    if (name == 'budget') {\n      budget = data;\n      startup('month');\n\n    } else if (name == 'month') {\n      month = data;\n      startup('incomes');\n      startup('outcomes');\n\n    } else if (name == 'incomes') {\n      incomes = data;\n\n    } else if (name == 'outcomes') {\n      outcomes = data;\n\n    } else if (name == 'config') {\n      config = data;\n      startup('budget');\n\n    } else {\n      console.log('invalid name');\n    }\n  }\n}\n\n/**\n * @ignore\n * @param {string} arg Determines what needs to be loaded (called by checkArg) (frontend window)\n */\nfunction startup(arg) {\n\n  if (arg == 'config' || arg == undefined) {\n    send({\n      task: 'read',\n      path: '',\n      name: 'config.json',\n    });\n  } else if (arg == 'budget') {\n    send({\n      task: 'read',\n      path: config.lastBudget,\n      name: 'budget.json',\n    });\n  } else if (arg == 'month') {\n    send({\n      task: 'read',\n      path: budget.monthsID[budget.lastMonthID].path,\n      name: 'month.json',\n    });\n  } else if (arg == 'incomes') {\n    send({\n      task: 'read',\n      path: budget.monthsID[budget.lastMonthID].path,\n      name: 'incomes.json',\n    });\n  } else if (arg == 'outcomes') {\n    send({\n      task: 'read',\n      path: budget.monthsID[budget.lastMonthID].path,\n      name: 'outcomes.json',\n    });\n  }\n\n}\n\n/**\n * Add an income or an outcome\n * @param {string} type income or outcome\n * @param {string} name Name / title of income or outcome\n * @param {string} desc Description of income or outcome\n * @param {number} amount Value of income or outcome\n * @param {number} cat Id of category\n * @example <JavaScript>\n * addIncome('income', 'Payment', 'From my employer', 2000, 1);\n */\nfunction addIncome(type, name, desc, amount, cat) {\n  let tmpArr;\n  if (type == 'income') {\n    tmpArr = incomes;\n  } else if (type == 'outcome') {\n    tmpArr = outcomes;\n  } else {\n    console.log('Invalid incomeType');\n    return;\n  }\n\n  let tmpObj = {\n    amount: amount,\n    name: name,\n    description: desc,\n    cat: cat,\n    id: (tmpArr.length),\n    flags: {\n      del: false,\n    },\n  };\n\n  tmpArr.push(tmpObj);\n\n  if (incomeType == 'income') {\n    incomes = tmpArr;\n  } else if (incomeType == 'outcome') {\n    outcomes = tmpArr;\n  } else {\n    console.log('Invalid incomeType');\n    return;\n  }\n}\n\nif ((document.getElementById('')) !== null) {\n  send({ task: '' });\n}\n",
     "static": true,
     "longname": "/home/epat/Dokumenty/GitHub/YourHomeBudget/src/frontend/main.js",
     "access": "public",
@@ -1168,7 +1168,7 @@
     "export": false,
     "importPath": "YourHomeBudget/src/frontend/main.js",
     "importStyle": null,
-    "description": "Contains configuration (frontend window)",
+    "description": "Contains configuration (frontend)",
     "lineNumber": 6,
     "type": {
       "nullable": null,
@@ -1190,8 +1190,8 @@
     "export": false,
     "importPath": "YourHomeBudget/src/frontend/main.js",
     "importStyle": null,
-    "description": "",
-    "lineNumber": 12,
+    "description": "Contains informations about incomes (frontend)",
+    "lineNumber": 13,
     "type": {
       "nullable": null,
       "types": [
@@ -1212,8 +1212,8 @@
     "export": false,
     "importPath": "YourHomeBudget/src/frontend/main.js",
     "importStyle": null,
-    "description": "",
-    "lineNumber": 16,
+    "description": "Contains informations about outcomes (frontend)",
+    "lineNumber": 18,
     "type": {
       "nullable": null,
       "types": [
@@ -1234,8 +1234,8 @@
     "export": false,
     "importPath": "YourHomeBudget/src/frontend/main.js",
     "importStyle": null,
-    "description": "Contains informations about budget (frontend window)",
-    "lineNumber": 21,
+    "description": "Contains informations about budget (frontend)",
+    "lineNumber": 23,
     "type": {
       "nullable": null,
       "types": [
@@ -1256,8 +1256,8 @@
     "export": false,
     "importPath": "YourHomeBudget/src/frontend/main.js",
     "importStyle": null,
-    "description": "Contains informations about settlement period (frontend window)",
-    "lineNumber": 37,
+    "description": "Contains informations about settlement period (frontend)",
+    "lineNumber": 39,
     "type": {
       "nullable": null,
       "types": [
@@ -1280,8 +1280,8 @@
     "export": false,
     "importPath": "YourHomeBudget/src/frontend/main.js",
     "importStyle": null,
-    "description": "Saves all informations about budget and config (frontend window)",
-    "lineNumber": 49,
+    "description": "Saves all informations about budget and config (frontend)",
+    "lineNumber": 51,
     "params": [],
     "return": null
   },
@@ -1299,7 +1299,7 @@
     "importPath": "YourHomeBudget/src/frontend/main.js",
     "importStyle": null,
     "description": "Checks argument sended from backend (frontend window)",
-    "lineNumber": 92,
+    "lineNumber": 94,
     "params": [
       {
         "nullable": null,
@@ -1328,7 +1328,7 @@
     "importPath": "YourHomeBudget/src/frontend/main.js",
     "importStyle": null,
     "description": "",
-    "lineNumber": 126,
+    "lineNumber": 128,
     "ignore": true,
     "params": [
       {
@@ -1361,7 +1361,7 @@
     "examples": [
       "<JavaScript>\naddIncome('income', 'Payment', 'From my employer', 2000, 1);"
     ],
-    "lineNumber": 172,
+    "lineNumber": 174,
     "params": [
       {
         "nullable": null,
@@ -1582,7 +1582,7 @@
     "__docId__": 94,
     "kind": "file",
     "name": "src/index.js",
-    "content": "/*jshint esversion: 6 */\n/**\n * @ignore\n */\nconst electron = require('electron');\n/**\n * @ignore\n */\nconst app = electron.app;\n/**\n * @ignore\n */\nconst BrowserWindow = electron.BrowserWindow;\n/**\n * @ignore\n */\nconst ipcMain = electron.ipcMain;\n/**\n * @ignore\n */\nconst path = require('path');\n/**\n * @ignore\n */\nconst url = require('url');\n/**\n * @ignore\n */\nlet mainWin;\n/**\n * @ignore\n */\nlet splash;\n/**\n * @ignore\n */\nlet backendWin;\n/**\n * @ignore\n */\nlet backendWC;\n\n/**\n * Main function, called at startup (Main process)\n *\n * @ignore\n */\nfunction main() {\n\n  require('events').EventEmitter.prototype._maxListeners = 30;\n  createSplash();\n  createMainWindow();\n  createWorker();\n\n}\n\n/**\n * Returns current date and time (Main process)\n *\n * @return {string} current date and time (dd-mm-yyyy hh:mm:ss)\n */\nfunction now() {\n\n  let date = new Date();\n  let hr = String('0' + date.getHours()).slice(-2);\n  let min = String('0' + date.getMinutes()).slice(-2);\n  let sec = String('0' + date.getSeconds()).slice(-2);\n  let yr = date.getFullYear();\n  let mth = String('0' + String(Number(date.getMonth()) + 1)).slice(-2);\n  let day = String('0' + date.getDate()).slice(-2);\n  let ret =  `${day}-${mth}-${yr} ${hr}:${min}:${sec}`;\n  return ret;\n}\n\n/**\n * Logs in console current date and time followed by message (Main process)\n *\n * @param {string} msg message to log in console\n * @example <JavaScript>\n * log('example message');\n * @example Console\n * [dd-mm-yyyy hh:mm:ss]> example message\n */\nfunction log(msg) {\n  console.log(`[${now()}]> ${msg}`);\n}\n\n/**\n * Create new browser window (Main process)\n * @param {undefined} win Variable which will contain BrowserWindow object\n * @param {string} htmlFile Relative path to file to load\n * @param {boolean} frame Specifies whether the window frame is displayed\n * @param {string} icon Relative path to icon for a window\n * @param {boolean} devTools Specifies whether the developer tools are displayed when the window is opened\n * @param {number} width Width of a window\n * @param {number} height Height of a window\n * @param {string} name Name of a window\n * @return {object} Object containing opened window\n * @example <JavaScript>\n *mainWindow = crWin(mainWindow, 'index.html', true, 'res/icon.ico', false, 800, 600, 'Main Window')\n */\nfunction crWin(win, htmlFile, frame, icon, devTools, width, height, name) {\n  // Create the browser window.\n  win = new BrowserWindow({\n      width: width,\n      height: height,\n      show: false,\n      frame: frame,\n      icon: __dirname + icon,\n      webPreferences: { experimentalFeatures: true },\n      autoHideMenuBar: true,\n    });\n\n  log(`creating ${name}`);\n  log(`loading ${htmlFile} to ${name}`);\n\n  win.loadURL(url.format({\n      pathname: path.join(__dirname, htmlFile),\n      protocol: 'file:',\n      slashes: true,\n    }));\n\n  // Open the DevTools.\n  if (devTools) {\n    win.webContents.openDevTools();\n  }\n\n  return win;\n}\n\nlog('launching');\n\n/**\n * @ignore\n */\nfunction createWorker() {\n  let name = 'backendWin';\n  let html = 'backend.html';\n  backendWin = crWin(backendWin, html, true, './../res/ico/wallet.png', true, 800, 600, name);\n\n  backendWin.on('closed', () => {\n      log('closing backend window');\n      backendWin = null;\n      if (mainWin != null) {\n        createWorker();\n      }\n    });\n\n  backendWin.once('ready-to-show', () => {\n      backendWin.show();\n      log('showing Worker window');\n    });\n}\n\n/**\n * @ignore\n */\nfunction createMainWindow() {\n\n  // Create the browser window.\n  let name = 'MainWin';\n  mainWin = crWin(mainWin, 'index.html', false, './../res/ico/wallet.png', true, 800, 600, name);\n  mainWin.on('closed', () => {\n\n      log('closing main window');\n      mainWin = null;\n      backendWin.close();\n    });\n\n  mainWin.once('ready-to-show', () => {\n      mainWin.show();\n\n      log('showing main window');\n\n      splash.close();\n    });\n}\n\n/**\n * @ignore\n */\nfunction createSplash() {\n\n  // Create the browser window.\n  let nameSp = 'splash';\n  splash = crWin(splash, 'loading.html', false, './../res/ico/wallet.png', false, 250, 300, nameSp);\n\n  // Emitted when the window is closed.\n  splash.on('closed', () => {\n\n      log('closing splash screen');\n      splash = null;\n    });\n\n  splash.on('ready-to-show', () => {\n      log('showing splash screen');\n      splash.show();\n    });\n}\n\napp.on('ready', main);\n\n// Quit when all windows are closed.\napp.on('window-all-closed', () => {\n\n    log('closing app');\n\n    // On macOS it is common for applications and their menu bar\n    // to stay active until the user quits explicitly with Cmd + Q\n    if (process.platform !== 'darwin') {\n      app.quit();\n    }\n  });\n\napp.on('activate', () => {\n    // On macOS it's common to re-create a window in the app when the\n    // dock icon is clicked and there are no other windows open.\n    if (win === null) {\n      createWindow();\n    }\n  });\n\n/**\n * Sends data to Browser Window (Main process)\n * @param {object} to Specifies destination of data (BrowserWindow object)\n * @param data Contains data to send\n * @example <JavaScript>\n * send(mainWin, 'data');\n */\nfunction send(to, data) {\n  let ch;\n  if (to == backendWin) {\n    ch = 'manipulatedData';\n  } else if (to == mainWin) {\n    ch = 'user-data';\n  } else {\n    return 'illegal channel';\n  }\n\n  to.webContents.send(ch, data);\n}\n\nipcMain.on('manipulatedData', (e, arg) => {\n    log('Odebrano (backend): ');\n    console.log(arg);\n    console.log('');\n    send(mainWin, arg);\n  });\n\nipcMain.on('user-data', (e, arg) => {\n    log('Odebrano (main): ');\n    console.log(arg);\n    console.log('');\n    send(backendWin, arg);\n  });\n",
+    "content": "/*jshint esversion: 6 */\n/**\n * @type {node_module}\n * @desc Main electron module (main process)\n */\nconst electron = require('electron');\n/**\n * @type {node_module}\n * @desc (main process)\n */\nconst app = electron.app;\n/**\n * @type {node_module}\n * @desc windows creating and management (main process)\n */\nconst BrowserWindow = electron.BrowserWindow;\n/**\n * @type {node_module}\n * @desc Communication between proceses (main process)\n */\nconst ipcMain = electron.ipcMain;\n/**\n * @type {node_module}\n * @desc main process\n */\nconst path = require('path');\n/**\n * @type {node_module}\n * @desc main process\n */\nconst url = require('url');\n/**\n * @ignore\n * @desc frontend browser window object\n */\nlet mainWin;\n/**\n * @ignore\n * @desc splashscreen\n */\nlet splash;\n/**\n * @ignore\n * @desc backend browser window object\n */\nlet backendWin;\n\n/**\n * Main function, called at startup (Main process)\n *\n * @ignore\n */\nfunction main() {\n\n  require('events').EventEmitter.prototype._maxListeners = 30;\n  createSplash();\n  createMainWindow();\n  createWorker();\n\n}\n\n/**\n * Returns current date and time (Main process)\n *\n * @return {string} current date and time (dd-mm-yyyy hh:mm:ss)\n */\nfunction now() {\n\n  let date = new Date();\n  let hr = String('0' + date.getHours()).slice(-2);\n  let min = String('0' + date.getMinutes()).slice(-2);\n  let sec = String('0' + date.getSeconds()).slice(-2);\n  let yr = date.getFullYear();\n  let mth = String('0' + String(Number(date.getMonth()) + 1)).slice(-2);\n  let day = String('0' + date.getDate()).slice(-2);\n  let ret =  `${day}-${mth}-${yr} ${hr}:${min}:${sec}`;\n  return ret;\n}\n\n/**\n * Logs in console current date and time followed by message (Main process)\n *\n * @param {string} msg message to log in console\n * @example <JavaScript>\n * log('example message');\n * @example Console\n * [dd-mm-yyyy hh:mm:ss]> example message\n */\nfunction log(msg) {\n  console.log(`[${now()}]> ${msg}`);\n}\n\n/**\n * Create new browser window (Main process)\n * @param {undefined} win Variable which will contain BrowserWindow object\n * @param {string} htmlFile Relative path to file to load\n * @param {boolean} frame Specifies whether the window frame is displayed\n * @param {string} icon Relative path to icon for a window\n * @param {boolean} devTools Specifies whether the developer tools are displayed when the window is opened\n * @param {number} width Width of a window\n * @param {number} height Height of a window\n * @param {string} name Name of a window\n * @return {object} Object containing opened window\n * @example <JavaScript>\n *mainWindow = crWin(mainWindow, 'index.html', true, 'res/icon.ico', false, 800, 600, 'Main Window');\n */\nfunction crWin(win, htmlFile, frame, icon, devTools, width, height, name) {\n  // Create the browser window.\n  win = new BrowserWindow({\n      width: width,\n      height: height,\n      show: false,\n      frame: frame,\n      icon: __dirname + icon,\n      webPreferences: { experimentalFeatures: true },\n      autoHideMenuBar: true,\n    });\n\n  log(`creating ${name}`);\n  log(`loading ${htmlFile} to ${name}`);\n\n  win.loadURL(url.format({\n      pathname: path.join(__dirname, htmlFile),\n      protocol: 'file:',\n      slashes: true,\n    }));\n\n  // Open the DevTools.\n  if (devTools) {\n    win.webContents.openDevTools();\n  }\n\n  return win;\n}\n\nlog('launching');\n\n/**\n * @ignore\n */\nfunction createWorker() {\n  let name = 'backendWin';\n  let html = 'backend.html';\n  backendWin = crWin(backendWin, html, true, '/../res/ico/wallet.png', true, 800, 600, name);\n\n  backendWin.on('closed', () => {\n      log('closing backend window');\n      backendWin = null;\n      if (mainWin != null) {\n        createWorker();\n      }\n    });\n\n  backendWin.once('ready-to-show', () => {\n      backendWin.show();\n      log('showing Worker window');\n    });\n}\n\n/**\n * @ignore\n */\nfunction createMainWindow() {\n\n  // Create the browser window.\n  let name = 'MainWin';\n  mainWin = crWin(mainWin, 'index.html', false, '/../res/ico/wallet.png', true, 800, 600, name);\n  mainWin.on('closed', () => {\n\n      log('closing main window');\n      mainWin = null;\n      backendWin.close();\n    });\n\n  mainWin.once('ready-to-show', () => {\n      mainWin.show();\n\n      log('showing main window');\n\n      splash.close();\n    });\n}\n\n/**\n * @ignore\n */\nfunction createSplash() {\n\n  // Create the browser window.\n  let nameSp = 'splash';\n  splash = crWin(splash, 'loading.html', false, '/../res/ico/wallet.png', false, 250, 300, nameSp);\n\n  // Emitted when the window is closed.\n  splash.on('closed', () => {\n\n      log('closing splash screen');\n      splash = null;\n    });\n\n  splash.on('ready-to-show', () => {\n      log('showing splash screen');\n      splash.show();\n    });\n}\n\napp.on('ready', main);\n\n// Quit when all windows are closed.\napp.on('window-all-closed', () => {\n\n    log('closing app');\n\n    // On macOS it is common for applications and their menu bar\n    // to stay active until the user quits explicitly with Cmd + Q\n    if (process.platform !== 'darwin') {\n      app.quit();\n    }\n  });\n\napp.on('activate', () => {\n    // On macOS it's common to re-create a window in the app when the\n    // dock icon is clicked and there are no other windows open.\n    if (mainWin === null) {\n      main();\n    }\n  });\n\n/**\n * Sends data to Browser Window (Main process)\n * @param {object} to Specifies destination of data (BrowserWindow object)\n * @param data Contains data to send\n * @example <JavaScript>\n * send(mainWin, 'data');\n * send(mainWin, {name: 'data', task:'save'})\n */\nfunction send(to, data) {\n  let ch;\n  if (to == backendWin) {\n    ch = 'manipulatedData';\n  } else if (to == mainWin) {\n    ch = 'user-data';\n  } else {\n    return 'illegal channel';\n  }\n\n  to.webContents.send(ch, data);\n}\n\nipcMain.on('manipulatedData', (e, arg) => {\n    log('Odebrano (backend): ');\n    console.log(arg);\n    console.log('');\n    send(mainWin, arg);\n  });\n\nipcMain.on('user-data', (e, arg) => {\n    log('Odebrano (main): ');\n    console.log(arg);\n    console.log('');\n    send(backendWin, arg);\n  });\n",
     "static": true,
     "longname": "/home/epat/Dokumenty/GitHub/YourHomeBudget/src/index.js",
     "access": "public",
@@ -1600,13 +1600,15 @@
     "export": false,
     "importPath": "YourHomeBudget",
     "importStyle": null,
-    "description": "",
-    "lineNumber": 5,
-    "ignore": true,
+    "description": "Main electron module (main process)",
+    "lineNumber": 6,
     "type": {
+      "nullable": null,
       "types": [
-        "*"
-      ]
+        "node_module"
+      ],
+      "spread": false,
+      "description": null
     }
   },
   {
@@ -1620,13 +1622,15 @@
     "export": false,
     "importPath": "YourHomeBudget",
     "importStyle": null,
-    "description": "",
-    "lineNumber": 9,
-    "ignore": true,
+    "description": "(main process)",
+    "lineNumber": 11,
     "type": {
+      "nullable": null,
       "types": [
-        "*"
-      ]
+        "node_module"
+      ],
+      "spread": false,
+      "description": null
     }
   },
   {
@@ -1640,13 +1644,15 @@
     "export": false,
     "importPath": "YourHomeBudget",
     "importStyle": null,
-    "description": "",
-    "lineNumber": 13,
-    "ignore": true,
+    "description": "windows creating and management (main process)",
+    "lineNumber": 16,
     "type": {
+      "nullable": null,
       "types": [
-        "*"
-      ]
+        "node_module"
+      ],
+      "spread": false,
+      "description": null
     }
   },
   {
@@ -1660,13 +1666,15 @@
     "export": false,
     "importPath": "YourHomeBudget",
     "importStyle": null,
-    "description": "",
-    "lineNumber": 17,
-    "ignore": true,
+    "description": "Communication between proceses (main process)",
+    "lineNumber": 21,
     "type": {
+      "nullable": null,
       "types": [
-        "*"
-      ]
+        "node_module"
+      ],
+      "spread": false,
+      "description": null
     }
   },
   {
@@ -1680,13 +1688,15 @@
     "export": false,
     "importPath": "YourHomeBudget",
     "importStyle": null,
-    "description": "",
-    "lineNumber": 21,
-    "ignore": true,
+    "description": "main process",
+    "lineNumber": 26,
     "type": {
+      "nullable": null,
       "types": [
-        "*"
-      ]
+        "node_module"
+      ],
+      "spread": false,
+      "description": null
     }
   },
   {
@@ -1700,13 +1710,15 @@
     "export": false,
     "importPath": "YourHomeBudget",
     "importStyle": null,
-    "description": "",
-    "lineNumber": 25,
-    "ignore": true,
+    "description": "main process",
+    "lineNumber": 31,
     "type": {
+      "nullable": null,
       "types": [
-        "*"
-      ]
+        "node_module"
+      ],
+      "spread": false,
+      "description": null
     }
   },
   {
@@ -1723,7 +1735,7 @@
     "importPath": "YourHomeBudget",
     "importStyle": null,
     "description": "Main function, called at startup (Main process)",
-    "lineNumber": 48,
+    "lineNumber": 53,
     "ignore": true,
     "params": [],
     "return": null
@@ -1742,7 +1754,7 @@
     "importPath": "YourHomeBudget",
     "importStyle": null,
     "description": "Returns current date and time (Main process)",
-    "lineNumber": 62,
+    "lineNumber": 67,
     "return": {
       "nullable": null,
       "types": [
@@ -1771,7 +1783,7 @@
       "<JavaScript>\nlog('example message');",
       "Console\n[dd-mm-yyyy hh:mm:ss]> example message"
     ],
-    "lineNumber": 84,
+    "lineNumber": 89,
     "params": [
       {
         "nullable": null,
@@ -1801,9 +1813,9 @@
     "importStyle": null,
     "description": "Create new browser window (Main process)",
     "examples": [
-      "<JavaScript>\nmainWindow = crWin(mainWindow, 'index.html', true, 'res/icon.ico', false, 800, 600, 'Main Window')"
+      "<JavaScript>\nmainWindow = crWin(mainWindow, 'index.html', true, 'res/icon.ico', false, 800, 600, 'Main Window');"
     ],
-    "lineNumber": 102,
+    "lineNumber": 107,
     "params": [
       {
         "nullable": null,
@@ -1909,7 +1921,7 @@
     "importPath": "YourHomeBudget",
     "importStyle": null,
     "description": "",
-    "lineNumber": 136,
+    "lineNumber": 141,
     "ignore": true,
     "params": [],
     "return": null
@@ -1928,7 +1940,7 @@
     "importPath": "YourHomeBudget",
     "importStyle": null,
     "description": "",
-    "lineNumber": 158,
+    "lineNumber": 163,
     "ignore": true,
     "params": [],
     "return": null
@@ -1947,7 +1959,7 @@
     "importPath": "YourHomeBudget",
     "importStyle": null,
     "description": "",
-    "lineNumber": 182,
+    "lineNumber": 187,
     "ignore": true,
     "params": [],
     "return": null
@@ -1967,9 +1979,9 @@
     "importStyle": null,
     "description": "Sends data to Browser Window (Main process)",
     "examples": [
-      "<JavaScript>\nsend(mainWin, 'data');"
+      "<JavaScript>\nsend(mainWin, 'data');\nsend(mainWin, {name: 'data', task:'save'})"
     ],
-    "lineNumber": 230,
+    "lineNumber": 236,
     "params": [
       {
         "nullable": null,

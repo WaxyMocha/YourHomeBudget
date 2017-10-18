@@ -1,22 +1,24 @@
-/*jshint esversion: 6 */
+/* jshint esversion: 6 */
 /**
  * @type {object}
- * @desc Contains configuration (frontend window)
+ * @desc Contains configuration (frontend)
  */
 let config = {
   lastBudget: 'budgets/budget-0/',
 };
 /**
  * @type {array}
+ * @desc Contains informations about incomes (frontend)
  */
 let incomes = [];
 /**
  * @type {array}
+ * @desc Contains informations about outcomes (frontend)
  */
 let outcomes = [];
 /**
  * @type {object}
- * @desc Contains informations about budget (frontend window)
+ * @desc Contains informations about budget (frontend)
  */
 let budget = {
   id: 0,
@@ -32,7 +34,7 @@ let budget = {
 
 /**
  * @type {object}
- * @desc Contains informations about settlement period (frontend window)
+ * @desc Contains informations about settlement period (frontend)
  */
 let month = {
   amount: 0,
@@ -44,7 +46,7 @@ let month = {
 };
 
 /**
- * Saves all informations about budget and config (frontend window)
+ * Saves all informations about budget and config (frontend)
  */
 function saveAll() {
 
