@@ -1,7 +1,7 @@
 {
-  "coverage": "100%",
-  "expectCount": 50,
-  "actualCount": 50,
+  "coverage": "98.07%",
+  "expectCount": 52,
+  "actualCount": 51,
   "files": {
     "src/backend/com.js": {
       "expectCount": 1,
@@ -24,9 +24,11 @@
       "undocumentLines": []
     },
     "src/frontend/com.js": {
-      "expectCount": 1,
-      "actualCount": 1,
-      "undocumentLines": []
+      "expectCount": 3,
+      "actualCount": 2,
+      "undocumentLines": [
+        15
+      ]
     },
     "src/frontend/main.js": {
       "expectCount": 9,

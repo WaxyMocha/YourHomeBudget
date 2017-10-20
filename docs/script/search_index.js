@@ -120,6 +120,18 @@ window.esdocSearchIndex = [
     "function"
   ],
   [
+    "yourhomebudget/src/frontend/com.js~read",
+    "function/index.html#static-function-read",
+    "<span>read</span> <span class=\"search-result-import-path\">YourHomeBudget/src/frontend/com.js</span>",
+    "function"
+  ],
+  [
+    "yourhomebudget/src/frontend/com.js~save",
+    "function/index.html#static-function-save",
+    "<span>save</span> <span class=\"search-result-import-path\">YourHomeBudget/src/frontend/com.js</span>",
+    "function"
+  ],
+  [
     "yourhomebudget/src/frontend/main.js~saveall",
     "function/index.html#static-function-saveAll",
     "<span>saveAll</span> <span class=\"search-result-import-path\">YourHomeBudget/src/frontend/main.js</span>",

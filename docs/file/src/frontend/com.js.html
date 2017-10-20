@@ -46,7 +46,9 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-write">write</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-checkArg">checkArg</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-jsonParser">jsonParser</a></span></span></li>
-<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#frontend">frontend</a><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-send">send</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#frontend">frontend</a><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-read">read</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-save">save</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-send">send</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-addIncome">addIncome</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-checkArg">checkArg</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-saveAll">saveAll</a></span></span></li>
@@ -63,12 +65,27 @@
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">/* jshint esversion:6 */
 
 /**
+Save data to file
+@param data stuff to save
+@param {string} filename self explainatory
+@param {string} path relative path to file
+@example &lt;Javascript&gt;
+save(&apos;some data to save&apos;, &apos;file.json&apos;, &apos;/path/to/parent/folder&apos;);
+*/
+function save(data, filename, path) {
+  send({task:&apos;save&apos;, data: data, name: filename, path: path,});
+}
+
+function read(filename, path) {
+  send({task:&apos;read&apos;, name: filename, path: path,})
+}
+/**
  * Sends data to main process and backend (frontend window)
  * @param data Contains data to send
  * @example &lt;JavaScript&gt;
  * send(&apos;data&apos;);
- * send({task:&apos;save&apos;, data: &apos;data&apos;, name:&apos;file.json&apos; path:&apos;relative/path/to/parent/folder&apos;});
- * send({task:&apos;read&apos;, name:&apos;file.json&apos; path:&apos;relative/path/to/parent/folder&apos;});
+ * send({task:&apos;save&apos;, data: &apos;data&apos;, name:&apos;file.json&apos;, path:&apos;relative/path/to/parent/folder&apos;});
+ * send({task:&apos;read&apos;, name:&apos;file.json&apos;, path:&apos;relative/path/to/parent/folder&apos;});
  */
 function send(data) {
   ipcRenderer.send(&apos;user-data&apos;, data);
