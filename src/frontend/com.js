@@ -13,7 +13,7 @@ function save(data, filename, path) {
 }
 
 function read(filename, path) {
-  send({task:'read', name: filename, path: path,})
+  send({task:'read', name: filename, path: path,});
 }
 /**
  * Sends data to main process and backend (frontend window)

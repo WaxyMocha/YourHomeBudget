@@ -45,6 +45,8 @@ let splash;
  */
 let backendWin;
 
+let backendStartupCount = 0;
+
 /**
  * Main function, called at startup (Main process)
  *
@@ -154,6 +156,10 @@ function createWorker() {
   backendWin.once('ready-to-show', () => {
       backendWin.show();
       log('showing Worker window');
+      if (backendStartupCount == 0) {
+        send(mainWin, 'start');
+      }
+      backendStartupCount++;
     });
 }
 

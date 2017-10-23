@@ -93,7 +93,9 @@ function saveAll() {
  */
 function checkArg(arg) {
 
-  if (arg.task == 'read') {
+  if (arg == 'start') {
+    startup();
+  } else if (arg.task == 'read') {
     let name = arg.data.name;
     let data = arg.data.data;
     if (name == 'budget') {
