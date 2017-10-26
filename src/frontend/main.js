@@ -89,15 +89,17 @@ function saveAll() {
 
 /**
  * Checks argument sended from backend (frontend window)
- * @param {object} arg argument to check
+ * @param {object} arg argument from communication channel to check
  */
 function checkArg(arg) {
 
   if (arg == 'start') {
     startup();
+
   } else if (arg.task == 'read') {
     let name = arg.data.name;
     let data = arg.data.data;
+    
     if (name == 'budget') {
       budget = data;
       startup('month');
