@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../../">
+  <title data-ice="title">src/frontend/main.js | YourHomeBudget</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  <script src="script/manual.js"></script>
+</head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-crWin">crWin</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-log">log</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-now">now</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-send">send</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-BrowserWindow">BrowserWindow</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-app">app</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-electron">electron</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-ipcMain">ipcMain</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-path">path</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-url">url</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#backend">backend</a><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-send">send</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-directory">directory</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-progDir">progDir</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-read">read</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-write">write</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-checkArg">checkArg</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-jsonParser">jsonParser</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#frontend">frontend</a><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-read">read</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-save">save</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-send">send</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-addIncome">addIncome</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-checkArg">checkArg</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-saveAll">saveAll</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-budget">budget</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-config">config</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-incomes">incomes</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-month">month</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-outcomes">outcomes</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">src/frontend/main.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">/* jshint esversion: 6 */
+/**
+ * @type {object}
+ * @desc Contains configuration (frontend)
+ */
+let config = {
+  lastBudget: &apos;budgets/budget-0/&apos;,
+};
+/**
+ * @type {array}
+ * @desc Contains informations about incomes (frontend)
+ */
+let incomes = [];
+/**
+ * @type {array}
+ * @desc Contains informations about outcomes (frontend)
+ */
+let outcomes = [];
+/**
+ * @type {object}
+ * @desc Contains informations about budget (frontend)
+ */
+let budget = {
+  id: 0,
+  path: `budgets/budget-0/`,
+  monthsID: [
+    {
+      id: 0,
+      path: `budgets/budget-0/month-0/`,
+    },
+  ],
+  lastMonthID: 0,
+};
+
+/**
+ * @type {object}
+ * @desc Contains informations about settlement period (frontend)
+ */
+let month = {
+  amount: 0,
+  id: 0,
+  name: &apos;&apos;,
+  descr: &apos;&apos;,
+  incomes: &apos;&apos;,
+  outcomes: &apos;&apos;,
+};
+
+/**
+ * Saves all informations about budget and config (frontend)
+ */
+function saveAll() {
+
+  send({
+    task: &apos;save&apos;,
+    data: { name: &apos;config&apos;, data: config },
+    path: &apos;&apos;,
+    name: &apos;config.json&apos;,
+  });
+
+  send({
+    task: &apos;save&apos;,
+    data: { name: &apos;budget&apos;, data: budget },
+    path: budget.path,
+    name: &apos;budget.json&apos;,
+  });
+
+  send({
+    task: &apos;save&apos;,
+    data: { name: &apos;month&apos;, data: month },
+    path: budget.monthsID[budget.monthsID.length - 1].path,
+    name: &apos;month.json&apos;,
+  });
+
+  send({
+    task: &apos;save&apos;,
+    data: { name: &apos;incomes&apos;, data: incomes },
+    path: budget.monthsID[budget.monthsID.length - 1].path,
+    name: &apos;incomes.json&apos;,
+  });
+
+  send({
+    task: &apos;save&apos;,
+    data: { name: &apos;outcomes&apos;, data: outcomes },
+    path: budget.monthsID[budget.monthsID.length - 1].path,
+    name: &apos;outcomes.json&apos;,
+  });
+
+}
+
+/**
+ * Checks argument sended from backend (frontend window)
+ * @param {object} arg argument to check
+ */
+function checkArg(arg) {
+
+  if (arg.task == &apos;read&apos;) {
+    let name = arg.data.name;
+    let data = arg.data.data;
+    if (name == &apos;budget&apos;) {
+      budget = data;
+      startup(&apos;month&apos;);
+
+    } else if (name == &apos;month&apos;) {
+      month = data;
+      startup(&apos;incomes&apos;);
+      startup(&apos;outcomes&apos;);
+
+    } else if (name == &apos;incomes&apos;) {
+      incomes = data;
+
+    } else if (name == &apos;outcomes&apos;) {
+      outcomes = data;
+
+    } else if (name == &apos;config&apos;) {
+      config = data;
+      startup(&apos;budget&apos;);
+
+    } else {
+      console.log(&apos;invalid name&apos;);
+    }
+  }
+}
+
+/**
+ * @ignore
+ * @param {string} arg Determines what needs to be loaded (called by checkArg) (frontend window)
+ */
+function startup(arg) {
+
+  if (arg == &apos;config&apos; || arg == undefined) {
+    send({
+      task: &apos;read&apos;,
+      path: &apos;&apos;,
+      name: &apos;config.json&apos;,
+    });
+  } else if (arg == &apos;budget&apos;) {
+    send({
+      task: &apos;read&apos;,
+      path: config.lastBudget,
+      name: &apos;budget.json&apos;,
+    });
+  } else if (arg == &apos;month&apos;) {
+    send({
+      task: &apos;read&apos;,
+      path: budget.monthsID[budget.lastMonthID].path,
+      name: &apos;month.json&apos;,
+    });
+  } else if (arg == &apos;incomes&apos;) {
+    send({
+      task: &apos;read&apos;,
+      path: budget.monthsID[budget.lastMonthID].path,
+      name: &apos;incomes.json&apos;,
+    });
+  } else if (arg == &apos;outcomes&apos;) {
+    send({
+      task: &apos;read&apos;,
+      path: budget.monthsID[budget.lastMonthID].path,
+      name: &apos;outcomes.json&apos;,
+    });
+  }
+
+}
+
+/**
+ * Add an income or an outcome
+ * @param {string} type income or outcome
+ * @param {string} name Name / title of income or outcome
+ * @param {string} desc Description of income or outcome
+ * @param {number} amount Value of income or outcome
+ * @param {number} cat Id of category
+ * @example &lt;JavaScript&gt;
+ * addIncome(&apos;income&apos;, &apos;Payment&apos;, &apos;From my employer&apos;, 2000, 1);
+ */
+function addIncome(type, name, desc, amount, cat) {
+  let tmpArr;
+  if (type == &apos;income&apos;) {
+    tmpArr = incomes;
+  } else if (type == &apos;outcome&apos;) {
+    tmpArr = outcomes;
+  } else {
+    console.log(&apos;Invalid incomeType&apos;);
+    return;
+  }
+
+  let tmpObj = {
+    amount: amount,
+    name: name,
+    description: desc,
+    cat: cat,
+    id: (tmpArr.length),
+    flags: {
+      del: false,
+    },
+  };
+
+  tmpArr.push(tmpObj);
+
+  if (incomeType == &apos;income&apos;) {
+    incomes = tmpArr;
+  } else if (incomeType == &apos;outcome&apos;) {
+    outcomes = tmpArr;
+  } else {
+    console.log(&apos;Invalid incomeType&apos;);
+    return;
+  }
+}
+
+if ((document.getElementById(&apos;&apos;)) !== null) {
+  send({ task: &apos;&apos; });
+}
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(1.0.3)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>
