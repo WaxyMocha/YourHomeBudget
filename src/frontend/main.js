@@ -41,8 +41,6 @@ let month = {
   id: 0,
   name: '',
   descr: '',
-  incomes: '',
-  outcomes: '',
 };
 
 /**
@@ -67,24 +65,42 @@ function saveAll() {
   send({
     task: 'save',
     data: { name: 'month', data: month },
-    path: budget.monthsID[budget.monthsID.length - 1].path,
+    path: budget.monthsID[budget.lastMonthID].path,
     name: 'month.json',
   });
 
   send({
     task: 'save',
     data: { name: 'incomes', data: incomes },
-    path: budget.monthsID[budget.monthsID.length - 1].path,
+    path: budget.monthsID[budget.lastMonthID].path,
     name: 'incomes.json',
   });
 
   send({
     task: 'save',
     data: { name: 'outcomes', data: outcomes },
-    path: budget.monthsID[budget.monthsID.length - 1].path,
+    path: budget.monthsID[budget.lastMonthID].path,
     name: 'outcomes.json',
   });
 
+}
+
+function updateMonth() {
+  let amount = 0;
+  let i;
+  for (i = 0; i < incomes.length; i++) {
+    amount += Number(incomes[i].amount);
+  }
+  for (i = 0; i < outcomes.length; i++) {
+    amount -= Number(outcomes[i].amount);
+  }
+  month.amount = amount;
+
+  save({ name: 'month', data: month }, 'month.json', budget.monthsID[budget.lastMonthID].path);
+
+  save({ name: 'incomes', data: incomes }, 'incomes.json', budget.monthsID[budget.lastMonthID].path);
+
+  save({ name: 'outcomes', data: outcomes }, 'outcomes.json', budget.monthsID[budget.lastMonthID].path);
 }
 
 /**
@@ -99,7 +115,7 @@ function checkArg(arg) {
   } else if (arg.task == 'read') {
     let name = arg.data.name;
     let data = arg.data.data;
-    
+
     if (name == 'budget') {
       budget = data;
       startup('month');
@@ -182,7 +198,7 @@ function addIncome(type, name, desc, amount, cat) {
   } else if (type == 'outcome') {
     tmpArr = outcomes;
   } else {
-    console.log('Invalid incomeType');
+    console.log('Invalid type');
     return;
   }
 
@@ -198,17 +214,11 @@ function addIncome(type, name, desc, amount, cat) {
   };
 
   tmpArr.push(tmpObj);
-
-  if (incomeType == 'income') {
-    incomes = tmpArr;
-  } else if (incomeType == 'outcome') {
-    outcomes = tmpArr;
-  } else {
-    console.log('Invalid incomeType');
-    return;
-  }
+  updateMonth();
 }
 
 if ((document.getElementById('')) !== null) {
   send({ task: '' });
 }
+
+send('reset');

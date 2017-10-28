@@ -31,7 +31,7 @@ function jsonParser(mode, arg) { //true parse, false stringify
     }
   } else if (mode == false) {
     if (typeof arg == 'object') {
-      arg = JSON.stringify(arg);
+      arg = JSON.stringify(arg, null, '\t');
       console.log('mode: false');
     }
   } else {

@@ -102,15 +102,19 @@ function log(msg) {
  * @param {number} width Width of a window
  * @param {number} height Height of a window
  * @param {string} name Name of a window
+ * @param {number} minWidth minimal width of window
+ * @param {number} minHeight minimal height of window
  * @return {object} Object containing opened window
  * @example <JavaScript>
  *mainWindow = crWin(mainWindow, 'index.html', true, 'res/icon.ico', false, 800, 600, 'Main Window');
  */
-function crWin(win, htmlFile, frame, icon, devTools, width, height, name) {
+function crWin(win, htmlFile, frame, icon, devTools, width, height, name, minWidth, minHeight) {
   // Create the browser window.
   win = new BrowserWindow({
       width: width,
       height: height,
+      minHeight: minHeight,
+      minWidth: minWidth,
       show: false,
       frame: frame,
       icon: __dirname + icon,
@@ -143,7 +147,7 @@ log('launching');
 function createWorker() {
   let name = 'backendWin';
   let html = 'backend.html';
-  backendWin = crWin(backendWin, html, true, '/../res/ico/wallet.png', true, 800, 600, name);
+  backendWin = crWin(backendWin, html, true, '/../res/ico/wallet.png', true, 800, 600, name, 300, 400);
 
   backendWin.on('closed', () => {
       log('closing backend window');
@@ -170,7 +174,7 @@ function createMainWindow() {
 
   // Create the browser window.
   let name = 'MainWin';
-  mainWin = crWin(mainWin, 'index.html', false, '/../res/ico/wallet.png', true, 800, 600, name);
+  mainWin = crWin(mainWin, 'index.html', false, '/../res/ico/wallet.png', true, 800, 600, name, 400, 400);
   mainWin.on('closed', () => {
 
       log('closing main window');
@@ -263,5 +267,9 @@ ipcMain.on('user-data', (e, arg) => {
     log('Odebrano (main): ');
     console.log(arg);
     console.log('');
+    if (arg == 'reset' && backendStartupCount) {
+      send(mainWin, 'start');
+      return;
+    }
     send(backendWin, arg);
   });

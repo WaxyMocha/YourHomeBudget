@@ -47,13 +47,13 @@ function read(relPath, name) {
   let path = filesPath + relPath;
   let appRootPath = `${appRoot}/${relPath}`;
   if (fs.existsSync(`${path}/${name}`)) {
-    console.log(`File is in: ${path}`);
+    console.log(`File location: ${path}`);
     return fs.readFileSync(`${path}/${name}`, 'utf8');
   } else if (fs.existsSync(`${appRootPath}/${name}`)) {
-    console.log(`File is in: ${appRootPath}`);
+    console.log(`File location: ${appRootPath}`);
     return (fs.readFileSync(`${appRootPath}/${name}`, 'utf8'));
   } else {
-    console.log('File does not exists');
+    console.log('File does not exist');
     return '';
   }
 }

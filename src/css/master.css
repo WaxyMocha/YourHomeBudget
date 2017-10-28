@@ -27,6 +27,12 @@ body {
   width: 100%;
   height: var(--headerBarHeight);
   background-color: var(--masterAccentColor);
+  position: fixed;
+  z-index: 1000;
+}
+
+.headerSpacer {
+  height: var(--headerBarHeight);
 }
 
 .headerBarButton {
@@ -34,6 +40,18 @@ body {
   width: var(--headerButtonSize);
   background-color: transparent;
   outline: none;
+  border-style: solid;
+  border-radius: 3px;
+  border-color: rgba(0, 0, 0, 0.26);
+  transition: 0.2s;
+}
+
+.headerBarButton:hover {
+  background-color: rgba(255, 255, 255, 0.16);
+}
+
+.headerBarButton:active {
+  background-color: rgba(0, 0, 0, 0.16);
 }
 
 .buttonsWraper {
@@ -47,9 +65,21 @@ body {
   max-width: 400px;
   position: fixed;
   height: calc(100vh - var(--headerBarHeight));
-  background-color: cyan;
+  background-color: rgb(218, 218, 218);
   z-index: 1000;
   transition: left 0.2s;
+}
+
+#maska {
+  background-color: rgba(54, 201, 48, 0);
+  position: fixed;
+  height: 100vh;
+  left: 0;
+  top: 0;
+  pointer-events: none;
+  width: 100vw;
+  z-index: 999;
+  transition: 0.3s;
 }
 
 .mainMenuItem {
@@ -116,21 +146,39 @@ body {
   grid-area: desc;
 }
 
-.incomesForm {
+.defaultForm {
   position: fixed;
   display: grid;
   width: 70vw;
   height: 70vh;
-  top: 15vh;
-  left: 30vh;
+  top: 100px;
+  left: 15vw;
   background-color: rgb(117, 131, 173);
   padding: 8px;
   border-radius: 5px;
   min-height: 400px;
 }
 
-.incomesForm button {
+#contextButtons {
   display: inline-block;
-  width: 30%;
-  float: right;
+}
+
+#contextButtons button {
+  margin-right: 5px;
+}
+
+.income {
+  background-color: rgba(227, 227, 227, 0.8);
+  width: 60vw;
+  min-width: 380px;
+  margin: 0 auto;
+  border-radius: 3px;
+  border-style: solid;
+  border-width: 3px;
+  border-color: rgba(94, 94, 94, 0.52);
+  margin-top: 3px;
+}
+
+.income * {
+  display: inline-block;
 }
