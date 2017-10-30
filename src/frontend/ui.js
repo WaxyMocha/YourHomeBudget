@@ -5,7 +5,7 @@
 const menuButton = document.getElementById('menuButton'),
       mainMenu = document.getElementById('mainMenu'),
       contextButtons = document.getElementById('contextButtons'),
-      maska = document.getElementById('maska'),
+      mask = document.getElementById('mask'),
       balanceContent = document.getElementById('balanceContent'),
       floatingFrame = document.getElementById('floatingFrame');
 let incomesSubmit,
@@ -15,31 +15,32 @@ let incomesSubmit,
 
 menuButton.addEventListener('click', (e) => {
   if (mainMenu.style.left == '0px') {
-    maska.style.pointerEvents = 'none';
+    mask.style.pointerEvents = 'none';
     mainMenu.style.left = '-100vw';
     menuButton.classList.remove("fa-arrow-left");
     menuButton.classList.add("fa-bars");
-    maska.style.backdropFilter = 'none';
+    mask.style.backdropFilter = 'none';
 
   } else {
     mainMenu.style.left = '0px';
-    maska.style.pointerEvents = 'all';
+    mask.style.pointerEvents = 'all';
     menuButton.classList.remove("fa-bars");
     menuButton.classList.add("fa-arrow-left");
-    maska.style.backdropFilter = 'blur(5px)';
+    mask.style.backdropFilter = 'blur(5px)';
   }
 });
 
-maska.addEventListener('click', () => {
-  maska.style.pointerEvents = 'none';
+mask.addEventListener('click', () => {
+  mask.style.pointerEvents = 'none';
   mainMenu.style.left = '-100vw';
   menuButton.classList.remove("fa-arrow-left");
   menuButton.classList.add("fa-bars");
-  maska.style.backdropFilter = 'none';
-})
+  mask.style.backdropFilter = 'none';
+});
 
 function generateIncomesForm() {
-    floatingFrame.innerHTML = '<section class="defaultForm" id="incomesForm"><p id="incomesFormName">Name</p><input type="text" id="incomesFormNameInput"><p id="incomesFormAmount">Amount</p><input type="number" id="incomesFormAmountInput" name="" value=""><p id="incomesFormDesc">Description</p><textarea name="name" id="incomesFormDescInput" rows="8" cols="80"></textarea><button id="incomesFormSubmit">Submit</button><button id="incomesFormCancel">Cancel</button></section>';
+    floatingFrame.innerHTML = '<section class="defaultForm" id="incomesForm"><h2>Add income</h2><p id="incomesFormName">Name</p><input type="text" id="incomesFormNameInput"><p id="incomesFormAmount">Amount</p><input type="number" id="incomesFormAmountInput" name="" value=""><p id="incomesFormDesc">Description</p><input name="name" id="incomesFormDescInput" rows="8" cols="80"></input><button id="incomesFormCancel">Cancel</button><button id="incomesFormSubmit">Submit</button></section>';
+    
     incomesSubmit = document.getElementById('incomesFormSubmit');
 
     incomesSubmit.addEventListener('click', () => {
@@ -67,7 +68,7 @@ function delForm() {
 }
 
 function generateOutcomesForm() {
-    floatingFrame.innerHTML = '<section class="defaultForm" id="outcomesForm"><p id="outcomesFormName">Name</p><input type="text" id="outcomesFormNameInput"><p id="outcomesFormAmount">Amount</p><input type="number" id="outcomesFormAmountInput" name="" value=""><p id="outcomesFormCategory">Category</p><input type="text" id="outcomesFormCategoryInput"><p id="outcomesFormDesc">Description</p><textarea name="name" id="outcomesFormDescInput" rows="8" cols="80"></textarea><button id="outcomesFormSubmit">Submit</button><button id="outcomesFormCancel">Cancel</button></section>';
+    floatingFrame.innerHTML = '<section class="defaultForm" id="outcomesForm"><h2>Add outcome</h2><p id="outcomesFormName">Name</p><input type="text" id="outcomesFormNameInput"><p id="outcomesFormAmount">Amount</p><input type="number" id="outcomesFormAmountInput" name="" value=""><p id="outcomesFormCategory">Category</p><input type="text" id="outcomesFormCategoryInput"><p id="outcomesFormDesc">Description</p><input name="name" id="outcomesFormDescInput" rows="8" cols="80"></input><button id="outcomesFormCancel">Cancel</button><button id="outcomesFormSubmit">Submit</button></section>';
     outcomesSubmit = document.getElementById('outcomesFormSubmit');
 
     outcomesSubmit.addEventListener('click', () => {
@@ -123,9 +124,19 @@ function generateContextButtons(scheme) {
 }
 
 function refreshIncomes() {
-  for (var i = 0; i < incomes.length; i++) {
+  balanceContent.innerHTML = '';
+  let i = 0;
+  for (i = 0; i < incomes.length; i++) {
     balanceContent.insertAdjacentHTML('afterbegin', `<section class="income" id="income${i}"><h1>${incomes[i].name}</h1>  <p>${incomes[i].amount}</p><br><p>${incomes[i].description}</p></section>`);
   }
+
+  balanceContent.insertAdjacentHTML('afterbegin', '<h1 style="margin: 0 auto">Incomes</h1>');
+
+  for (i = 0; i < outcomes.length; i++) {
+    balanceContent.insertAdjacentHTML('afterbegin', `<section class="income" id="outcome${i}"><h1>${outcomes[i].name}</h1>  <p>${outcomes[i].amount}</p><br><p>${outcomes[i].cat}</p><br><p>${outcomes[i].description}</p></section>`);
+  }
+
+  balanceContent.insertAdjacentHTML('afterbegin', '<h1 style="margin: 0 auto">Outcomes</h1>');
 }
 
 generateContextButtons('incomes');

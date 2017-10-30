@@ -70,7 +70,7 @@ body {
   transition: left 0.2s;
 }
 
-#maska {
+#mask {
   background-color: rgba(54, 201, 48, 0);
   position: fixed;
   height: 100vh;
@@ -79,7 +79,7 @@ body {
   pointer-events: none;
   width: 100vw;
   z-index: 999;
-  transition: 0.3s;
+  transition: backdrop-filter 0.3s;
 }
 
 .mainMenuItem {
@@ -149,14 +149,42 @@ body {
 .defaultForm {
   position: fixed;
   display: grid;
-  width: 70vw;
+  width: 40vw;
   height: 70vh;
   top: 100px;
-  left: 15vw;
+  left: 30vw;
   background-color: rgb(117, 131, 173);
   padding: 8px;
   border-radius: 5px;
-  min-height: 400px;
+  min-height: 50px;
+  max-height: 200px;
+  grid-gap: 4px;
+}
+
+#incomesForm {
+  grid-template:
+    "title title" 1fr
+    "name nameVal" 1fr
+    "amount amountVal" 1fr
+    "desc descVal" 1fr
+    "cancel submit" 1fr
+    / 1fr 3fr;
+}
+
+#outcomesForm {
+  grid-template:
+    "title title" 1fr
+    "name nameVal" 1fr
+    "amount amountVal" 1fr
+    "cat catVal" 1fr
+    "desc descVal" 1fr
+    "cancel submit" 1fr
+    / 1fr 3fr;
+}
+
+.defaultForm h2 {
+  grid-area: title;
+  text-align: center;
 }
 
 #contextButtons {

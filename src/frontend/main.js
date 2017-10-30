@@ -4,7 +4,7 @@
  * @desc Contains configuration (frontend)
  */
 let config = {
-  lastBudget: 'budgets/budget-0/',
+  lastBudgetID: 0,
 };
 /**
  * @type {array}
@@ -22,11 +22,10 @@ let outcomes = [];
  */
 let budget = {
   id: 0,
-  path: `budgets/budget-0/`,
+  place: 'disk',
   monthsID: [
     {
-      id: 0,
-      path: `budgets/budget-0/month-0/`,
+      date: '10.2017',
     },
   ],
   lastMonthID: 0,
@@ -58,28 +57,28 @@ function saveAll() {
   send({
     task: 'save',
     data: { name: 'budget', data: budget },
-    path: budget.path,
+    path: `budgets/budget-${budget.id}/`,
     name: 'budget.json',
   });
 
   send({
     task: 'save',
     data: { name: 'month', data: month },
-    path: budget.monthsID[budget.lastMonthID].path,
+    path: `budgets/budget-${budget.id}/month-${budget.lastMonthID}/`,
     name: 'month.json',
   });
 
   send({
     task: 'save',
     data: { name: 'incomes', data: incomes },
-    path: budget.monthsID[budget.lastMonthID].path,
+    path: `budgets/budget-${budget.id}/month-${budget.lastMonthID}/`,
     name: 'incomes.json',
   });
 
   send({
     task: 'save',
     data: { name: 'outcomes', data: outcomes },
-    path: budget.monthsID[budget.lastMonthID].path,
+    path: `budgets/budget-${budget.id}/month-${budget.lastMonthID}/`,
     name: 'outcomes.json',
   });
 
@@ -96,11 +95,11 @@ function updateMonth() {
   }
   month.amount = amount;
 
-  save({ name: 'month', data: month }, 'month.json', budget.monthsID[budget.lastMonthID].path);
+  save({ name: 'month', data: month }, 'month.json', `budgets/budget-${budget.id}/month-${budget.lastMonthID}/`);
 
-  save({ name: 'incomes', data: incomes }, 'incomes.json', budget.monthsID[budget.lastMonthID].path);
+  save({ name: 'incomes', data: incomes }, 'incomes.json', `budgets/budget-${budget.id}/month-${budget.lastMonthID}/`);
 
-  save({ name: 'outcomes', data: outcomes }, 'outcomes.json', budget.monthsID[budget.lastMonthID].path);
+  save({ name: 'outcomes', data: outcomes }, 'outcomes.json', `budgets/budget-${budget.id}/month-${budget.lastMonthID}/`);
 }
 
 /**
@@ -156,25 +155,25 @@ function startup(arg) {
   } else if (arg == 'budget') {
     send({
       task: 'read',
-      path: config.lastBudget,
+      path: `budgets/budget-${config.lastBudgetID}/`,
       name: 'budget.json',
     });
   } else if (arg == 'month') {
     send({
       task: 'read',
-      path: budget.monthsID[budget.lastMonthID].path,
+      path: `budgets/budget-${budget.id}/month-${budget.lastMonthID}/`,
       name: 'month.json',
     });
   } else if (arg == 'incomes') {
     send({
       task: 'read',
-      path: budget.monthsID[budget.lastMonthID].path,
+      path: `budgets/budget-${budget.id}/month-${budget.lastMonthID}/`,
       name: 'incomes.json',
     });
   } else if (arg == 'outcomes') {
     send({
       task: 'read',
-      path: budget.monthsID[budget.lastMonthID].path,
+      path: `budgets/budget-${budget.id}/month-${budget.lastMonthID}/`,
       name: 'outcomes.json',
     });
   }
