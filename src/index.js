@@ -158,8 +158,8 @@ function createWorker() {
     });
 
   backendWin.once('ready-to-show', () => {
-      backendWin.show();
-      log('showing Worker window');
+      // backendWin.show();
+      // log('showing Worker window');
       if (backendStartupCount == 0) {
         send(mainWin, 'start');
       }
@@ -174,7 +174,7 @@ function createMainWindow() {
 
   // Create the browser window.
   let name = 'MainWin';
-  mainWin = crWin(mainWin, 'index.html', false, '/../res/ico/wallet.png', true, 800, 600, name, 400, 400);
+  mainWin = crWin(mainWin, 'index.html', false, '/../res/ico/wallet.png', false, 800, 600, name, 400, 400);
   mainWin.on('closed', () => {
 
       log('closing main window');
