@@ -15,8 +15,7 @@ if (platform == 'win32') {
 const filesPath = tempPath;
 
 /**
- * Checks if main program directory exists, if it doesn't it creates it. You should use {@link directory} (backend window)
- * @deprecated
+ * @ignore
  */
 function progDir() {
   directory(filesPath);
@@ -30,10 +29,11 @@ function directory(path) {
   if (!fs.existsSync(path)) {
     console.log('creating folder');
     fs.mkdirsSync(path);
-    return;
+    return false;
   }
 
   console.log('folder already exists');
+  return true;
 }
 
 /**
@@ -52,6 +52,8 @@ function read(relPath, name) {
   } else if (fs.existsSync(`${appRootPath}/${name}`)) {
     console.log(`File location: ${appRootPath}`);
     return (fs.readFileSync(`${appRootPath}/${name}`, 'utf8'));
+  } else if (name == 'config.json' && !fs.existsSync(`${path}/${name}`)) {
+    send('firstStartup');
   } else {
     console.log('File does not exist');
     return '';

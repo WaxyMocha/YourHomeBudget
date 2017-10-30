@@ -46,42 +46,28 @@ let month = {
  * Saves all informations about budget and config (frontend)
  */
 function saveAll() {
+  saveConfig();
+  saveBudget();
+  updateMonth();
 
+}
+
+function saveConfig() {
   send({
     task: 'save',
     data: { name: 'config', data: config },
     path: '',
     name: 'config.json',
   });
+}
 
+function saveBudget() {
   send({
     task: 'save',
     data: { name: 'budget', data: budget },
     path: `budgets/budget-${budget.id}/`,
     name: 'budget.json',
   });
-
-  send({
-    task: 'save',
-    data: { name: 'month', data: month },
-    path: `budgets/budget-${budget.id}/month-${budget.lastMonthID}/`,
-    name: 'month.json',
-  });
-
-  send({
-    task: 'save',
-    data: { name: 'incomes', data: incomes },
-    path: `budgets/budget-${budget.id}/month-${budget.lastMonthID}/`,
-    name: 'incomes.json',
-  });
-
-  send({
-    task: 'save',
-    data: { name: 'outcomes', data: outcomes },
-    path: `budgets/budget-${budget.id}/month-${budget.lastMonthID}/`,
-    name: 'outcomes.json',
-  });
-
 }
 
 function updateMonth() {
@@ -111,7 +97,10 @@ function checkArg(arg) {
   if (arg == 'start') {
     startup();
 
-  } else if (arg.task == 'read') {
+  } else if (arg == 'firstStartup') {
+    saveAll();
+    return;
+  } else if (typeof arg == 'object' && arg.task == 'read') {
     let name = arg.data.name;
     let data = arg.data.data;
 
@@ -126,10 +115,10 @@ function checkArg(arg) {
 
     } else if (name == 'incomes') {
       incomes = data;
-
+      refreshIncomes();
     } else if (name == 'outcomes') {
       outcomes = data;
-
+      refreshIncomes();
     } else if (name == 'config') {
       config = data;
       startup('budget');
@@ -214,6 +203,7 @@ function addIncome(type, name, desc, amount, cat) {
 
   tmpArr.push(tmpObj);
   updateMonth();
+  refreshIncomes();
 }
 
 if ((document.getElementById('')) !== null) {

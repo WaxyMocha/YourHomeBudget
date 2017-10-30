@@ -210,3 +210,9 @@ body {
 .income * {
   display: inline-block;
 }
+
+#incomesAmount {
+  display: inline-block;
+  float: right;
+  margin: 15px 10px;
+}

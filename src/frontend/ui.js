@@ -40,7 +40,7 @@ mask.addEventListener('click', () => {
 
 function generateIncomesForm() {
     floatingFrame.innerHTML = '<section class="defaultForm" id="incomesForm"><h2>Add income</h2><p id="incomesFormName">Name</p><input type="text" id="incomesFormNameInput"><p id="incomesFormAmount">Amount</p><input type="number" id="incomesFormAmountInput" name="" value=""><p id="incomesFormDesc">Description</p><input name="name" id="incomesFormDescInput" rows="8" cols="80"></input><button id="incomesFormCancel">Cancel</button><button id="incomesFormSubmit">Submit</button></section>';
-    
+
     incomesSubmit = document.getElementById('incomesFormSubmit');
 
     incomesSubmit.addEventListener('click', () => {
@@ -68,7 +68,7 @@ function delForm() {
 }
 
 function generateOutcomesForm() {
-    floatingFrame.innerHTML = '<section class="defaultForm" id="outcomesForm"><h2>Add outcome</h2><p id="outcomesFormName">Name</p><input type="text" id="outcomesFormNameInput"><p id="outcomesFormAmount">Amount</p><input type="number" id="outcomesFormAmountInput" name="" value=""><p id="outcomesFormCategory">Category</p><input type="text" id="outcomesFormCategoryInput"><p id="outcomesFormDesc">Description</p><input name="name" id="outcomesFormDescInput" rows="8" cols="80"></input><button id="outcomesFormCancel">Cancel</button><button id="outcomesFormSubmit">Submit</button></section>';
+    floatingFrame.innerHTML = '<section class="defaultForm" id="outcomesForm"><h2>Add outcome</h2><p id="outcomesFormName">Name</p><input type="text" id="outcomesFormNameInput"><p id="outcomesFormAmount">Amount</p><input type="number" id="outcomesFormAmountInput" name="" value=""><p id="outcomesFormCategory">Category</p><select id="outcomesFormCategoryInput"><option value="Other">Other</option><option value="Daily expenses">Daily expenses</option><option value="Entertainment">Entertainment</option><option value="House and bills">House and bills</option><option value="Finance and insurance">Finance and insurance</option></select><p id="outcomesFormDesc">Description</p><input name="name" id="outcomesFormDescInput" rows="8" cols="80"></input><button id="outcomesFormCancel">Cancel</button><button id="outcomesFormSubmit">Submit</button></section>';
     outcomesSubmit = document.getElementById('outcomesFormSubmit');
 
     outcomesSubmit.addEventListener('click', () => {
@@ -94,7 +94,8 @@ function generateOutcomesForm() {
 
 function generateContextButtons(scheme) {
   if (scheme == 'incomes') {
-    contextButtons.innerHTML = '<button id="incomesButton" class="headerBarButton fa  fa-usd"><b>+</b></button><button id="outcomesButton" class="headerBarButton fa fa-usd"><b>-</b></button>';
+    contextButtons.innerHTML = '<button id="incomesButton" class="headerBarButton fa  fa-usd"><b>+</b></button><button id="outcomesButton" class="headerBarButton fa fa-usd"><b>-</b></button><div>';
+    contextButtons.insertAdjacentHTML('afterend', '<div id="incomesAmount"></div>');
 
     incomesButton = document.getElementById('incomesButton');
     outcomesButton = document.getElementById('outcomesButton');
@@ -123,20 +124,30 @@ function generateContextButtons(scheme) {
   }
 }
 
+function contextIncomesAmount() {
+  let amount = month.amount;
+  document.getElementById('incomesAmount').innerHTML = `Amount: ${amount}`;
+}
+
 function refreshIncomes() {
   balanceContent.innerHTML = '';
   let i = 0;
-  for (i = 0; i < incomes.length; i++) {
-    balanceContent.insertAdjacentHTML('afterbegin', `<section class="income" id="income${i}"><h1>${incomes[i].name}</h1>  <p>${incomes[i].amount}</p><br><p>${incomes[i].description}</p></section>`);
+  if (incomes.length > 0) {
+
+    for (i = 0; i < incomes.length; i++) {
+      balanceContent.insertAdjacentHTML('afterbegin', `<section class="income" id="income${i}"><h1>${incomes[i].name}</h1>  <p>${incomes[i].amount}</p><br><p>${incomes[i].description}</p></section>`);
+    }
+
+    balanceContent.insertAdjacentHTML('afterbegin', '<div style="margin: 0 auto"><h1>Incomes</h1></div>');
   }
 
-  balanceContent.insertAdjacentHTML('afterbegin', '<h1 style="margin: 0 auto">Incomes</h1>');
+  if (outcomes.length > 0) {
+    for (i = 0; i < outcomes.length; i++) {
+      balanceContent.insertAdjacentHTML('afterbegin', `<section class="income" id="outcome${i}"><h1>${outcomes[i].name}</h1>  <p>${outcomes[i].amount}</p><br><p>${outcomes[i].cat}</p><br><p>${outcomes[i].description}</p></section>`);
+    }
 
-  for (i = 0; i < outcomes.length; i++) {
-    balanceContent.insertAdjacentHTML('afterbegin', `<section class="income" id="outcome${i}"><h1>${outcomes[i].name}</h1>  <p>${outcomes[i].amount}</p><br><p>${outcomes[i].cat}</p><br><p>${outcomes[i].description}</p></section>`);
+    balanceContent.insertAdjacentHTML('afterbegin', '<div style="margin: 0 auto"><h1>Outcomes</h1></div>');
   }
-
-  balanceContent.insertAdjacentHTML('afterbegin', '<h1 style="margin: 0 auto">Outcomes</h1>');
 }
 
 generateContextButtons('incomes');
