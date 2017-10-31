@@ -9,15 +9,20 @@
     "electron": "^1.7.5",
     "electron-packager": "^8.7.2",
     "electron-rebuild": "^1.6.0",
+    "electron-winstaller": "^2.6.3",
     "file-system": "^2.2.2",
     "fs-extra": "^4.0.2",
     "stylelint-config-recommended": "^1.0.0"
   },
   "scripts": {
-    "package-win": "electron-packager . --overwrite --asar=true --platform=win32 --arch=ia32 --ignore=./docs/* --icon=res/ico/wallet.ico --prune=true --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=\"Your Home Budget\"",
-    "package-linux": "electron-packager . --overwrite --platform=linux --arch=x64 --ignore=./docs/* --icon=assets/icons/png/1024x1024.png --prune=true --out=release-builds"
+    "package-win": "electron-packager . --overwrite --asar=true --platform=win32 --arch=ia32 --icon=res/ico/wallet.ico --prune=true --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=\"Your Home Budget\"",
+    "package-linux": "electron-packager . --overwrite --platform=linux --arch=x64 --icon=assets/icons/png/1024x1024.png --prune=true --out=release-builds"
   },
   "dependencies": {
-    "electron-titlebar": "^0.0.3"
+    "devtron": "^1.4.0",
+    "electron": "^1.7.9",
+    "electron-titlebar": "^0.0.3",
+    "file-system": "^2.2.2",
+    "fs-extra": "^4.0.2"
   }
 }
