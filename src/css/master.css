@@ -65,7 +65,7 @@ body {
   width: 70vw;
   max-width: 400px;
   position: fixed;
-  height: calc(100vh - var(--headerBarHeight));
+  height: calc(100vh - var(--headerBarHeight) - 1px);
   background-color: rgb(218, 218, 218);
   z-index: 1000;
   transition: left 0.2s;
