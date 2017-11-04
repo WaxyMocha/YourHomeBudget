@@ -12,6 +12,7 @@
     "electron-winstaller": "^2.6.3",
     "file-system": "^2.2.2",
     "fs-extra": "^4.0.2",
+    "grunt-electron-installer": "^2.1.0",
     "stylelint-config-recommended": "^1.0.0"
   },
   "scripts": {

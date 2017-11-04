@@ -47,7 +47,7 @@ function generateIncomesForm() {
       let name = document.getElementById('incomesFormNameInput').value;
       let amount = Number(document.getElementById('incomesFormAmountInput').value);
       let description = document.getElementById('incomesFormDescInput').value;
-      if (amount != "" && name != "" && description != "") {
+      if (amount != "" && name != "") {
         addIncome('income', name, description, amount, 'none');
       } else {
         console.log(' continue');
@@ -76,7 +76,7 @@ function generateOutcomesForm() {
       let amount = Number(document.getElementById('outcomesFormAmountInput').value);
       let category = document.getElementById('outcomesFormCategoryInput').value;
       let description = document.getElementById('outcomesFormDescInput').value;
-      if (amount != "" && name != "" && category != "" && description != "") {
+      if (amount != "" && name != "" && category != "") {
         addIncome('outcome', name, description, amount, category);
       } else {
         console.log(' continue');

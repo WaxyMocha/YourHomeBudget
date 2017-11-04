@@ -21,6 +21,7 @@ body {
   width: 100%;
   font-family: calibri, arial, sans-serif;
   min-height: 100vh;
+  overflow: hidden;
 }
 
 .headerBar {
@@ -94,8 +95,8 @@ body {
 }
 
 .content {
-  width: 100%;
-  height: calc(100vh - var(--headerBarHeight));
+  width: calc(100% - 2px);
+  height: calc(100vh - var(--headerBarHeight) - 2px);
   overflow-y: auto;
 }
 
@@ -104,6 +105,9 @@ body {
   position: relative;
   top: 0;
   left: 0;
+  border-style: solid;
+  border-color: var(--masterAccentColor);
+  border-width: 1px;
 }
 
 .contentItem {
@@ -159,6 +163,7 @@ body {
   min-height: 50px;
   max-height: 200px;
   grid-gap: 4px;
+  box-shadow: 0 3px 5px 3px lightgrey;
 }
 
 #incomesForm {

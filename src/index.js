@@ -47,6 +47,8 @@ let backendWin;
 
 let backendStartupCount = 0;
 
+if(require('electron-squirrel-startup')) return;
+
 /**
  * Main function, called at startup (Main process)
  *
