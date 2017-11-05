@@ -2,12 +2,26 @@
   "name": "YourHomeBudget",
   "productName": "YourHomeBudget",
   "version": "0.1.0",
+  "author": {
+    "name": "Damian Epat Kusmierz",
+    "email": "kamikadze2185@gmail.com"
+  },
   "main": "src/index.js",
-  "description": "lol",
+  "category": "Office",
+  "description": "Simple home budget managet",
   "icon": "res\\ico\\wallet.png",
+  "build": {
+    "appid":"yourid",
+    "asar": false,
+      "linux" : {
+        "target" : "deb",
+        "category": "Office"
+      }
+  },
   "devDependencies": {
     "devtron": "^1.4.0",
     "electron": "^1.7.5",
+    "electron-builder": "^19.45.0",
     "electron-packager": "^8.7.2",
     "electron-rebuild": "^1.6.0",
     "electron-winstaller": "^2.6.3",
@@ -25,7 +39,6 @@
   },
   "dependencies": {
     "devtron": "^1.4.0",
-    "electron": "^1.7.9",
     "electron-titlebar": "^0.0.3",
     "file-system": "^2.2.2",
     "fs-extra": "^4.0.2"
