@@ -1,0 +1,10 @@
+'create-windows-installer': {
+  ia32: {
+    appDirectory: 'F:\\Programowanie\\JS\\YourHomeBudget\\release-builds\\YourHomeBudget-win32-ia32',
+    outputDirectory: 'F:\\Programowanie\\JS\\YourHomeBudget\\release-builds\\YourHomeBudget-win32-ia32-installer',
+    authors: 'Epat',
+    exe: 'YourHomeBudget.exe',
+    iconUrl: 'res\\ico\\wallet.ico',
+    setupIcon: 'res\\ico\\wallet.ico'
+  }
+}
