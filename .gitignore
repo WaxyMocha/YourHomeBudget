@@ -2,5 +2,3 @@ release-builds
 release-builds/*
 dist
 dist/*
-build
-build/*
