@@ -8,10 +8,10 @@
   },
   "main": "src/index.js",
   "category": "Office",
-  "description": "Simple home budget managet",
+  "description": "Simple home budget manager",
   "icon": "res\\ico\\wallet.png",
   "build": {
-    "asar": true,
+    "asar": false,
     "linux": {
       "target": "deb",
       "category": "Office"
@@ -22,18 +22,12 @@
     "concat-stream": "^1.6.0",
     "devtron": "^1.4.0",
     "electron": "^1.7.5",
-    "electron-builder": "^19.45.0",
-    "electron-packager": "^8.7.2",
-    "electron-rebuild": "^1.6.0",
-    "electron-winstaller": "^2.6.3",
+    "electron-builder": "^19.45.4",
     "extract-zip": "^1.6.6",
     "fd-slicer": "^1.0.1",
     "file-match": "^1.0.2",
     "file-system": "^2.2.2",
     "fs-extra": "^4.0.2",
-    "grunt": "^1.0.1",
-    "grunt-electron-installer": "^2.1.0",
-    "grunt-generate": "^0.3.2",
     "highlight.js": "^9.12.0",
     "humanize-plus": "^1.8.2",
     "load-grunt-tasks": "^3.5.2",
@@ -47,22 +41,11 @@
     "package-linux": "electron-packager . --overwrite --platform=linux --arch=x64 --icon=assets/icons/png/1024x1024.png --prune=true --out=release-builds"
   },
   "dependencies": {
-    "accessibility-developer-tools": "^2.12.0",
-    "concat-stream": "^1.6.0",
     "devtron": "^1.4.0",
     "electron-squirrel-startup": "^1.0.0",
     "electron-titlebar": "^0.0.3",
-    "extract-zip": "^1.6.6",
     "file-match": "^1.0.2",
     "file-system": "^2.2.2",
-    "fs-extra": "^4.0.2",
-    "grunt": "^1.0.1",
-    "grunt-electron-installer": "^2.1.0",
-    "grunt-generate": "^0.3.2",
-    "highlight.js": "^9.12.0",
-    "humanize-plus": "^1.8.2",
-    "load-grunt-tasks": "^3.5.2",
-    "stylelint-config-recommended": "^1.0.0",
-    "utils-extend": "^1.0.8"
+    "fs-extra": "^4.0.2"
   }
 }
