@@ -44,7 +44,8 @@ body {
   border-style: solid;
   border-radius: 3px;
   border-color: rgba(0, 0, 0, 0.26);
-  transition: 0.2s;
+
+  /* transition: 0.2s; */
 }
 
 .headerBarButton:hover {
@@ -68,7 +69,8 @@ body {
   height: calc(100vh - var(--headerBarHeight) - 1px);
   background-color: rgb(218, 218, 218);
   z-index: 1000;
-  transition: left 0.2s;
+
+  /* transition: left 0.2s; */
 }
 
 #mask {
@@ -80,7 +82,8 @@ body {
   pointer-events: none;
   width: 100vw;
   z-index: 999;
-  transition: backdrop-filter 0.3s;
+
+  /* transition: backdrop-filter 0.3s; */
 }
 
 .mainMenuItem {

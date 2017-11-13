@@ -1,4 +1,5 @@
-release-builds
+release-builds/
 release-builds/*
-dist
+dist/
 dist/*
+*.zip

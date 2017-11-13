@@ -7,14 +7,14 @@
     "email": "kamikadze2185@gmail.com"
   },
   "main": "src/index.js",
-  "category": "Office",
+  "category": "Accesories",
   "description": "Simple home budget manager",
   "icon": "res\\ico\\wallet.png",
   "build": {
     "asar": false,
     "linux": {
       "target": "deb",
-      "category": "Office"
+      "category": "Accesories"
     }
   },
   "devDependencies": {
