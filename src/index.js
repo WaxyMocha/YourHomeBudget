@@ -55,12 +55,10 @@ if(require('electron-squirrel-startup')) return;
  * @ignore
  */
 function main() {
-
   require('events').EventEmitter.prototype._maxListeners = 30;
   createSplash();
   createMainWindow();
   createWorker();
-
 }
 
 /**
@@ -69,7 +67,6 @@ function main() {
  * @return {string} current date and time (dd-mm-yyyy hh:mm:ss)
  */
 function now() {
-
   let date = new Date();
   let hr = String('0' + date.getHours()).slice(-2);
   let min = String('0' + date.getMinutes()).slice(-2);
@@ -178,7 +175,6 @@ function createMainWindow() {
   let name = 'MainWin';
   mainWin = crWin(mainWin, 'index.html', false, '/../res/ico/wallet.png', false, 800, 600, name, 400, 400);
   mainWin.on('closed', () => {
-
       log('closing main window');
       mainWin = null;
       backendWin.close();
@@ -186,9 +182,7 @@ function createMainWindow() {
 
   mainWin.once('ready-to-show', () => {
       mainWin.show();
-
       log('showing main window');
-
       splash.close();
     });
 }
@@ -204,7 +198,6 @@ function createSplash() {
 
   // Emitted when the window is closed.
   splash.on('closed', () => {
-
       log('closing splash screen');
       splash = null;
     });
@@ -219,7 +212,6 @@ app.on('ready', main);
 
 // Quit when all windows are closed.
 app.on('window-all-closed', () => {
-
     log('closing app');
 
     // On macOS it is common for applications and their menu bar

@@ -49,7 +49,6 @@ function saveAll() {
   saveConfig();
   saveBudget();
   updateMonth();
-
 }
 
 function saveConfig() {
@@ -96,23 +95,19 @@ function checkArg(arg) {
 
   if (arg == 'start') {
     startup();
-
   } else if (arg == 'firstStartup') {
     saveAll();
     return;
   } else if (typeof arg == 'object' && arg.task == 'read') {
     let name = arg.data.name;
     let data = arg.data.data;
-
     if (name == 'budget') {
       budget = data;
       startup('month');
-
     } else if (name == 'month') {
       month = data;
       startup('incomes');
       startup('outcomes');
-
     } else if (name == 'incomes') {
       incomes = data;
       refreshIncomes();
@@ -122,7 +117,6 @@ function checkArg(arg) {
     } else if (name == 'config') {
       config = data;
       startup('budget');
-
     } else {
       console.log('invalid name');
     }
