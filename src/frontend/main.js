@@ -25,7 +25,7 @@ let budget = {
   place: 'disk',
   monthsID: [
     {
-      date: '10.2017',
+      date: new Date(),
     },
   ],
   lastMonthID: 0,
@@ -69,6 +69,37 @@ function saveBudget() {
   });
 }
 
+function checkMonth() {
+ let lastMonth = new Date((
+budget.monthsID[budget.monthsID.length - 1].date));
+  let now = new Date();
+  if (now.getMonth() > lastMonth.getMonth()) {
+    let leftAmount = month.amount;
+    resetMonthToDefault();
+    budget.monthsID.push({
+      date: new Date(),
+    },);
+    budget.lastMonthID = budget.monthsID.length - 1;
+    addIncome('income', 'Last amount', 'Left from last month', leftAmount);
+    updateMonth();
+  }
+  saveAll();
+}
+
+function resetMonthToDefault() {
+  month = {
+    amount: 0,
+    id: 0,
+    name: '',
+    descr: '',
+  };
+  config = {
+    lastBudgetID: 0,
+  };
+  outcomes = [];
+  incomes = [];
+}
+
 function updateMonth() {
   let amount = 0;
   let i;
@@ -108,6 +139,7 @@ function checkArg(arg) {
       month = data;
       startup('incomes');
       startup('outcomes');
+      checkMonth();
     } else if (name == 'incomes') {
       incomes = data;
       refreshIncomes();
