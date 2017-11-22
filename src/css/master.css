@@ -224,3 +224,9 @@ body {
   float: right;
   margin: 15px 10px;
 }
+
+#date {
+  display: inline-block;
+  float: right;
+  margin: 15px 10px;
+}

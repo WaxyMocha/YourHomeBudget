@@ -96,6 +96,7 @@ function generateContextButtons(scheme) {
   if (scheme == 'incomes') {
     contextButtons.innerHTML = '<button id="incomesButton" class="headerBarButton fa  fa-usd"><b>+</b></button><button id="outcomesButton" class="headerBarButton fa fa-usd"><b>-</b></button><div>';
     contextButtons.insertAdjacentHTML('afterend', '<div id="incomesAmount"></div>');
+    contextButtons.insertAdjacentHTML('afterend', '<div id="date"></div>');
 
     incomesButton = document.getElementById('incomesButton');
     outcomesButton = document.getElementById('outcomesButton');
@@ -129,6 +130,12 @@ function contextIncomesAmount() {
   document.getElementById('incomesAmount').innerHTML = `Amount: ${amount}`;
 }
 
+function contextIncomesDate() {
+  let date = new Date(budget.monthsID[budget.lastMonthID].date);
+  let dateFormatted = `${date.getMonth() + 1}-${date.getYear() + 1900}`;
+  document.getElementById('date').innerHTML = dateFormatted;
+}
+
 function refreshIncomes() {
   balanceContent.innerHTML = '';
   let i = 0;
@@ -149,6 +156,7 @@ function refreshIncomes() {
     balanceContent.insertAdjacentHTML('afterbegin', '<div style="margin: 0 auto"><h1>Outcomes</h1></div>');
   }
   contextIncomesAmount();
+  contextIncomesDate();
 }
 
 generateContextButtons('incomes');

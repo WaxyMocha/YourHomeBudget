@@ -80,8 +80,10 @@ budget.monthsID[budget.monthsID.length - 1].date));
       date: new Date(),
     },);
     budget.lastMonthID = budget.monthsID.length - 1;
+    updateMonth();
     addIncome('income', 'Last amount', 'Left from last month', leftAmount);
     updateMonth();
+    refreshIncomes();
   }
   saveAll();
 }
@@ -93,11 +95,12 @@ function resetMonthToDefault() {
     name: '',
     descr: '',
   };
-  config = {
-    lastBudgetID: 0,
-  };
   outcomes = [];
   incomes = [];
+  console.log(month);
+  console.log(outcomes);
+  console.log(incomes);
+  return;
 }
 
 function updateMonth() {
@@ -139,13 +142,14 @@ function checkArg(arg) {
       month = data;
       startup('incomes');
       startup('outcomes');
-      checkMonth();
     } else if (name == 'incomes') {
       incomes = data;
       refreshIncomes();
+      checkMonth();
     } else if (name == 'outcomes') {
       outcomes = data;
       refreshIncomes();
+      checkMonth();
     } else if (name == 'config') {
       config = data;
       startup('budget');
