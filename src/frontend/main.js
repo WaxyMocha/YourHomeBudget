@@ -5,6 +5,7 @@
  */
 let config = {
   lastBudgetID: 0,
+  currencySymbol: '$',
 };
 /**
  * @type {array}
@@ -25,6 +26,7 @@ let budget = {
   place: 'disk',
   monthsID: [
     {
+      amount: 0,
       date: new Date(),
     },
   ],
@@ -41,6 +43,9 @@ let month = {
   name: '',
   descr: '',
 };
+
+let editMonth = true;
+let historyCheck = false;
 
 /**
  * Saves all informations about budget and config (frontend)
@@ -69,23 +74,35 @@ function saveBudget() {
   });
 }
 
+function lastMth() {
+  budget.lastMonthID = budget.monthsID.length - 1;
+  loadMonth(budget.monthsID.length - 1);
+  historyCheck = false;
+  editMonth = true;
+}
+
 function checkMonth() {
- let lastMonth = new Date((
-budget.monthsID[budget.monthsID.length - 1].date));
-  let now = new Date();
-  if (now.getMonth() > lastMonth.getMonth()) {
-    let leftAmount = month.amount;
-    resetMonthToDefault();
-    budget.monthsID.push({
-      date: new Date(),
-    },);
-    budget.lastMonthID = budget.monthsID.length - 1;
-    updateMonth();
-    addIncome('income', 'Last amount', 'Left from last month', leftAmount);
-    updateMonth();
-    refreshIncomes();
+  if (historyCheck) {
+    return;
+  } else {
+     let lastMonth = new Date((
+    budget.monthsID[budget.monthsID.length - 1].date));
+      let now = new Date();
+      if (now.getMonth() > lastMonth.getMonth()) {
+        let leftAmount = month.amount;
+        resetMonthToDefault();
+        budget.monthsID.push({
+          date: new Date(),
+        },);
+        budget.lastMonthID = budget.monthsID.length - 1;
+        updateMonth();
+      addIncome('income', 'Last amount', 'Left from last month', leftAmount);
+      updateMonth();
+      refreshIncomes();
+    }
+    saveAll();
+    return;
   }
-  saveAll();
 }
 
 function resetMonthToDefault() {
@@ -113,6 +130,7 @@ function updateMonth() {
     amount -= Number(outcomes[i].amount);
   }
   month.amount = amount;
+  budget.monthsID[budget.monthsID.length - 1].amount = amount;
 
   save({ name: 'month', data: month }, 'month.json', `budgets/budget-${budget.id}/month-${budget.lastMonthID}/`);
 
@@ -199,6 +217,66 @@ function startup(arg) {
 
 }
 
+function fullDateAndHour(date) {
+  date = new Date(date);
+  let hr = String('0' + date.getHours()).slice(-2);
+  let min = String('0' + date.getMinutes()).slice(-2);
+  let sec = String('0' + date.getSeconds()).slice(-2);
+  let yr = date.getFullYear();
+  let mth = String('0' + String(Number(date.getMonth()) + 1)).slice(-2);
+  let day = String('0' + date.getDate()).slice(-2);
+  let ret =  `${day}-${mth}-${yr} ${hr}:${min}:${sec}`;
+  return ret;
+}
+
+function loadMonth(id){
+  budget.lastMonthID = id;
+  read('month.json', `budgets/budget-${budget.id}/month-${id}/`);
+  read('incomes.json', `budgets/budget-${budget.id}/month-${id}/`);
+  read('outcomes.json', `budgets/budget-${budget.id}/month-${id}/`);
+  if (id != budget.monthsID.length - 1) {
+    editMonth = false;
+  } else {
+    editMonth = true;
+  }
+}
+
+function showMonth(id) {
+  if (id != budget.monthsID.length - 1) {
+    historyCheck = true;
+  } else {
+    historyCheck = false;
+  }
+  loadMonth(id);
+}
+
+function delIncome(type, id) {
+  let tempArr = [];
+  if(!confirm('Are you shure?')){
+    return;
+  }
+  if (type == 'income') {
+
+    for (var i = 0; i < incomes.length; i++) {
+      if (i != id){
+        tempArr.push(incomes[i]);
+      }
+    }
+    incomes = tempArr;
+  } else if (type == 'outcome') {
+    for (var i = 0; i < outcomes.length; i++) {
+      if (i != id){
+        tempArr.push(outcomes[i]);
+      }
+    }
+    outcomes = tempArr;
+  }
+  updateMonth();
+  saveAll();
+  refreshIncomes();
+  contextIncomesAmount();
+}
+
 /**
  * Add an income or an outcome
  * @param {string} type income or outcome
@@ -209,7 +287,19 @@ function startup(arg) {
  * @example <JavaScript>
  * addIncome('income', 'Payment', 'From my employer', 2000, 1);
  */
-function addIncome(type, name, desc, amount, cat) {
+function addIncome(type, name, desc, amount, cat, canDelete) {
+  if (!editMonth) {
+    delForm();
+    if(type == 'income'){
+      incomesCancel = undefined;
+      incomesSubmit = undefined;
+    } else if (type == 'outcome') {
+      outcomesCancel = undefined;
+      outcomesSubmit = undefined;
+    }
+    alert("You can't edit this month");
+    return;
+  }
   let tmpArr;
   if (type == 'income') {
     tmpArr = incomes;
@@ -225,11 +315,15 @@ function addIncome(type, name, desc, amount, cat) {
     name: name,
     description: desc,
     cat: cat,
+    date: new Date(),
     id: (tmpArr.length),
     flags: {
       del: false,
     },
   };
+  if (canDelete) {
+    tmpObj.flags.del = true;
+  }
 
   tmpArr.push(tmpObj);
   updateMonth();

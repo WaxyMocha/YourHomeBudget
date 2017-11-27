@@ -13,7 +13,9 @@ let incomesSubmit,
     incomesButton,
     outcomesButton;
 
-menuButton.addEventListener('click', (e) => {
+menuButton.addEventListener('click', menuPos);
+
+function menuPos() {
   if (mainMenu.style.left == '0px') {
     mask.style.pointerEvents = 'none';
     mainMenu.style.left = '-100vw';
@@ -28,8 +30,7 @@ menuButton.addEventListener('click', (e) => {
     menuButton.classList.add("fa-arrow-left");
     mask.style.backdropFilter = 'blur(5px)';
   }
-});
-
+}
 mask.addEventListener('click', () => {
   mask.style.pointerEvents = 'none';
   mainMenu.style.left = '-100vw';
@@ -48,7 +49,7 @@ function generateIncomesForm() {
       let amount = Number(document.getElementById('incomesFormAmountInput').value);
       let description = document.getElementById('incomesFormDescInput').value;
       if (amount != "" && name != "") {
-        addIncome('income', name, description, amount, 'none');
+        addIncome('income', name, description, amount, 'none', true);
       } else {
         console.log(' continue');
       }
@@ -77,7 +78,7 @@ function generateOutcomesForm() {
       let category = document.getElementById('outcomesFormCategoryInput').value;
       let description = document.getElementById('outcomesFormDescInput').value;
       if (amount != "" && name != "" && category != "") {
-        addIncome('outcome', name, description, amount, category);
+        addIncome('outcome', name, description, amount, category, true);
       } else {
         console.log(' continue');
       }
@@ -127,13 +128,43 @@ function generateContextButtons(scheme) {
 
 function contextIncomesAmount() {
   let amount = month.amount;
-  document.getElementById('incomesAmount').innerHTML = `Amount: ${amount}`;
+  document.getElementById('incomesAmount').innerHTML = `Amount: ${amount.toFixed(2)} ${config.currencySymbol}`;
 }
 
+function monthYear(date) {
+  date = new Date(date);
+  let dateFormatted = `${date.getMonth() + 1}-${date.getYear() + 1900}`;
+  return dateFormatted;
+}
 function contextIncomesDate() {
   let date = new Date(budget.monthsID[budget.lastMonthID].date);
-  let dateFormatted = `${date.getMonth() + 1}-${date.getYear() + 1900}`;
+  let dateFormatted = monthYear(date);
   document.getElementById('date').innerHTML = dateFormatted;
+}
+
+function generateHistory() {
+  let history = budget.monthsID;
+  balanceContent.innerHTML = '';
+  for (let i = 0; i < history.length; i++) {
+    balanceContent.insertAdjacentHTML('afterbegin', `<button class="income" onclick="showMonth(${i})"> <h1> ${monthYear(history[i].date)}</h1><br><p>${history[i].amount}</p></button>`);
+  }
+}
+
+function generateMainMenu() {
+  let buttons = [
+    {
+      name: 'Budget',
+      action: 'lastMth()',
+    },
+    {
+      name: 'History',
+      action: 'generateHistory()',
+    }
+  ];
+
+  for (var i = 0; i < buttons.length; i++) {
+    mainMenu.insertAdjacentHTML('beforeend', `<button class="mainMenuItem" onclick="${buttons[i].action}; menuPos()">${buttons[i].name}</button>`);
+  }
 }
 
 function refreshIncomes() {
@@ -142,7 +173,20 @@ function refreshIncomes() {
   if (incomes.length > 0) {
 
     for (i = 0; i < incomes.length; i++) {
-      balanceContent.insertAdjacentHTML('afterbegin', `<section class="income" id="income${i}"><h1>${incomes[i].name}</h1>  <p>${incomes[i].amount}</p><br><p>${incomes[i].description}</p></section>`);
+      let cont = `<section class="income" id="income${i}"><h1>${incomes[i].name}</h1>  <p>${incomes[i].amount.toFixed(2)}${config.currencySymbol}</p>`;
+      if (incomes[i].description) {
+        cont += '<br>';
+      }
+      cont += `<p>${incomes[i].description}</p>`;
+      if (incomes[i].date) {
+        cont += `<br><p>${fullDateAndHour(incomes[i].date)}</p>`;
+      }
+      if (incomes[i].flags.del && editMonth) {
+        cont += `<br><button onclick="delIncome('income', ${i})"> Delete</button>`;
+      }
+      cont += '</section>';
+      balanceContent.insertAdjacentHTML('afterbegin', cont);
+      cont = '';
     }
 
     balanceContent.insertAdjacentHTML('afterbegin', '<div style="margin: 0 auto"><h1>Incomes</h1></div>');
@@ -150,13 +194,28 @@ function refreshIncomes() {
 
   if (outcomes.length > 0) {
     for (i = 0; i < outcomes.length; i++) {
-      balanceContent.insertAdjacentHTML('afterbegin', `<section class="income" id="outcome${i}"><h1>${outcomes[i].name}</h1>  <p>${outcomes[i].amount}</p><br><p>${outcomes[i].cat}</p><br><p>${outcomes[i].description}</p></section>`);
+      let cont = `<section class="income" id="outcome${i}"><h1>${outcomes[i].name}</h1>  <p>${outcomes[i].amount.toFixed(2)}${config.currencySymbol}</p>`;
+      if (outcomes[i].description) {
+        cont += '<br>';
+      }
+      cont += `<p>${outcomes[i].description}</p>`;
+      if (outcomes[i].date) {
+        cont += `<br><p>${fullDateAndHour(outcomes[i].date)}</p>`;
+      }
+      cont += `<br><p>${outcomes[i].cat}</p>`
+      if (outcomes[i].flags.del && editMonth) {
+        cont += `<br><button onclick="delIncome('outcome', ${i})"> Delete</button>`;
+      }
+      cont += '</section>';
+      balanceContent.insertAdjacentHTML('afterbegin', cont);
+      cont = '';
     }
-
     balanceContent.insertAdjacentHTML('afterbegin', '<div style="margin: 0 auto"><h1>Outcomes</h1></div>');
   }
+  updateMonth();
   contextIncomesAmount();
   contextIncomesDate();
 }
 
 generateContextButtons('incomes');
+generateMainMenu();

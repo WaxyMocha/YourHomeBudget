@@ -47,7 +47,11 @@ let backendWin;
 
 let backendStartupCount = 0;
 
-if(require('electron-squirrel-startup')) return;
+function checkSquirrel(){
+  if(require('electron-squirrel-startup')) return;
+}
+
+checkSquirrel();
 
 /**
  * Main function, called at startup (Main process)
@@ -157,7 +161,7 @@ function createWorker() {
     });
 
   backendWin.once('ready-to-show', () => {
-      //backendWin.show();
+      backendWin.show();
       // log('showing Worker window');
       if (backendStartupCount == 0) {
         send(mainWin, 'start');
