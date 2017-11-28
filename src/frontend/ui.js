@@ -40,8 +40,12 @@ mask.addEventListener('click', () => {
 });
 
 function generateIncomesForm() {
-    floatingFrame.innerHTML = '<section class="defaultForm" id="incomesForm"><h2>Add income</h2><p id="incomesFormName">Name</p><input type="text" id="incomesFormNameInput"><p id="incomesFormAmount">Amount</p><input type="number" id="incomesFormAmountInput" name="" value=""><p id="incomesFormDesc">Description</p><input name="name" id="incomesFormDescInput" rows="8" cols="80"></input><button id="incomesFormCancel">Cancel</button><button id="incomesFormSubmit">Submit</button></section>';
-
+    let cont = `<section class="defaultForm" id="incomesForm"><h2>${lang.incomes.forms.addIncome}</h2>`;
+    cont += `<p id="incomesFormName">${lang.incomes.forms.name}</p><input type="text" id="incomesFormNameInput">`;
+    cont += `<p id="incomesFormAmount">${lang.incomes.forms.amount}</p><input type="number" id="incomesFormAmountInput" name="" value="0">`;
+    cont += `<p id="incomesFormDesc">${lang.incomes.forms.description}</p><input name="name" id="incomesFormDescInput" rows="8" cols="80"></input>`;
+    cont +=`<button id="incomesFormCancel">${lang.other.cancel}</button><button id="incomesFormSubmit">${lang.other.submit}</button></section>`;
+    floatingFrame.innerHTML = cont;
     incomesSubmit = document.getElementById('incomesFormSubmit');
 
     incomesSubmit.addEventListener('click', () => {
@@ -69,7 +73,13 @@ function delForm() {
 }
 
 function generateOutcomesForm() {
-    floatingFrame.innerHTML = '<section class="defaultForm" id="outcomesForm"><h2>Add outcome</h2><p id="outcomesFormName">Name</p><input type="text" id="outcomesFormNameInput"><p id="outcomesFormAmount">Amount</p><input type="number" id="outcomesFormAmountInput" name="" value=""><p id="outcomesFormCategory">Category</p><select id="outcomesFormCategoryInput"><option value="Other">Other</option><option value="Daily expenses">Daily expenses</option><option value="Entertainment">Entertainment</option><option value="House and bills">House and bills</option><option value="Finance and insurance">Finance and insurance</option></select><p id="outcomesFormDesc">Description</p><input name="name" id="outcomesFormDescInput" rows="8" cols="80"></input><button id="outcomesFormCancel">Cancel</button><button id="outcomesFormSubmit">Submit</button></section>';
+    let cont = `<section class="defaultForm" id="outcomesForm"><h2>${lang.incomes.forms.addOutcome}</h2>`;
+    cont += `<p id="outcomesFormName"> ${lang.incomes.forms.name}</p><input type="text" id="outcomesFormNameInput">`;
+    cont += `<p id="outcomesFormAmount">${lang.incomes.forms.amount}</p><input type="number" id="outcomesFormAmountInput" name="" value="0">`;
+    cont += `<p id="outcomesFormCategory">${lang.incomes.forms.category}</p><select id="outcomesFormCategoryInput" default="4" ><option value="0">${lang.incomes.categories.other}</option><option value="1">${lang.incomes.categories.dailyExpences}</option><option value="2">${lang.incomes.categories.entertaiment}</option><option value="3">${lang.incomes.categories.houseAndBills}</option><option value="4">${lang.incomes.categories.financeAndInsurance}</option></select>`;
+    cont += `<p id="outcomesFormDesc">${lang.incomes.forms.descrdescription}</p><input name="name" id="outcomesFormDescInput" rows="8" cols="80"></input>`;
+    cont += `<button id="outcomesFormCancel">${lang.other.cancel}</button><button id="outcomesFormSubmit">${lang.other.submit}</button></section>`;
+    floatingFrame.innerHTML = cont;
     outcomesSubmit = document.getElementById('outcomesFormSubmit');
 
     outcomesSubmit.addEventListener('click', () => {
@@ -80,7 +90,7 @@ function generateOutcomesForm() {
       if (amount != "" && name != "" && category != "") {
         addIncome('outcome', name, description, amount, category, true);
       } else {
-        console.log(' continue');
+        console.log('continue');
       }
 
     });
@@ -128,14 +138,9 @@ function generateContextButtons(scheme) {
 
 function contextIncomesAmount() {
   let amount = month.amount;
-  document.getElementById('incomesAmount').innerHTML = `Amount: ${amount.toFixed(2)} ${config.currencySymbol}`;
+  document.getElementById('incomesAmount').innerHTML = `${lang.headerBar.incomes.amount}: ${amount.toFixed(2)} ${config.currencySymbol}`;
 }
 
-function monthYear(date) {
-  date = new Date(date);
-  let dateFormatted = `${date.getMonth() + 1}-${date.getYear() + 1900}`;
-  return dateFormatted;
-}
 function contextIncomesDate() {
   let date = new Date(budget.monthsID[budget.lastMonthID].date);
   let dateFormatted = monthYear(date);
@@ -146,25 +151,38 @@ function generateHistory() {
   let history = budget.monthsID;
   balanceContent.innerHTML = '';
   for (let i = 0; i < history.length; i++) {
-    balanceContent.insertAdjacentHTML('afterbegin', `<button class="income" onclick="showMonth(${i})"> <h1> ${monthYear(history[i].date)}</h1><br><p>${history[i].amount}</p></button>`);
+    balanceContent.insertAdjacentHTML('afterbegin', `<button class="income" onclick="showMonth(${i})"> <h1> ${monthYear(history[i].date)}</h1><br><p>${history[i].amount.toFixed(2)}</p></button>`);
   }
 }
 
 function generateMainMenu() {
+  mainMenu.innerHTML = '';
   let buttons = [
     {
-      name: 'Budget',
+      name: lang.menu.budget,
       action: 'lastMth()',
     },
     {
-      name: 'History',
+      name: lang.menu.history,
       action: 'generateHistory()',
+    },
+    {
+      name: lang.menu.preferences,
+      action: 'generatePreferences()',
     }
   ];
 
   for (var i = 0; i < buttons.length; i++) {
     mainMenu.insertAdjacentHTML('beforeend', `<button class="mainMenuItem" onclick="${buttons[i].action}; menuPos()">${buttons[i].name}</button>`);
   }
+}
+
+function generatePreferences() {
+  balanceContent.innerHTML = '';
+  balanceContent.insertAdjacentHTML(
+    'beforeend',
+    `<h1>${lang.preferences.preferences}</h1>`
+   );
 }
 
 function refreshIncomes() {
@@ -182,14 +200,18 @@ function refreshIncomes() {
         cont += `<br><p>${fullDateAndHour(incomes[i].date)}</p>`;
       }
       if (incomes[i].flags.del && editMonth) {
-        cont += `<br><button onclick="delIncome('income', ${i})"> Delete</button>`;
+        cont += `<br><button onclick="delIncome('income', ${i})"> ${lang.other.del}</button>`;
       }
       cont += '</section>';
+
+      if (incomes[i].description == 'bwlflm' && incomes[i].name == 'bwlflm') {
+        cont = `<section class="income" id="income${i}"><h1>${lang.incomes.lastAmount}</h1>  <p>${incomes[i].amount.toFixed(2)}${config.currencySymbol}</p><br><p>${lang.incomes.leftFromLastMonth}</p></section>`
+      }
       balanceContent.insertAdjacentHTML('afterbegin', cont);
       cont = '';
     }
 
-    balanceContent.insertAdjacentHTML('afterbegin', '<div style="margin: 0 auto"><h1>Incomes</h1></div>');
+    balanceContent.insertAdjacentHTML('afterbegin', `<div style="margin: 0 auto"><h1>${lang.incomes.incomes}</h1></div>`);
   }
 
   if (outcomes.length > 0) {
@@ -202,15 +224,19 @@ function refreshIncomes() {
       if (outcomes[i].date) {
         cont += `<br><p>${fullDateAndHour(outcomes[i].date)}</p>`;
       }
-      cont += `<br><p>${outcomes[i].cat}</p>`
+      if (!isNaN(Number(outcomes[i].cat))) {
+        cont += `<br><p>${incomesCategories[Number(outcomes[i].cat)]}</p>`
+      } else {
+        cont += `<br><p>${outcomes[i].cat}</p>`;
+      }
       if (outcomes[i].flags.del && editMonth) {
-        cont += `<br><button onclick="delIncome('outcome', ${i})"> Delete</button>`;
+        cont += `<br><button onclick="delIncome('outcome', ${i})"> ${lang.other.del}</button>`;
       }
       cont += '</section>';
       balanceContent.insertAdjacentHTML('afterbegin', cont);
       cont = '';
     }
-    balanceContent.insertAdjacentHTML('afterbegin', '<div style="margin: 0 auto"><h1>Outcomes</h1></div>');
+    balanceContent.insertAdjacentHTML('afterbegin', `<div><h1>${lang.incomes.outcomes}</h1></div>`);
   }
   updateMonth();
   contextIncomesAmount();

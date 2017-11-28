@@ -24,12 +24,10 @@ let outcomes = [];
 let budget = {
   id: 0,
   place: 'disk',
-  monthsID: [
-    {
-      amount: 0,
-      date: new Date(),
-    },
-  ],
+  monthsID: [{
+    amount: 0,
+    date: new Date(),
+  }, ],
   lastMonthID: 0,
 };
 
@@ -59,7 +57,10 @@ function saveAll() {
 function saveConfig() {
   send({
     task: 'save',
-    data: { name: 'config', data: config },
+    data: {
+      name: 'config',
+      data: config
+    },
     path: '',
     name: 'config.json',
   });
@@ -68,7 +69,10 @@ function saveConfig() {
 function saveBudget() {
   send({
     task: 'save',
-    data: { name: 'budget', data: budget },
+    data: {
+      name: 'budget',
+      data: budget
+    },
     path: `budgets/budget-${budget.id}/`,
     name: 'budget.json',
   });
@@ -85,18 +89,18 @@ function checkMonth() {
   if (historyCheck) {
     return;
   } else {
-     let lastMonth = new Date((
-    budget.monthsID[budget.monthsID.length - 1].date));
-      let now = new Date();
-      if (now.getMonth() > lastMonth.getMonth()) {
-        let leftAmount = month.amount;
-        resetMonthToDefault();
-        budget.monthsID.push({
-          date: new Date(),
-        },);
-        budget.lastMonthID = budget.monthsID.length - 1;
-        updateMonth();
-      addIncome('income', 'Last amount', 'Left from last month', leftAmount);
+    let lastMonth = new Date((
+      budget.monthsID[budget.monthsID.length - 1].date));
+    let now = new Date();
+    if (now.getMonth() > lastMonth.getMonth()) {
+      let leftAmount = month.amount;
+      resetMonthToDefault();
+      budget.monthsID.push({
+        date: new Date(),
+      }, );
+      budget.lastMonthID = budget.monthsID.length - 1;
+      updateMonth();
+      addIncome('income', 'bwlflm', 'bwlflm', leftAmount);
       updateMonth();
       refreshIncomes();
     }
@@ -132,11 +136,26 @@ function updateMonth() {
   month.amount = amount;
   budget.monthsID[budget.monthsID.length - 1].amount = amount;
 
-  save({ name: 'month', data: month }, 'month.json', `budgets/budget-${budget.id}/month-${budget.lastMonthID}/`);
+  save({
+    name: 'month',
+    data: month
+  }, 'month.json', `budgets/budget-${budget.id}/month-${budget.lastMonthID}/`);
 
-  save({ name: 'incomes', data: incomes }, 'incomes.json', `budgets/budget-${budget.id}/month-${budget.lastMonthID}/`);
+  save({
+    name: 'incomes',
+    data: incomes
+  }, 'incomes.json', `budgets/budget-${budget.id}/month-${budget.lastMonthID}/`);
 
-  save({ name: 'outcomes', data: outcomes }, 'outcomes.json', `budgets/budget-${budget.id}/month-${budget.lastMonthID}/`);
+  save({
+    name: 'outcomes',
+    data: outcomes
+  }, 'outcomes.json', `budgets/budget-${budget.id}/month-${budget.lastMonthID}/`);
+}
+
+function monthYear(date) {
+  date = new Date(date);
+  let dateFormatted = `${date.getMonth() + 1}-${date.getYear() + 1900}`;
+  return dateFormatted;
 }
 
 /**
@@ -171,11 +190,14 @@ function checkArg(arg) {
     } else if (name == 'config') {
       config = data;
       startup('budget');
+    } else if (name == 'lang') {
+      changeLang(data);
     } else {
       console.log('invalid name');
     }
   }
 }
+
 
 /**
  * @ignore
@@ -225,11 +247,11 @@ function fullDateAndHour(date) {
   let yr = date.getFullYear();
   let mth = String('0' + String(Number(date.getMonth()) + 1)).slice(-2);
   let day = String('0' + date.getDate()).slice(-2);
-  let ret =  `${day}-${mth}-${yr} ${hr}:${min}:${sec}`;
+  let ret = `${day}-${mth}-${yr} ${hr}:${min}:${sec}`;
   return ret;
 }
 
-function loadMonth(id){
+function loadMonth(id) {
   budget.lastMonthID = id;
   read('month.json', `budgets/budget-${budget.id}/month-${id}/`);
   read('incomes.json', `budgets/budget-${budget.id}/month-${id}/`);
@@ -252,20 +274,20 @@ function showMonth(id) {
 
 function delIncome(type, id) {
   let tempArr = [];
-  if(!confirm('Are you shure?')){
+  if (!confirm('Are you shure?')) {
     return;
   }
   if (type == 'income') {
 
     for (var i = 0; i < incomes.length; i++) {
-      if (i != id){
+      if (i != id) {
         tempArr.push(incomes[i]);
       }
     }
     incomes = tempArr;
   } else if (type == 'outcome') {
     for (var i = 0; i < outcomes.length; i++) {
-      if (i != id){
+      if (i != id) {
         tempArr.push(outcomes[i]);
       }
     }
@@ -290,7 +312,7 @@ function delIncome(type, id) {
 function addIncome(type, name, desc, amount, cat, canDelete) {
   if (!editMonth) {
     delForm();
-    if(type == 'income'){
+    if (type == 'income') {
       incomesCancel = undefined;
       incomesSubmit = undefined;
     } else if (type == 'outcome') {
@@ -331,7 +353,9 @@ function addIncome(type, name, desc, amount, cat, canDelete) {
 }
 
 if ((document.getElementById('')) !== null) {
-  send({ task: '' });
+  send({
+    task: ''
+  });
 }
 
 send('reset');
