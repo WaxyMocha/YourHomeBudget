@@ -32,7 +32,7 @@ body {
   z-index: 1000;
   color: white;
   font-weight: 600;
-  box-shadow: 0 0 5px 0px black;
+  box-shadow: 0 0 5px 0 black;
 }
 
 .headerSpacer {
@@ -214,7 +214,8 @@ body {
   background-color: rgba(227, 227, 227, 0.8);
   width: 60vw;
   min-width: 380px;
-  /*margin: 0 calc(20vw - 6px);*/
+
+  /* margin: 0 calc(20vw - 6px); */
   border-radius: 3px;
   border-style: solid;
   border-width: 3px;

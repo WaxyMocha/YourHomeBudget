@@ -205,7 +205,7 @@ function refreshIncomes() {
       cont += '</section>';
 
       if (incomes[i].description == 'bwlflm' && incomes[i].name == 'bwlflm') {
-        cont = `<section class="income" id="income${i}"><h1>${lang.incomes.lastAmount}</h1>  <p>${incomes[i].amount.toFixed(2)}${config.currencySymbol}</p><br><p>${lang.incomes.leftFromLastMonth}</p></section>`
+        cont = `<section class="income" id="income${i}"><h1>${lang.incomes.lastAmount}</h1>  <p>${incomes[i].amount.toFixed(2)}${config.currencySymbol}</p><br><p>${lang.incomes.leftFromLastMonth}</p></section>`;
       }
       balanceContent.insertAdjacentHTML('afterbegin', cont);
       cont = '';
@@ -225,7 +225,7 @@ function refreshIncomes() {
         cont += `<br><p>${fullDateAndHour(outcomes[i].date)}</p>`;
       }
       if (!isNaN(Number(outcomes[i].cat))) {
-        cont += `<br><p>${incomesCategories[Number(outcomes[i].cat)]}</p>`
+        cont += `<br><p>${incomesCategories[Number(outcomes[i].cat)]}</p>`;
       } else {
         cont += `<br><p>${outcomes[i].cat}</p>`;
       }
