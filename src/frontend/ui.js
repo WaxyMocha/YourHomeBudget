@@ -146,7 +146,7 @@ function generateHistory() {
   let history = budget.monthsID;
   balanceContent.innerHTML = '';
   for (let i = 0; i < history.length; i++) {
-    balanceContent.insertAdjacentHTML('afterbegin', `<button class="income" onclick="showMonth(${i})"> <h1> ${monthYear(history[i].date)}</h1><br><p>${history[i].amount}</p></button>`);
+    balanceContent.insertAdjacentHTML('afterbegin', `<button class="income" onclick="showMonth(${i})"> <h1> ${monthYear(history[i].date)}</h1><br><p>${history[i].amount.toFixed(2)}</p></button>`);
   }
 }
 

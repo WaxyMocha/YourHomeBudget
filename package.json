@@ -1,7 +1,7 @@
 {
   "name": "YourHomeBudget",
   "productName": "YourHomeBudget",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": {
     "name": "Damian Epat Kusmierz",
     "email": "kamikadze2185@gmail.com"
@@ -9,7 +9,7 @@
   "main": "src/index.js",
   "category": "Accesories",
   "description": "Simple home budget manager",
-  "icon": "res\\ico\\wallet.png",
+  "icon": "res\\ico\\512x512.png",
   "build": {
     "asar": false,
     "linux": {
