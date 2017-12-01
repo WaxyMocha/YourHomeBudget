@@ -1,1 +1,2 @@
-electron ./src/index.js
+#! /bin/sh
+exec electron ./src/index.js
