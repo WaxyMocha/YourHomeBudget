@@ -31,6 +31,7 @@ let budget = {
   lastMonthID: 0,
 };
 
+let inOut = 0;
 /**
  * @type {object}
  * @desc Contains informations about settlement period (frontend)
@@ -97,10 +98,11 @@ function checkMonth() {
       resetMonthToDefault();
       budget.monthsID.push({
         date: new Date(),
-      }, );
+      });
       budget.lastMonthID = budget.monthsID.length - 1;
       updateMonth();
       addIncome('income', 'bwlflm', 'bwlflm', leftAmount);
+      saveAll();
       updateMonth();
       refreshIncomes();
     }
@@ -182,11 +184,19 @@ function checkArg(arg) {
     } else if (name == 'incomes') {
       incomes = data;
       refreshIncomes();
-      checkMonth();
+      inOut++;
+      if (inOut >= 2) {
+        checkMonth();
+        inOut = 0;
+      }
     } else if (name == 'outcomes') {
       outcomes = data;
       refreshIncomes();
-      checkMonth();
+      inOut++;
+      if (inOut >= 2) {
+        checkMonth();
+        inOut = 0;
+      }
     } else if (name == 'config') {
       config = data;
       startup('budget');
