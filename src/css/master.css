@@ -45,7 +45,7 @@ body {
   background-color: transparent;
   outline: none;
   color: white;
-  border-style: solid;
+  border-style: none;
   border-radius: 3px;
   border-color: rgba(0, 0, 0, 0.26);
 
@@ -94,6 +94,11 @@ body {
   height: var(--headerButtonSize);
   margin-top: 1px;
   width: 100%;
+  background-color: transparent;
+  border-style: solid;
+  border-width: 2px;
+  border-radius: 5px;
+  border-color: rgb(113, 113, 113);
 }
 
 #electron-titlebar {

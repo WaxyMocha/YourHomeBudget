@@ -105,7 +105,7 @@ function generateOutcomesForm() {
 
 function generateContextButtons(scheme) {
   if (scheme == 'incomes') {
-    contextButtons.innerHTML = '<button id="incomesButton" class="headerBarButton fa  fa-usd"><b>+</b></button><button id="outcomesButton" class="headerBarButton fa fa-usd"><b>-</b></button><div>';
+    contextButtons.innerHTML = '<button id="incomesButton" class="headerBarButton ripple fa  fa-usd"><b>+</b></button><button id="outcomesButton" class="headerBarButton fa fa-usd ripple"><b>-</b></button><div>';
     contextButtons.insertAdjacentHTML('afterend', '<div id="incomesAmount"></div>');
     contextButtons.insertAdjacentHTML('afterend', '<div id="date"></div>');
 
@@ -151,7 +151,7 @@ function generateHistory() {
   let history = budget.monthsID;
   balanceContent.innerHTML = '';
   for (let i = 0; i < history.length; i++) {
-    balanceContent.insertAdjacentHTML('afterbegin', `<button class="income" onclick="showMonth(${i})"> <h1> ${monthYear(history[i].date)}</h1><br><p>${history[i].amount.toFixed(2)}</p></button>`);
+    balanceContent.insertAdjacentHTML('afterbegin', `<button class="income ripple" onclick="showMonth(${i})"> <h1> ${monthYear(history[i].date)}</h1><br><p>${history[i].amount.toFixed(2)}</p></button>`);
   }
 }
 
@@ -173,7 +173,7 @@ function generateMainMenu() {
   ];
 
   for (var i = 0; i < buttons.length; i++) {
-    mainMenu.insertAdjacentHTML('beforeend', `<button class="mainMenuItem" onclick="${buttons[i].action}; menuPos()">${buttons[i].name}</button>`);
+    mainMenu.insertAdjacentHTML('beforeend', `<button class="mainMenuItem ripple" onclick="${buttons[i].action}; menuPos()">${buttons[i].name}</button>`);
   }
 }
 
