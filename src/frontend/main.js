@@ -152,7 +152,7 @@ function updateMonth() {
   }, 'outcomes.json', `budgets/budget-${budget.id}/month-${budget.lastMonthID}/`);
 }
 
-function monthYear(date) {
+function monthYear(date = new Date()) {
   date = new Date(date);
   let dateFormatted = `${date.getMonth() + 1}-${date.getYear() + 1900}`;
   return dateFormatted;
@@ -247,7 +247,7 @@ function startup(arg) {
 
 }
 
-function fullDateAndHour(date) {
+function fullDateAndHour(date = new Date()) {
   date = new Date(date);
   let hr = String('0' + date.getHours()).slice(-2);
   let min = String('0' + date.getMinutes()).slice(-2);
@@ -287,14 +287,14 @@ function delIncome(type, id) {
   }
   if (type == 'income') {
 
-    for (var i = 0; i < incomes.length; i++) {
+    for (let i = 0; i < incomes.length; i++) {
       if (i != id) {
         tempArr.push(incomes[i]);
       }
     }
     incomes = tempArr;
   } else if (type == 'outcome') {
-    for (var i = 0; i < outcomes.length; i++) {
+    for (let i = 0; i < outcomes.length; i++) {
       if (i != id) {
         tempArr.push(outcomes[i]);
       }
