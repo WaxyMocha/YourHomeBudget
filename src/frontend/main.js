@@ -27,8 +27,7 @@ let budget = {
   monthsID: [{
     amount: 0,
     date: new Date(),
-  },
- ],
+  }, ],
   lastMonthID: 0,
 };
 
@@ -121,6 +120,9 @@ function resetMonthToDefault() {
   };
   outcomes = [];
   incomes = [];
+  console.log(month);
+  console.log(outcomes);
+  console.log(incomes);
   return;
 }
 
