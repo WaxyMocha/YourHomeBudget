@@ -8,6 +8,7 @@ const menuButton = document.getElementById('menuButton'),
       mask = document.getElementById('mask'),
       balanceContent = document.getElementById('balanceContent'),
       floatingFrame = document.getElementById('floatingFrame');
+
 let incomesSubmit,
     incomesCancel,
     incomesButton,
