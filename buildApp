@@ -1,0 +1,3 @@
+#! /bin/sh
+exec --ia32 appimage --linux
+exec --x64 appimage --linux
