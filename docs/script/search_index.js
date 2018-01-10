@@ -1,27 +1,21 @@
 window.esdocSearchIndex = [
   [
-    "yourhomebudget~browserwindow",
-    "variable/index.html#static-variable-BrowserWindow",
-    "<span>BrowserWindow</span> <span class=\"search-result-import-path\">YourHomeBudget</span>",
-    "variable"
-  ],
-  [
     "yourhomebudget/src/frontend/main.js~addincome",
     "function/index.html#static-function-addIncome",
     "<span>addIncome</span> <span class=\"search-result-import-path\">YourHomeBudget/src/frontend/main.js</span>",
     "function"
   ],
   [
-    "yourhomebudget~app",
-    "variable/index.html#static-variable-app",
-    "<span>app</span> <span class=\"search-result-import-path\">YourHomeBudget</span>",
-    "variable"
-  ],
-  [
     "yourhomebudget/src/frontend/main.js~budget",
     "variable/index.html#static-variable-budget",
     "<span>budget</span> <span class=\"search-result-import-path\">YourHomeBudget/src/frontend/main.js</span>",
     "variable"
+  ],
+  [
+    "yourhomebudget/src/frontend/lang.js~changelang",
+    "function/index.html#static-function-changeLang",
+    "<span>changeLang</span> <span class=\"search-result-import-path\">YourHomeBudget/src/frontend/lang.js</span>",
+    "function"
   ],
   [
     "yourhomebudget/src/backend/main.js~checkarg",
@@ -36,15 +30,39 @@ window.esdocSearchIndex = [
     "function"
   ],
   [
+    "yourhomebudget/src/frontend/main.js~checkmonth",
+    "function/index.html#static-function-checkMonth",
+    "<span>checkMonth</span> <span class=\"search-result-import-path\">YourHomeBudget/src/frontend/main.js</span>",
+    "function"
+  ],
+  [
     "yourhomebudget/src/frontend/main.js~config",
     "variable/index.html#static-variable-config",
     "<span>config</span> <span class=\"search-result-import-path\">YourHomeBudget/src/frontend/main.js</span>",
     "variable"
   ],
   [
-    "yourhomebudget~crwin",
-    "function/index.html#static-function-crWin",
-    "<span>crWin</span> <span class=\"search-result-import-path\">YourHomeBudget</span>",
+    "yourhomebudget/src/frontend/ui.js~contextincomesamount",
+    "function/index.html#static-function-contextIncomesAmount",
+    "<span>contextIncomesAmount</span> <span class=\"search-result-import-path\">YourHomeBudget/src/frontend/ui.js</span>",
+    "function"
+  ],
+  [
+    "yourhomebudget/src/frontend/ui.js~contextincomesdate",
+    "function/index.html#static-function-contextIncomesDate",
+    "<span>contextIncomesDate</span> <span class=\"search-result-import-path\">YourHomeBudget/src/frontend/ui.js</span>",
+    "function"
+  ],
+  [
+    "yourhomebudget/src/frontend/ui.js~delform",
+    "function/index.html#static-function-delForm",
+    "<span>delForm</span> <span class=\"search-result-import-path\">YourHomeBudget/src/frontend/ui.js</span>",
+    "function"
+  ],
+  [
+    "yourhomebudget/src/frontend/main.js~delincome",
+    "function/index.html#static-function-delIncome",
+    "<span>delIncome</span> <span class=\"search-result-import-path\">YourHomeBudget/src/frontend/main.js</span>",
     "function"
   ],
   [
@@ -54,9 +72,63 @@ window.esdocSearchIndex = [
     "function"
   ],
   [
-    "yourhomebudget~electron",
-    "variable/index.html#static-variable-electron",
-    "<span>electron</span> <span class=\"search-result-import-path\">YourHomeBudget</span>",
+    "yourhomebudget/src/frontend/main.js~editmonth",
+    "variable/index.html#static-variable-editMonth",
+    "<span>editMonth</span> <span class=\"search-result-import-path\">YourHomeBudget/src/frontend/main.js</span>",
+    "variable"
+  ],
+  [
+    "yourhomebudget/src/frontend/main.js~fulldateandhour",
+    "function/index.html#static-function-fullDateAndHour",
+    "<span>fullDateAndHour</span> <span class=\"search-result-import-path\">YourHomeBudget/src/frontend/main.js</span>",
+    "function"
+  ],
+  [
+    "yourhomebudget/src/frontend/ui.js~generatecontextbuttons",
+    "function/index.html#static-function-generateContextButtons",
+    "<span>generateContextButtons</span> <span class=\"search-result-import-path\">YourHomeBudget/src/frontend/ui.js</span>",
+    "function"
+  ],
+  [
+    "yourhomebudget/src/frontend/ui.js~generatehistory",
+    "function/index.html#static-function-generateHistory",
+    "<span>generateHistory</span> <span class=\"search-result-import-path\">YourHomeBudget/src/frontend/ui.js</span>",
+    "function"
+  ],
+  [
+    "yourhomebudget/src/frontend/ui.js~generateincomesform",
+    "function/index.html#static-function-generateIncomesForm",
+    "<span>generateIncomesForm</span> <span class=\"search-result-import-path\">YourHomeBudget/src/frontend/ui.js</span>",
+    "function"
+  ],
+  [
+    "yourhomebudget/src/frontend/ui.js~generatemainmenu",
+    "function/index.html#static-function-generateMainMenu",
+    "<span>generateMainMenu</span> <span class=\"search-result-import-path\">YourHomeBudget/src/frontend/ui.js</span>",
+    "function"
+  ],
+  [
+    "yourhomebudget/src/frontend/ui.js~generateoutcomesform",
+    "function/index.html#static-function-generateOutcomesForm",
+    "<span>generateOutcomesForm</span> <span class=\"search-result-import-path\">YourHomeBudget/src/frontend/ui.js</span>",
+    "function"
+  ],
+  [
+    "yourhomebudget/src/frontend/ui.js~generatepreferences",
+    "function/index.html#static-function-generatePreferences",
+    "<span>generatePreferences</span> <span class=\"search-result-import-path\">YourHomeBudget/src/frontend/ui.js</span>",
+    "function"
+  ],
+  [
+    "yourhomebudget/src/frontend/main.js~historycheck",
+    "variable/index.html#static-variable-historyCheck",
+    "<span>historyCheck</span> <span class=\"search-result-import-path\">YourHomeBudget/src/frontend/main.js</span>",
+    "variable"
+  ],
+  [
+    "yourhomebudget/src/frontend/main.js~inout",
+    "variable/index.html#static-variable-inOut",
+    "<span>inOut</span> <span class=\"search-result-import-path\">YourHomeBudget/src/frontend/main.js</span>",
     "variable"
   ],
   [
@@ -66,9 +138,9 @@ window.esdocSearchIndex = [
     "variable"
   ],
   [
-    "yourhomebudget~ipcmain",
-    "variable/index.html#static-variable-ipcMain",
-    "<span>ipcMain</span> <span class=\"search-result-import-path\">YourHomeBudget</span>",
+    "yourhomebudget/src/frontend/lang.js~incomescategories",
+    "variable/index.html#static-variable-incomesCategories",
+    "<span>incomesCategories</span> <span class=\"search-result-import-path\">YourHomeBudget/src/frontend/lang.js</span>",
     "variable"
   ],
   [
@@ -78,9 +150,27 @@ window.esdocSearchIndex = [
     "function"
   ],
   [
-    "yourhomebudget~log",
-    "function/index.html#static-function-log",
-    "<span>log</span> <span class=\"search-result-import-path\">YourHomeBudget</span>",
+    "yourhomebudget/src/frontend/lang.js~lang",
+    "variable/index.html#static-variable-lang",
+    "<span>lang</span> <span class=\"search-result-import-path\">YourHomeBudget/src/frontend/lang.js</span>",
+    "variable"
+  ],
+  [
+    "yourhomebudget/src/frontend/main.js~lastmth",
+    "function/index.html#static-function-lastMth",
+    "<span>lastMth</span> <span class=\"search-result-import-path\">YourHomeBudget/src/frontend/main.js</span>",
+    "function"
+  ],
+  [
+    "yourhomebudget/src/frontend/main.js~loadmonth",
+    "function/index.html#static-function-loadMonth",
+    "<span>loadMonth</span> <span class=\"search-result-import-path\">YourHomeBudget/src/frontend/main.js</span>",
+    "function"
+  ],
+  [
+    "yourhomebudget/src/frontend/ui.js~menupos",
+    "function/index.html#static-function-menuPos",
+    "<span>menuPos</span> <span class=\"search-result-import-path\">YourHomeBudget/src/frontend/ui.js</span>",
     "function"
   ],
   [
@@ -90,9 +180,9 @@ window.esdocSearchIndex = [
     "variable"
   ],
   [
-    "yourhomebudget~now",
-    "function/index.html#static-function-now",
-    "<span>now</span> <span class=\"search-result-import-path\">YourHomeBudget</span>",
+    "yourhomebudget/src/frontend/main.js~monthyear",
+    "function/index.html#static-function-monthYear",
+    "<span>monthYear</span> <span class=\"search-result-import-path\">YourHomeBudget/src/frontend/main.js</span>",
     "function"
   ],
   [
@@ -100,18 +190,6 @@ window.esdocSearchIndex = [
     "variable/index.html#static-variable-outcomes",
     "<span>outcomes</span> <span class=\"search-result-import-path\">YourHomeBudget/src/frontend/main.js</span>",
     "variable"
-  ],
-  [
-    "yourhomebudget~path",
-    "variable/index.html#static-variable-path",
-    "<span>path</span> <span class=\"search-result-import-path\">YourHomeBudget</span>",
-    "variable"
-  ],
-  [
-    "yourhomebudget/src/backend/files.js~progdir",
-    "function/index.html#static-function-progDir",
-    "<span>progDir</span> <span class=\"search-result-import-path\">YourHomeBudget/src/backend/files.js</span>",
-    "function"
   ],
   [
     "yourhomebudget/src/backend/files.js~read",
@@ -123,6 +201,18 @@ window.esdocSearchIndex = [
     "yourhomebudget/src/frontend/com.js~read",
     "function/index.html#static-function-read",
     "<span>read</span> <span class=\"search-result-import-path\">YourHomeBudget/src/frontend/com.js</span>",
+    "function"
+  ],
+  [
+    "yourhomebudget/src/frontend/ui.js~refreshincomes",
+    "function/index.html#static-function-refreshIncomes",
+    "<span>refreshIncomes</span> <span class=\"search-result-import-path\">YourHomeBudget/src/frontend/ui.js</span>",
+    "function"
+  ],
+  [
+    "yourhomebudget/src/frontend/main.js~resetmonthtodefault",
+    "function/index.html#static-function-resetMonthToDefault",
+    "<span>resetMonthToDefault</span> <span class=\"search-result-import-path\">YourHomeBudget/src/frontend/main.js</span>",
     "function"
   ],
   [
@@ -138,6 +228,18 @@ window.esdocSearchIndex = [
     "function"
   ],
   [
+    "yourhomebudget/src/frontend/main.js~savebudget",
+    "function/index.html#static-function-saveBudget",
+    "<span>saveBudget</span> <span class=\"search-result-import-path\">YourHomeBudget/src/frontend/main.js</span>",
+    "function"
+  ],
+  [
+    "yourhomebudget/src/frontend/main.js~saveconfig",
+    "function/index.html#static-function-saveConfig",
+    "<span>saveConfig</span> <span class=\"search-result-import-path\">YourHomeBudget/src/frontend/main.js</span>",
+    "function"
+  ],
+  [
     "yourhomebudget/src/backend/com.js~send",
     "function/index.html#static-function-send",
     "<span>send</span> <span class=\"search-result-import-path\">YourHomeBudget/src/backend/com.js</span>",
@@ -150,16 +252,16 @@ window.esdocSearchIndex = [
     "function"
   ],
   [
-    "yourhomebudget~send",
-    "function/index.html#static-function-send",
-    "<span>send</span> <span class=\"search-result-import-path\">YourHomeBudget</span>",
+    "yourhomebudget/src/frontend/main.js~showmonth",
+    "function/index.html#static-function-showMonth",
+    "<span>showMonth</span> <span class=\"search-result-import-path\">YourHomeBudget/src/frontend/main.js</span>",
     "function"
   ],
   [
-    "yourhomebudget~url",
-    "variable/index.html#static-variable-url",
-    "<span>url</span> <span class=\"search-result-import-path\">YourHomeBudget</span>",
-    "variable"
+    "yourhomebudget/src/frontend/main.js~updatemonth",
+    "function/index.html#static-function-updateMonth",
+    "<span>updateMonth</span> <span class=\"search-result-import-path\">YourHomeBudget/src/frontend/main.js</span>",
+    "function"
   ],
   [
     "yourhomebudget/src/backend/files.js~write",
@@ -486,6 +588,12 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
+    "src/frontend/lang.js",
+    "file/src/frontend/lang.js.html",
+    "src/frontend/lang.js",
+    "file"
+  ],
+  [
     "src/frontend/main.js",
     "file/src/frontend/main.js.html",
     "src/frontend/main.js",
@@ -501,12 +609,6 @@ window.esdocSearchIndex = [
     "src/frontend/ui.js",
     "file/src/frontend/ui.js.html",
     "src/frontend/ui.js",
-    "file"
-  ],
-  [
-    "src/index.js",
-    "file/src/index.js.html",
-    "src/index.js",
     "file"
   ]
 ]

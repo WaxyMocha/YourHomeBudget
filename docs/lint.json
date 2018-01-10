@@ -5,27 +5,27 @@
     "lines": [
       {
         "lineNumber": 19,
-        "line": "/**"
+        "line": "/**\r"
       },
       {
         "lineNumber": 20,
-        "line": " *Parse or stringify JSON"
+        "line": " *Parse or stringify JSON\r"
       },
       {
         "lineNumber": 21,
-        "line": " * @param {boolean} mode If it's true, it will parse JSON to Object or Array, if it's false it will stringify Object or Array to JSON"
+        "line": " * @param {boolean} mode If it's true, it will parse JSON to Object or Array, if it's false it will stringify Object or Array to JSON\r"
       },
       {
         "lineNumber": 22,
-        "line": " * @return  if mode is set to true {object}, if mode is set to false {string}"
+        "line": " * @return  if mode is set to true {object}, if mode is set to false {string}\r"
       },
       {
         "lineNumber": 23,
-        "line": " */"
+        "line": " */\r"
       },
       {
         "lineNumber": 24,
-        "line": "function jsonParser(mode, arg) { //true parse, false stringify"
+        "line": "function jsonParser(mode, arg) { //true parse, false stringify\r"
       }
     ],
     "codeParams": [
@@ -34,6 +34,71 @@
     ],
     "docParams": [
       "mode"
+    ]
+  },
+  {
+    "name": "addIncome",
+    "filePath": "src/frontend/main.js",
+    "lines": [
+      {
+        "lineNumber": 309,
+        "line": "/**\r"
+      },
+      {
+        "lineNumber": 310,
+        "line": " * Add an income or an outcome\r"
+      },
+      {
+        "lineNumber": 311,
+        "line": " * @param {string} type income or outcome\r"
+      },
+      {
+        "lineNumber": 312,
+        "line": " * @param {string} name Name / title of income or outcome\r"
+      },
+      {
+        "lineNumber": 313,
+        "line": " * @param {string} desc Description of income or outcome\r"
+      },
+      {
+        "lineNumber": 314,
+        "line": " * @param {number} amount Value of income or outcome\r"
+      },
+      {
+        "lineNumber": 315,
+        "line": " * @param {number} cat Id of category\r"
+      },
+      {
+        "lineNumber": 316,
+        "line": " * @example <JavaScript>\r"
+      },
+      {
+        "lineNumber": 317,
+        "line": " * addIncome('income', 'Payment', 'From my employer', 2000, 1);\r"
+      },
+      {
+        "lineNumber": 318,
+        "line": " */\r"
+      },
+      {
+        "lineNumber": 319,
+        "line": "function addIncome(type, name, desc, amount, cat, canDelete) {\r"
+      }
+    ],
+    "codeParams": [
+      "type",
+      "name",
+      "desc",
+      "amount",
+      "cat",
+      "canDelete"
+    ],
+    "docParams": [
+      "type",
+      "name",
+      "desc",
+      "amount",
+      "cat"
     ]
   }
 ]

@@ -579,9 +579,9 @@
     "__docId__": 50,
     "kind": "file",
     "name": "src/backend/com.js",
-    "content": "/*jshint esversion: 6 */\n\n/**\n * Sends data to main process and frontend (backend window)\n * @param data Contains data to send\n * @example <JavaScript>\n * send('data');\n */\nfunction send(data) {\n\n  ipcRenderer.send('manipulatedData', data);\n}\n\nipcRenderer.on('manipulatedData', (e, arg) => {\n  console.log(arg);\n  checkArg(arg);\n});\n",
+    "content": "/*jshint esversion: 6 */\r\n\r\n/**\r\n * Sends data to main process and frontend (backend window)\r\n * @param data Contains data to send\r\n * @example <JavaScript>\r\n * send('data');\r\n */\r\nfunction send(data) {\r\n\r\n  ipcRenderer.send('manipulatedData', data);\r\n}\r\n\r\nipcRenderer.on('manipulatedData', (e, arg) => {\r\n  console.log(arg);\r\n  checkArg(arg);\r\n});\r\n",
     "static": true,
-    "longname": "/home/epat/Dokumenty/GitHub/YourHomeBudget/src/backend/com.js",
+    "longname": "F:/Programowanie/JS/yourhomebudget/src/backend/com.js",
     "access": "public",
     "description": null,
     "lineNumber": 1
@@ -622,9 +622,9 @@
     "__docId__": 52,
     "kind": "file",
     "name": "src/backend/files.js",
-    "content": "/*jshint esversion: 6 */\n/**\n * @ignore\n */\nconst appRoot = path.dirname(require.main.filename);\n\nif (platform == 'win32') {\n  var tempPath = os.homedir() + '\\\\.YourHomeBudget\\\\';\n} else {\n  var tempPath = os.homedir() + '/.YourHomeBudget/';\n}\n/**\n * @ignore\n */\nconst filesPath = tempPath;\n\n/**\n * Checks if main program directory exists, if it doesn't it creates it. You should use {@link directory} (backend window)\n * @deprecated\n */\nfunction progDir() {\n  directory(filesPath);\n}\n\n/**\n * Checks if main program directory exists, if it doesn't it creates it (backend window)\n * @param {string} path Path to directory\n */\nfunction directory(path) {\n  if (!fs.existsSync(path)) {\n    console.log('creating folder');\n    fs.mkdirsSync(path);\n    return;\n  }\n\n  console.log('folder already exists');\n}\n\n/**\n * Get file content (backend window)\n * @param {string} relPath Relative path to parent directory of the file\n * @param {string} name Name of file\n * @return {string} content of loaded file\n */\nfunction read(relPath, name) {\n  progDir();\n  let path = filesPath + relPath;\n  let appRootPath = `${appRoot}/${relPath}`;\n  if (fs.existsSync(`${path}/${name}`)) {\n    console.log(`File is in: ${path}`);\n    return fs.readFileSync(`${path}/${name}`, 'utf8');\n  } else if (fs.existsSync(`${appRootPath}/${name}`)) {\n    console.log(`File is in: ${appRootPath}`);\n    return (fs.readFileSync(`${appRootPath}/${name}`, 'utf8'));\n  } else {\n    console.log('File does not exists');\n    return '';\n  }\n}\n\n/**\n * Save informations to filesPath (backend window)\n * @param {string} relPath Relative path to parent directory of the file\n * @param {string} data Content which will be saved to file\n * @param {string} name Name of file\n */\nfunction write(relPath, data, name) {\n  progDir();\n  if (typeof data == 'object') {\n    data = jsonParser(false, data);\n  }\n\n  let path = filesPath + relPath;\n  directory(filesPath);\n  directory(path);\n  fs.writeFileSync(path + name, data, 'utf8');\n}\n",
+    "content": "/*jshint esversion: 6 */\r\n/**\r\n * @ignore\r\n */\r\nconst appRoot = path.dirname(require.main.filename);\r\n\r\nif (platform == 'win32') {\r\n  var tempPath = os.homedir() + '\\\\.YourHomeBudget\\\\';\r\n} else {\r\n  var tempPath = os.homedir() + '/.YourHomeBudget/';\r\n}\r\n/**\r\n * @ignore\r\n */\r\nconst filesPath = tempPath;\r\n\r\n/**\r\n * @ignore\r\n */\r\nfunction progDir() {\r\n  directory(filesPath);\r\n}\r\n\r\n/**\r\n * Checks if main program directory exists, if it doesn't it creates it (backend window)\r\n * @param {string} path Path to directory\r\n */\r\nfunction directory(path) {\r\n  if (!fs.existsSync(path)) {\r\n    console.log('creating folder');\r\n    fs.mkdirsSync(path);\r\n    return false;\r\n  }\r\n\r\n  console.log('folder already exists');\r\n  return true;\r\n}\r\n\r\n/**\r\n * Get file content (backend window)\r\n * @param {string} relPath Relative path to parent directory of the file\r\n * @param {string} name Name of file\r\n * @return {string} content of loaded file\r\n */\r\nfunction read(relPath, name) {\r\n  progDir();\r\n  let path = filesPath + relPath;\r\n  let appRootPath = `${appRoot}/${relPath}`;\r\n  if (fs.existsSync(`${path}/${name}`)) {\r\n    console.log(`File location: ${path}`);\r\n    return fs.readFileSync(`${path}/${name}`, 'utf8');\r\n  } else if (fs.existsSync(`${appRootPath}/${name}`)) {\r\n    console.log(`File location: ${appRootPath}`);\r\n    return (fs.readFileSync(`${appRootPath}/${name}`, 'utf8'));\r\n  } else if (name == 'config.json' && !fs.existsSync(`${path}/${name}`)) {\r\n    send('firstStartup');\r\n  } else {\r\n    console.log('File does not exist');\r\n    return '';\r\n  }\r\n}\r\n\r\n/**\r\n * Save informations to filesPath (backend window)\r\n * @param {string} relPath Relative path to parent directory of the file\r\n * @param {string} data Content which will be saved to file\r\n * @param {string} name Name of file\r\n */\r\nfunction write(relPath, data, name) {\r\n  progDir();\r\n  if (typeof data == 'object') {\r\n    data = jsonParser(false, data);\r\n  }\r\n\r\n  let path = filesPath + relPath;\r\n  directory(filesPath);\r\n  directory(path);\r\n  fs.writeFileSync(path + name, data, 'utf8');\r\n}\r\n",
     "static": true,
-    "longname": "/home/epat/Dokumenty/GitHub/YourHomeBudget/src/backend/files.js",
+    "longname": "F:/Programowanie/JS/yourhomebudget/src/backend/files.js",
     "access": "public",
     "description": null,
     "lineNumber": 1
@@ -682,9 +682,9 @@
     "export": false,
     "importPath": "YourHomeBudget/src/backend/files.js",
     "importStyle": null,
-    "description": "Checks if main program directory exists, if it doesn't it creates it. You should use {@link directory} (backend window)",
-    "lineNumber": 21,
-    "deprecated": true,
+    "description": "",
+    "lineNumber": 20,
+    "ignore": true,
     "params": [],
     "return": null
   },
@@ -702,7 +702,7 @@
     "importPath": "YourHomeBudget/src/backend/files.js",
     "importStyle": null,
     "description": "Checks if main program directory exists, if it doesn't it creates it (backend window)",
-    "lineNumber": 29,
+    "lineNumber": 28,
     "params": [
       {
         "nullable": null,
@@ -715,7 +715,11 @@
         "description": "Path to directory"
       }
     ],
-    "return": null
+    "return": {
+      "types": [
+        "boolean"
+      ]
+    }
   },
   {
     "__docId__": 57,
@@ -777,7 +781,7 @@
     "importPath": "YourHomeBudget/src/backend/files.js",
     "importStyle": null,
     "description": "Save informations to filesPath (backend window)",
-    "lineNumber": 67,
+    "lineNumber": 69,
     "params": [
       {
         "nullable": null,
@@ -816,9 +820,9 @@
     "__docId__": 59,
     "kind": "file",
     "name": "src/backend/main.js",
-    "content": "/*jshint esversion: 6 */\n\n/**\n * Checks argument sended from backend (backend window)\n * @param {object} arg argument to check\n */\nfunction checkArg(arg) {\n  let task = arg.task;\n  if (task == 'save') {\n    write(arg.path, jsonParser(false, arg.data), arg.name);\n    send({ done: 'saved', to: arg.path });\n  } else if (task == 'read') {\n    send({ task: 'read', data: jsonParser(true, read(arg.path, arg.name)) });\n  } else {\n    return 'invalid task';\n  }\n\n}\n\n/**\n *Parse or stringify JSON\n * @param {boolean} mode If it's true, it will parse JSON to Object or Array, if it's false it will stringify Object or Array to JSON\n * @return  if mode is set to true {object}, if mode is set to false {string}\n */\nfunction jsonParser(mode, arg) { //true parse, false stringify\n  if (mode == true) {\n    if ((typeof arg == 'string') && (arg.slice(0, 1) == '{' || arg.slice(0, 1) == '[')) {\n      arg = JSON.parse(arg);\n      console.log('mode: true');\n      console.log(arg);\n    }\n  } else if (mode == false) {\n    if (typeof arg == 'object') {\n      arg = JSON.stringify(arg);\n      console.log('mode: false');\n    }\n  } else {\n    arg = null;\n    console.log('invalid mode');\n  }\n\n  return arg;\n}\n",
+    "content": "/*jshint esversion: 6 */\r\n\r\n/**\r\n * Checks argument sended from backend (backend window)\r\n * @param {object} arg argument to check\r\n */\r\nfunction checkArg(arg) {\r\n  let task = arg.task;\r\n  if (task == 'save') {\r\n    write(arg.path, jsonParser(false, arg.data), arg.name);\r\n    send({ done: 'saved', to: arg.path });\r\n  } else if (task == 'read') {\r\n    send({ task: 'read', data: jsonParser(true, read(arg.path, arg.name)) });\r\n  } else {\r\n    return 'invalid task';\r\n  }\r\n\r\n}\r\n\r\n/**\r\n *Parse or stringify JSON\r\n * @param {boolean} mode If it's true, it will parse JSON to Object or Array, if it's false it will stringify Object or Array to JSON\r\n * @return  if mode is set to true {object}, if mode is set to false {string}\r\n */\r\nfunction jsonParser(mode, arg) { //true parse, false stringify\r\n  if (mode == true) {\r\n    if ((typeof arg == 'string') && (arg.slice(0, 1) == '{' || arg.slice(0, 1) == '[')) {\r\n      arg = JSON.parse(arg);\r\n      console.log('mode: true');\r\n      console.log(arg);\r\n    }\r\n  } else if (mode == false) {\r\n    if (typeof arg == 'object') {\r\n      arg = JSON.stringify(arg, null, '\\t');\r\n      console.log('mode: false');\r\n    }\r\n  } else {\r\n    arg = null;\r\n    console.log('invalid mode');\r\n  }\r\n\r\n  return arg;\r\n}\r\n",
     "static": true,
-    "longname": "/home/epat/Dokumenty/GitHub/YourHomeBudget/src/backend/main.js",
+    "longname": "F:/Programowanie/JS/yourhomebudget/src/backend/main.js",
     "access": "public",
     "description": null,
     "lineNumber": 1
@@ -896,9 +900,9 @@
     "__docId__": 62,
     "kind": "file",
     "name": "src/backend/requires.js",
-    "content": "/*jshint esversion: 6 */\n/**\n * @ignore\n */\nconst fs = require('fs-extra');\n/**\n * @ignore\n */\nconst electron = require('electron');\n/**\n * @ignore\n */\nconst remote = electron.remote;\n/**\n * @ignore\n */\nconst app = remote.app;\n/**\n * @ignore\n */\nconst { ipcRenderer } = electron;\n/**\n * @ignore\n */\nconst os = require('os');\n/**\n * @ignore\n */\nconst platform = os.platform();\n/**\n * @ignore\n */\nconst readline = require('readline');\n/**\n * @ignore\n */\nconst path = require('path');\n/**\n * @ignore\n */\nconst mkdirp = require('mkdirp');\n",
+    "content": "/*jshint esversion: 6 */\r\n/**\r\n * @ignore\r\n */\r\nconst fs = require('fs-extra');\r\n/**\r\n * @ignore\r\n */\r\nconst electron = require('electron');\r\n/**\r\n * @ignore\r\n */\r\nconst remote = electron.remote;\r\n/**\r\n * @ignore\r\n */\r\nconst app = remote.app;\r\n/**\r\n * @ignore\r\n */\r\nconst { ipcRenderer } = electron;\r\n/**\r\n * @ignore\r\n */\r\nconst os = require('os');\r\n/**\r\n * @ignore\r\n */\r\nconst platform = os.platform();\r\n/**\r\n * @ignore\r\n */\r\nconst readline = require('readline');\r\n/**\r\n * @ignore\r\n */\r\nconst path = require('path');\r\n/**\r\n * @ignore\r\n */\r\nconst mkdirp = require('mkdirp');\r\n",
     "static": true,
-    "longname": "/home/epat/Dokumenty/GitHub/YourHomeBudget/src/backend/requires.js",
+    "longname": "F:/Programowanie/JS/yourhomebudget/src/backend/requires.js",
     "access": "public",
     "description": null,
     "lineNumber": 1
@@ -1107,9 +1111,9 @@
     "__docId__": 73,
     "kind": "file",
     "name": "src/frontend/com.js",
-    "content": "/* jshint esversion:6 */\n\n/**\nSave data to file\n@param data stuff to save\n@param {string} filename self explainatory\n@param {string} path relative path to file\n@example <Javascript>\nsave('some data to save', 'file.json', '/path/to/parent/folder');\n*/\nfunction save(data, filename, path) {\n  send({task:'save', data: data, name: filename, path: path,});\n}\n\nfunction read(filename, path) {\n  send({task:'read', name: filename, path: path,})\n}\n/**\n * Sends data to main process and backend (frontend window)\n * @param data Contains data to send\n * @example <JavaScript>\n * send('data');\n * send({task:'save', data: 'data', name:'file.json', path:'relative/path/to/parent/folder'});\n * send({task:'read', name:'file.json', path:'relative/path/to/parent/folder'});\n */\nfunction send(data) {\n  ipcRenderer.send('user-data', data);\n}\n\nipcRenderer.on('user-data', (e, arg) => {\n  if ((typeof arg == 'string') && (arg.slice(0, 1) == '{' || arg.slice(0, 1) == '[')) {\n    arg = JSON.parse(arg);\n  }\n\n  checkArg(arg);\n  console.log('Odebrano: ');\n  console.log(arg);\n  return;\n});\n",
+    "content": "/* jshint esversion:6 */\r\n\r\n/**\r\nSave data to file\r\n@param data stuff to save\r\n@param {string} filename self explainatory\r\n@param {string} path relative path to file\r\n@example <Javascript>\r\nsave('some data to save', 'file.json', '/path/to/parent/folder');\r\n*/\r\nfunction save(data, filename, path) {\r\n  send({task:'save', data: data, name: filename, path: path,});\r\n}\r\n\r\nfunction read(filename, path) {\r\n  send({task:'read', name: filename, path: path,});\r\n}\r\n/**\r\n * Sends data to main process and backend (frontend window)\r\n * @param data Contains data to send\r\n * @example <JavaScript>\r\n * send('data');\r\n * send({task:'save', data: 'data', name:'file.json', path:'relative/path/to/parent/folder'});\r\n * send({task:'read', name:'file.json', path:'relative/path/to/parent/folder'});\r\n */\r\nfunction send(data) {\r\n  ipcRenderer.send('user-data', data);\r\n}\r\n\r\nipcRenderer.on('user-data', (e, arg) => {\r\n  if ((typeof arg == 'string') && (arg.slice(0, 1) == '{' || arg.slice(0, 1) == '[')) {\r\n    arg = JSON.parse(arg);\r\n  }\r\n\r\n  checkArg(arg);\r\n  console.log('Odebrano: ');\r\n  console.log(arg);\r\n  return;\r\n});\r\n",
     "static": true,
-    "longname": "/home/epat/Dokumenty/GitHub/YourHomeBudget/src/frontend/com.js",
+    "longname": "F:/Programowanie/JS/yourhomebudget/src/frontend/com.js",
     "access": "public",
     "description": null,
     "lineNumber": 1
@@ -1233,16 +1237,93 @@
   {
     "__docId__": 77,
     "kind": "file",
-    "name": "src/frontend/main.js",
-    "content": "/* jshint esversion: 6 */\n/**\n * @type {object}\n * @desc Contains configuration (frontend)\n */\nlet config = {\n  lastBudget: 'budgets/budget-0/',\n};\n/**\n * @type {array}\n * @desc Contains informations about incomes (frontend)\n */\nlet incomes = [];\n/**\n * @type {array}\n * @desc Contains informations about outcomes (frontend)\n */\nlet outcomes = [];\n/**\n * @type {object}\n * @desc Contains informations about budget (frontend)\n */\nlet budget = {\n  id: 0,\n  path: `budgets/budget-0/`,\n  monthsID: [\n    {\n      id: 0,\n      path: `budgets/budget-0/month-0/`,\n    },\n  ],\n  lastMonthID: 0,\n};\n\n/**\n * @type {object}\n * @desc Contains informations about settlement period (frontend)\n */\nlet month = {\n  amount: 0,\n  id: 0,\n  name: '',\n  descr: '',\n  incomes: '',\n  outcomes: '',\n};\n\n/**\n * Saves all informations about budget and config (frontend)\n */\nfunction saveAll() {\n\n  send({\n    task: 'save',\n    data: { name: 'config', data: config },\n    path: '',\n    name: 'config.json',\n  });\n\n  send({\n    task: 'save',\n    data: { name: 'budget', data: budget },\n    path: budget.path,\n    name: 'budget.json',\n  });\n\n  send({\n    task: 'save',\n    data: { name: 'month', data: month },\n    path: budget.monthsID[budget.monthsID.length - 1].path,\n    name: 'month.json',\n  });\n\n  send({\n    task: 'save',\n    data: { name: 'incomes', data: incomes },\n    path: budget.monthsID[budget.monthsID.length - 1].path,\n    name: 'incomes.json',\n  });\n\n  send({\n    task: 'save',\n    data: { name: 'outcomes', data: outcomes },\n    path: budget.monthsID[budget.monthsID.length - 1].path,\n    name: 'outcomes.json',\n  });\n\n}\n\n/**\n * Checks argument sended from backend (frontend window)\n * @param {object} arg argument to check\n */\nfunction checkArg(arg) {\n\n  if (arg.task == 'read') {\n    let name = arg.data.name;\n    let data = arg.data.data;\n    if (name == 'budget') {\n      budget = data;\n      startup('month');\n\n    } else if (name == 'month') {\n      month = data;\n      startup('incomes');\n      startup('outcomes');\n\n    } else if (name == 'incomes') {\n      incomes = data;\n\n    } else if (name == 'outcomes') {\n      outcomes = data;\n\n    } else if (name == 'config') {\n      config = data;\n      startup('budget');\n\n    } else {\n      console.log('invalid name');\n    }\n  }\n}\n\n/**\n * @ignore\n * @param {string} arg Determines what needs to be loaded (called by checkArg) (frontend window)\n */\nfunction startup(arg) {\n\n  if (arg == 'config' || arg == undefined) {\n    send({\n      task: 'read',\n      path: '',\n      name: 'config.json',\n    });\n  } else if (arg == 'budget') {\n    send({\n      task: 'read',\n      path: config.lastBudget,\n      name: 'budget.json',\n    });\n  } else if (arg == 'month') {\n    send({\n      task: 'read',\n      path: budget.monthsID[budget.lastMonthID].path,\n      name: 'month.json',\n    });\n  } else if (arg == 'incomes') {\n    send({\n      task: 'read',\n      path: budget.monthsID[budget.lastMonthID].path,\n      name: 'incomes.json',\n    });\n  } else if (arg == 'outcomes') {\n    send({\n      task: 'read',\n      path: budget.monthsID[budget.lastMonthID].path,\n      name: 'outcomes.json',\n    });\n  }\n\n}\n\n/**\n * Add an income or an outcome\n * @param {string} type income or outcome\n * @param {string} name Name / title of income or outcome\n * @param {string} desc Description of income or outcome\n * @param {number} amount Value of income or outcome\n * @param {number} cat Id of category\n * @example <JavaScript>\n * addIncome('income', 'Payment', 'From my employer', 2000, 1);\n */\nfunction addIncome(type, name, desc, amount, cat) {\n  let tmpArr;\n  if (type == 'income') {\n    tmpArr = incomes;\n  } else if (type == 'outcome') {\n    tmpArr = outcomes;\n  } else {\n    console.log('Invalid incomeType');\n    return;\n  }\n\n  let tmpObj = {\n    amount: amount,\n    name: name,\n    description: desc,\n    cat: cat,\n    id: (tmpArr.length),\n    flags: {\n      del: false,\n    },\n  };\n\n  tmpArr.push(tmpObj);\n\n  if (incomeType == 'income') {\n    incomes = tmpArr;\n  } else if (incomeType == 'outcome') {\n    outcomes = tmpArr;\n  } else {\n    console.log('Invalid incomeType');\n    return;\n  }\n}\n\nif ((document.getElementById('')) !== null) {\n  send({ task: '' });\n}\n",
+    "name": "src/frontend/lang.js",
+    "content": "/*jshint esversion:6*/\r\nlet lang = {\r\n  menu: {\r\n    budget: 'Budget',\r\n    history: 'History',\r\n    preferences: 'Preferences',\r\n  },\r\n  headerBar: {\r\n    incomes: {\r\n      amount: 'Amount',\r\n    },\r\n  },\r\n  incomes: {\r\n    incomes: 'Incomes',\r\n    outcomes: 'Outcomes',\r\n    lastAmount: 'Last Amount',\r\n    leftFromLastMonth: 'Left from last month',\r\n    forms: {\r\n      addIncome: 'Add income',\r\n      addOutcome: 'Add outcome',\r\n      name: 'Name',\r\n      amount: 'Amount',\r\n      category: 'Category',\r\n      description: 'Description'\r\n    },\r\n    categories: {\r\n      other: 'Other',\r\n      dailyExpences: 'Daily expences',\r\n      entertaiment: 'Entertaiment',\r\n      houseAndBills: 'House and bills',\r\n      financeAndInsurance: 'Finance and insurance',\r\n    },\r\n  },\r\n  other: {\r\n    submit: 'Submit',\r\n    save: 'Save',\r\n    cancel: 'Cancel',\r\n    del: 'Delete',\r\n  },\r\n  preferences: {\r\n    preferences: 'Preferences',\r\n    currencySymbol: 'Currency symbol',\r\n    lang: 'Language',\r\n    makeLang: 'Make a translation'\r\n  }\r\n};\r\n\r\nlet incomesCategories = [\r\n  lang.incomes.categories.other,\r\n  lang.incomes.categories.dailyExpences,\r\n  lang.incomes.categories.entertaiment,\r\n  lang.incomes.categories.houseAndBills,\r\n  lang.incomes.categories.financeAndInsurance\r\n];\r\n\r\nfunction changeLang(data) {\r\n  lang = data;\r\n  incomesCategories = [\r\n    lang.incomes.categories.other,\r\n    lang.incomes.categories.dailyExpences,\r\n    lang.incomes.categories.entertaiment,\r\n    lang.incomes.categories.houseAndBills,\r\n    lang.incomes.categories.financeAndInsurance\r\n  ];\r\n  refreshIncomes();\r\n  generateMainMenu();\r\n}\r\n",
     "static": true,
-    "longname": "/home/epat/Dokumenty/GitHub/YourHomeBudget/src/frontend/main.js",
+    "longname": "F:/Programowanie/JS/yourhomebudget/src/frontend/lang.js",
     "access": "public",
     "description": null,
     "lineNumber": 1
   },
   {
     "__docId__": 78,
+    "kind": "variable",
+    "name": "lang",
+    "memberof": "src/frontend/lang.js",
+    "static": true,
+    "longname": "src/frontend/lang.js~lang",
+    "access": "public",
+    "export": false,
+    "importPath": "YourHomeBudget/src/frontend/lang.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 2,
+    "undocument": true,
+    "type": {
+      "types": [
+        "{\"menu\": *, \"headerBar\": *, \"incomes\": *, \"other\": *, \"preferences\": *}"
+      ]
+    }
+  },
+  {
+    "__docId__": 79,
+    "kind": "variable",
+    "name": "incomesCategories",
+    "memberof": "src/frontend/lang.js",
+    "static": true,
+    "longname": "src/frontend/lang.js~incomesCategories",
+    "access": "public",
+    "export": false,
+    "importPath": "YourHomeBudget/src/frontend/lang.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 48,
+    "undocument": true,
+    "type": {
+      "types": [
+        "undefined[]"
+      ]
+    }
+  },
+  {
+    "__docId__": 80,
+    "kind": "function",
+    "name": "changeLang",
+    "memberof": "src/frontend/lang.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/frontend/lang.js~changeLang",
+    "access": "public",
+    "export": false,
+    "importPath": "YourHomeBudget/src/frontend/lang.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 56,
+    "undocument": true,
+    "params": [
+      {
+        "name": "data",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": null
+  },
+  {
+    "__docId__": 81,
+    "kind": "file",
+    "name": "src/frontend/main.js",
+    "content": "/* jshint esversion: 6 */\r\n/**\r\n * @type {object}\r\n * @desc Contains configuration (frontend)\r\n */\r\nlet config = {\r\n  lastBudgetID: 0,\r\n  currencySymbol: '$',\r\n};\r\n/**\r\n * @type {array}\r\n * @desc Contains informations about incomes (frontend)\r\n */\r\nlet incomes = [];\r\n/**\r\n * @type {array}\r\n * @desc Contains informations about outcomes (frontend)\r\n */\r\nlet outcomes = [];\r\n/**\r\n * @type {object}\r\n * @desc Contains informations about budget (frontend)\r\n */\r\nlet budget = {\r\n  id: 0,\r\n  place: 'disk',\r\n  monthsID: [{\r\n    amount: 0,\r\n    date: new Date(),\r\n  },\r\n ],\r\n  lastMonthID: 0,\r\n};\r\n\r\nlet inOut = 0;\r\n/**\r\n * @type {object}\r\n * @desc Contains informations about settlement period (frontend)\r\n */\r\nlet month = {\r\n  amount: 0,\r\n  id: 0,\r\n  name: '',\r\n  descr: '',\r\n};\r\n\r\nlet editMonth = true;\r\nlet historyCheck = false;\r\n\r\n/**\r\n * Saves all informations about budget and config (frontend)\r\n */\r\nfunction saveAll() {\r\n  saveConfig();\r\n  saveBudget();\r\n  updateMonth();\r\n}\r\n\r\nfunction saveConfig() {\r\n  send({\r\n    task: 'save',\r\n    data: {\r\n      name: 'config',\r\n      data: config\r\n    },\r\n    path: '',\r\n    name: 'config.json',\r\n  });\r\n}\r\n\r\nfunction saveBudget() {\r\n  send({\r\n    task: 'save',\r\n    data: {\r\n      name: 'budget',\r\n      data: budget\r\n    },\r\n    path: `budgets/budget-${budget.id}/`,\r\n    name: 'budget.json',\r\n  });\r\n}\r\n\r\nfunction lastMth() {\r\n  budget.lastMonthID = budget.monthsID.length - 1;\r\n  loadMonth(budget.monthsID.length - 1);\r\n  historyCheck = false;\r\n  editMonth = true;\r\n}\r\n\r\nfunction checkMonth() {\r\n  if (historyCheck) {\r\n    return;\r\n  } else {\r\n    let lastMonth = new Date((\r\n      budget.monthsID[budget.monthsID.length - 1].date));\r\n    let now = new Date();\r\n    if (now.getMonth() > lastMonth.getMonth()) {\r\n      let leftAmount = month.amount;\r\n      resetMonthToDefault();\r\n      budget.monthsID.push({\r\n        date: new Date(),\r\n      });\r\n      budget.lastMonthID = budget.monthsID.length - 1;\r\n      updateMonth();\r\n      addIncome('income', 'bwlflm', 'bwlflm', leftAmount);\r\n      saveAll();\r\n      updateMonth();\r\n      refreshIncomes();\r\n    }\r\n    saveAll();\r\n    return;\r\n  }\r\n}\r\n\r\nfunction resetMonthToDefault() {\r\n  month = {\r\n    amount: 0,\r\n    id: 0,\r\n    name: '',\r\n    descr: '',\r\n  };\r\n  outcomes = [];\r\n  incomes = [];\r\n  return;\r\n}\r\n\r\nfunction updateMonth() {\r\n  let amount = 0;\r\n  let i;\r\n  for (i = 0; i < incomes.length; i++) {\r\n    amount += Number(incomes[i].amount);\r\n  }\r\n  for (i = 0; i < outcomes.length; i++) {\r\n    amount -= Number(outcomes[i].amount);\r\n  }\r\n  month.amount = amount;\r\n  budget.monthsID[budget.monthsID.length - 1].amount = amount;\r\n\r\n  save({\r\n    name: 'month',\r\n    data: month\r\n  }, 'month.json', `budgets/budget-${budget.id}/month-${budget.lastMonthID}/`);\r\n\r\n  save({\r\n    name: 'incomes',\r\n    data: incomes\r\n  }, 'incomes.json', `budgets/budget-${budget.id}/month-${budget.lastMonthID}/`);\r\n\r\n  save({\r\n    name: 'outcomes',\r\n    data: outcomes\r\n  }, 'outcomes.json', `budgets/budget-${budget.id}/month-${budget.lastMonthID}/`);\r\n}\r\n\r\nfunction monthYear(date = new Date()) {\r\n  date = new Date(date);\r\n  let dateFormatted = `${date.getMonth() + 1}-${date.getYear() + 1900}`;\r\n  return dateFormatted;\r\n}\r\n\r\n/**\r\n * Checks argument sended from backend (frontend window)\r\n * @param {object} arg argument from communication channel to check\r\n */\r\nfunction checkArg(arg) {\r\n\r\n  if (arg == 'start') {\r\n    startup();\r\n  } else if (arg == 'firstStartup') {\r\n    saveAll();\r\n    return;\r\n  } else if (typeof arg == 'object' && arg.task == 'read') {\r\n    let name = arg.data.name;\r\n    let data = arg.data.data;\r\n    if (name == 'budget') {\r\n      budget = data;\r\n      startup('month');\r\n    } else if (name == 'month') {\r\n      month = data;\r\n      startup('incomes');\r\n      startup('outcomes');\r\n    } else if (name == 'incomes') {\r\n      incomes = data;\r\n      refreshIncomes();\r\n      inOut++;\r\n      if (inOut >= 2) {\r\n        checkMonth();\r\n        inOut = 0;\r\n      }\r\n    } else if (name == 'outcomes') {\r\n      outcomes = data;\r\n      refreshIncomes();\r\n      inOut++;\r\n      if (inOut >= 2) {\r\n        checkMonth();\r\n        inOut = 0;\r\n      }\r\n    } else if (name == 'config') {\r\n      config = data;\r\n      startup('budget');\r\n    } else if (name == 'lang') {\r\n      changeLang(data);\r\n    } else {\r\n      console.log('invalid name');\r\n    }\r\n  }\r\n}\r\n\r\n\r\n/**\r\n * @ignore\r\n * @param {string} arg Determines what needs to be loaded (called by checkArg) (frontend window)\r\n */\r\nfunction startup(arg) {\r\n\r\n  if (arg == 'config' || arg == undefined) {\r\n    send({\r\n      task: 'read',\r\n      path: '',\r\n      name: 'config.json',\r\n    });\r\n  } else if (arg == 'budget') {\r\n    send({\r\n      task: 'read',\r\n      path: `budgets/budget-${config.lastBudgetID}/`,\r\n      name: 'budget.json',\r\n    });\r\n  } else if (arg == 'month') {\r\n    send({\r\n      task: 'read',\r\n      path: `budgets/budget-${budget.id}/month-${budget.lastMonthID}/`,\r\n      name: 'month.json',\r\n    });\r\n  } else if (arg == 'incomes') {\r\n    send({\r\n      task: 'read',\r\n      path: `budgets/budget-${budget.id}/month-${budget.lastMonthID}/`,\r\n      name: 'incomes.json',\r\n    });\r\n  } else if (arg == 'outcomes') {\r\n    send({\r\n      task: 'read',\r\n      path: `budgets/budget-${budget.id}/month-${budget.lastMonthID}/`,\r\n      name: 'outcomes.json',\r\n    });\r\n  }\r\n\r\n}\r\n\r\nfunction fullDateAndHour(date = new Date()) {\r\n  date = new Date(date);\r\n  let hr = String('0' + date.getHours()).slice(-2);\r\n  let min = String('0' + date.getMinutes()).slice(-2);\r\n  let sec = String('0' + date.getSeconds()).slice(-2);\r\n  let yr = date.getFullYear();\r\n  let mth = String('0' + String(Number(date.getMonth()) + 1)).slice(-2);\r\n  let day = String('0' + date.getDate()).slice(-2);\r\n  let ret = `${day}-${mth}-${yr} ${hr}:${min}:${sec}`;\r\n  return ret;\r\n}\r\n\r\nfunction loadMonth(id) {\r\n  budget.lastMonthID = id;\r\n  read('month.json', `budgets/budget-${budget.id}/month-${id}/`);\r\n  read('incomes.json', `budgets/budget-${budget.id}/month-${id}/`);\r\n  read('outcomes.json', `budgets/budget-${budget.id}/month-${id}/`);\r\n  if (id != budget.monthsID.length - 1) {\r\n    editMonth = false;\r\n  } else {\r\n    editMonth = true;\r\n  }\r\n}\r\n\r\nfunction showMonth(id) {\r\n  if (id != budget.monthsID.length - 1) {\r\n    historyCheck = true;\r\n  } else {\r\n    historyCheck = false;\r\n  }\r\n  loadMonth(id);\r\n}\r\n\r\nfunction delIncome(type, id) {\r\n  let tempArr = [];\r\n  if (!confirm('Are you shure?')) {\r\n    return;\r\n  }\r\n  if (type == 'income') {\r\n\r\n    for (let i = 0; i < incomes.length; i++) {\r\n      if (i != id) {\r\n        tempArr.push(incomes[i]);\r\n      }\r\n    }\r\n    incomes = tempArr;\r\n  } else if (type == 'outcome') {\r\n    for (let i = 0; i < outcomes.length; i++) {\r\n      if (i != id) {\r\n        tempArr.push(outcomes[i]);\r\n      }\r\n    }\r\n    outcomes = tempArr;\r\n  }\r\n  updateMonth();\r\n  saveAll();\r\n  refreshIncomes();\r\n  contextIncomesAmount();\r\n}\r\n\r\n/**\r\n * Add an income or an outcome\r\n * @param {string} type income or outcome\r\n * @param {string} name Name / title of income or outcome\r\n * @param {string} desc Description of income or outcome\r\n * @param {number} amount Value of income or outcome\r\n * @param {number} cat Id of category\r\n * @example <JavaScript>\r\n * addIncome('income', 'Payment', 'From my employer', 2000, 1);\r\n */\r\nfunction addIncome(type, name, desc, amount, cat, canDelete) {\r\n  if (!editMonth) {\r\n    delForm();\r\n    if (type == 'income') {\r\n      incomesCancel = undefined;\r\n      incomesSubmit = undefined;\r\n    } else if (type == 'outcome') {\r\n      outcomesCancel = undefined;\r\n      outcomesSubmit = undefined;\r\n    }\r\n    alert(\"You can't edit this month\");\r\n    return;\r\n  }\r\n  let tmpArr;\r\n  if (type == 'income') {\r\n    tmpArr = incomes;\r\n  } else if (type == 'outcome') {\r\n    tmpArr = outcomes;\r\n  } else {\r\n    console.log('Invalid type');\r\n    return;\r\n  }\r\n\r\n  let tmpObj = {\r\n    amount: amount,\r\n    name: name,\r\n    description: desc,\r\n    cat: cat,\r\n    date: new Date(),\r\n    id: (tmpArr.length),\r\n    flags: {\r\n      del: false,\r\n    },\r\n  };\r\n  if (canDelete) {\r\n    tmpObj.flags.del = true;\r\n  }\r\n\r\n  tmpArr.push(tmpObj);\r\n  updateMonth();\r\n  refreshIncomes();\r\n}\r\n\r\nif ((document.getElementById('')) !== null) {\r\n  send({\r\n    task: ''\r\n  });\r\n}\r\n\r\nsend('reset');\r\n",
+    "static": true,
+    "longname": "F:/Programowanie/JS/yourhomebudget/src/frontend/main.js",
+    "access": "public",
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 82,
     "kind": "variable",
     "name": "config",
     "memberof": "src/frontend/main.js",
@@ -1264,7 +1345,7 @@
     }
   },
   {
-    "__docId__": 79,
+    "__docId__": 83,
     "kind": "variable",
     "name": "incomes",
     "memberof": "src/frontend/main.js",
@@ -1275,7 +1356,7 @@
     "importPath": "YourHomeBudget/src/frontend/main.js",
     "importStyle": null,
     "description": "Contains informations about incomes (frontend)",
-    "lineNumber": 13,
+    "lineNumber": 14,
     "type": {
       "nullable": null,
       "types": [
@@ -1286,7 +1367,7 @@
     }
   },
   {
-    "__docId__": 80,
+    "__docId__": 84,
     "kind": "variable",
     "name": "outcomes",
     "memberof": "src/frontend/main.js",
@@ -1297,7 +1378,7 @@
     "importPath": "YourHomeBudget/src/frontend/main.js",
     "importStyle": null,
     "description": "Contains informations about outcomes (frontend)",
-    "lineNumber": 18,
+    "lineNumber": 19,
     "type": {
       "nullable": null,
       "types": [
@@ -1308,7 +1389,7 @@
     }
   },
   {
-    "__docId__": 81,
+    "__docId__": 85,
     "kind": "variable",
     "name": "budget",
     "memberof": "src/frontend/main.js",
@@ -1319,7 +1400,7 @@
     "importPath": "YourHomeBudget/src/frontend/main.js",
     "importStyle": null,
     "description": "Contains informations about budget (frontend)",
-    "lineNumber": 23,
+    "lineNumber": 24,
     "type": {
       "nullable": null,
       "types": [
@@ -1330,7 +1411,27 @@
     }
   },
   {
-    "__docId__": 82,
+    "__docId__": 86,
+    "kind": "variable",
+    "name": "inOut",
+    "memberof": "src/frontend/main.js",
+    "static": true,
+    "longname": "src/frontend/main.js~inOut",
+    "access": "public",
+    "export": false,
+    "importPath": "YourHomeBudget/src/frontend/main.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 35,
+    "undocument": true,
+    "type": {
+      "types": [
+        "number"
+      ]
+    }
+  },
+  {
+    "__docId__": 87,
     "kind": "variable",
     "name": "month",
     "memberof": "src/frontend/main.js",
@@ -1341,7 +1442,7 @@
     "importPath": "YourHomeBudget/src/frontend/main.js",
     "importStyle": null,
     "description": "Contains informations about settlement period (frontend)",
-    "lineNumber": 39,
+    "lineNumber": 40,
     "type": {
       "nullable": null,
       "types": [
@@ -1352,7 +1453,47 @@
     }
   },
   {
-    "__docId__": 83,
+    "__docId__": 88,
+    "kind": "variable",
+    "name": "editMonth",
+    "memberof": "src/frontend/main.js",
+    "static": true,
+    "longname": "src/frontend/main.js~editMonth",
+    "access": "public",
+    "export": false,
+    "importPath": "YourHomeBudget/src/frontend/main.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 47,
+    "undocument": true,
+    "type": {
+      "types": [
+        "boolean"
+      ]
+    }
+  },
+  {
+    "__docId__": 89,
+    "kind": "variable",
+    "name": "historyCheck",
+    "memberof": "src/frontend/main.js",
+    "static": true,
+    "longname": "src/frontend/main.js~historyCheck",
+    "access": "public",
+    "export": false,
+    "importPath": "YourHomeBudget/src/frontend/main.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 48,
+    "undocument": true,
+    "type": {
+      "types": [
+        "boolean"
+      ]
+    }
+  },
+  {
+    "__docId__": 90,
     "kind": "function",
     "name": "saveAll",
     "memberof": "src/frontend/main.js",
@@ -1365,12 +1506,157 @@
     "importPath": "YourHomeBudget/src/frontend/main.js",
     "importStyle": null,
     "description": "Saves all informations about budget and config (frontend)",
-    "lineNumber": 51,
+    "lineNumber": 53,
     "params": [],
     "return": null
   },
   {
-    "__docId__": 84,
+    "__docId__": 91,
+    "kind": "function",
+    "name": "saveConfig",
+    "memberof": "src/frontend/main.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/frontend/main.js~saveConfig",
+    "access": "public",
+    "export": false,
+    "importPath": "YourHomeBudget/src/frontend/main.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 59,
+    "undocument": true,
+    "params": [],
+    "return": null
+  },
+  {
+    "__docId__": 92,
+    "kind": "function",
+    "name": "saveBudget",
+    "memberof": "src/frontend/main.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/frontend/main.js~saveBudget",
+    "access": "public",
+    "export": false,
+    "importPath": "YourHomeBudget/src/frontend/main.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 71,
+    "undocument": true,
+    "params": [],
+    "return": null
+  },
+  {
+    "__docId__": 93,
+    "kind": "function",
+    "name": "lastMth",
+    "memberof": "src/frontend/main.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/frontend/main.js~lastMth",
+    "access": "public",
+    "export": false,
+    "importPath": "YourHomeBudget/src/frontend/main.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 83,
+    "undocument": true,
+    "params": [],
+    "return": null
+  },
+  {
+    "__docId__": 94,
+    "kind": "function",
+    "name": "checkMonth",
+    "memberof": "src/frontend/main.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/frontend/main.js~checkMonth",
+    "access": "public",
+    "export": false,
+    "importPath": "YourHomeBudget/src/frontend/main.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 90,
+    "undocument": true,
+    "params": [],
+    "return": null
+  },
+  {
+    "__docId__": 95,
+    "kind": "function",
+    "name": "resetMonthToDefault",
+    "memberof": "src/frontend/main.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/frontend/main.js~resetMonthToDefault",
+    "access": "public",
+    "export": false,
+    "importPath": "YourHomeBudget/src/frontend/main.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 115,
+    "undocument": true,
+    "params": [],
+    "return": null
+  },
+  {
+    "__docId__": 96,
+    "kind": "function",
+    "name": "updateMonth",
+    "memberof": "src/frontend/main.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/frontend/main.js~updateMonth",
+    "access": "public",
+    "export": false,
+    "importPath": "YourHomeBudget/src/frontend/main.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 127,
+    "undocument": true,
+    "params": [],
+    "return": null
+  },
+  {
+    "__docId__": 97,
+    "kind": "function",
+    "name": "monthYear",
+    "memberof": "src/frontend/main.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/frontend/main.js~monthYear",
+    "access": "public",
+    "export": false,
+    "importPath": "YourHomeBudget/src/frontend/main.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 155,
+    "undocument": true,
+    "params": [
+      {
+        "name": "date",
+        "optional": true,
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 98,
     "kind": "function",
     "name": "checkArg",
     "memberof": "src/frontend/main.js",
@@ -1383,7 +1669,7 @@
     "importPath": "YourHomeBudget/src/frontend/main.js",
     "importStyle": null,
     "description": "Checks argument sended from backend (frontend window)",
-    "lineNumber": 94,
+    "lineNumber": 165,
     "params": [
       {
         "nullable": null,
@@ -1393,13 +1679,13 @@
         "spread": false,
         "optional": false,
         "name": "arg",
-        "description": "argument to check"
+        "description": "argument from communication channel to check"
       }
     ],
     "return": null
   },
   {
-    "__docId__": 85,
+    "__docId__": 99,
     "kind": "function",
     "name": "startup",
     "memberof": "src/frontend/main.js",
@@ -1412,7 +1698,7 @@
     "importPath": "YourHomeBudget/src/frontend/main.js",
     "importStyle": null,
     "description": "",
-    "lineNumber": 128,
+    "lineNumber": 214,
     "ignore": true,
     "params": [
       {
@@ -1429,7 +1715,122 @@
     "return": null
   },
   {
-    "__docId__": 86,
+    "__docId__": 100,
+    "kind": "function",
+    "name": "fullDateAndHour",
+    "memberof": "src/frontend/main.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/frontend/main.js~fullDateAndHour",
+    "access": "public",
+    "export": false,
+    "importPath": "YourHomeBudget/src/frontend/main.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 250,
+    "undocument": true,
+    "params": [
+      {
+        "name": "date",
+        "optional": true,
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 101,
+    "kind": "function",
+    "name": "loadMonth",
+    "memberof": "src/frontend/main.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/frontend/main.js~loadMonth",
+    "access": "public",
+    "export": false,
+    "importPath": "YourHomeBudget/src/frontend/main.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 262,
+    "undocument": true,
+    "params": [
+      {
+        "name": "id",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": null
+  },
+  {
+    "__docId__": 102,
+    "kind": "function",
+    "name": "showMonth",
+    "memberof": "src/frontend/main.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/frontend/main.js~showMonth",
+    "access": "public",
+    "export": false,
+    "importPath": "YourHomeBudget/src/frontend/main.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 274,
+    "undocument": true,
+    "params": [
+      {
+        "name": "id",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": null
+  },
+  {
+    "__docId__": 103,
+    "kind": "function",
+    "name": "delIncome",
+    "memberof": "src/frontend/main.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/frontend/main.js~delIncome",
+    "access": "public",
+    "export": false,
+    "importPath": "YourHomeBudget/src/frontend/main.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 283,
+    "undocument": true,
+    "params": [
+      {
+        "name": "type",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "id",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": null
+  },
+  {
+    "__docId__": 104,
     "kind": "function",
     "name": "addIncome",
     "memberof": "src/frontend/main.js",
@@ -1445,7 +1846,7 @@
     "examples": [
       "<JavaScript>\naddIncome('income', 'Payment', 'From my employer', 2000, 1);"
     ],
-    "lineNumber": 174,
+    "lineNumber": 320,
     "params": [
       {
         "nullable": null,
@@ -1501,18 +1902,18 @@
     "return": null
   },
   {
-    "__docId__": 87,
+    "__docId__": 105,
     "kind": "file",
     "name": "src/frontend/requires.js",
-    "content": "/* jshint esversion: 6 */\n/**\n * @ignore\n */\nconst electron = require('electron');\n/**\n * @ignore\n */\nconst remote = electron.remote;\n/**\n * @ignore\n */\nconst app = remote.app;\n/**\n * @ignore\n */\nconst { ipcRenderer } = electron;\n/**\n * @ignore\n */\nconst electronTitlebar = require('electron-titlebar');\n",
+    "content": "/* jshint esversion: 6 */\r\n/**\r\n * @ignore\r\n */\r\nconst electron = require('electron');\r\n/**\r\n * @ignore\r\n */\r\nconst remote = electron.remote;\r\n/**\r\n * @ignore\r\n */\r\nconst app = remote.app;\r\n/**\r\n * @ignore\r\n */\r\nconst { ipcRenderer } = electron;\r\n/**\r\n * @ignore\r\n */\r\nconst electronTitlebar = require('electron-titlebar');\r\n",
     "static": true,
-    "longname": "/home/epat/Dokumenty/GitHub/YourHomeBudget/src/frontend/requires.js",
+    "longname": "F:/Programowanie/JS/yourhomebudget/src/frontend/requires.js",
     "access": "public",
     "description": null,
     "lineNumber": 1
   },
   {
-    "__docId__": 88,
+    "__docId__": 106,
     "kind": "variable",
     "name": "electron",
     "memberof": "src/frontend/requires.js",
@@ -1532,7 +1933,7 @@
     }
   },
   {
-    "__docId__": 89,
+    "__docId__": 107,
     "kind": "variable",
     "name": "remote",
     "memberof": "src/frontend/requires.js",
@@ -1552,7 +1953,7 @@
     }
   },
   {
-    "__docId__": 90,
+    "__docId__": 108,
     "kind": "variable",
     "name": "app",
     "memberof": "src/frontend/requires.js",
@@ -1572,7 +1973,7 @@
     }
   },
   {
-    "__docId__": 91,
+    "__docId__": 109,
     "kind": "variable",
     "name": "ipcRenderer",
     "memberof": "src/frontend/requires.js",
@@ -1592,7 +1993,7 @@
     }
   },
   {
-    "__docId__": 92,
+    "__docId__": 110,
     "kind": "variable",
     "name": "electronTitlebar",
     "memberof": "src/frontend/requires.js",
@@ -1612,18 +2013,18 @@
     }
   },
   {
-    "__docId__": 93,
+    "__docId__": 111,
     "kind": "file",
     "name": "src/frontend/ui.js",
-    "content": "/*jshint esversion: 6 */\n/**\n * @ignore\n */\nconst menuButton = document.getElementById('menuButton');\n/**\n * @ignore\n */\nconst mainMenu = document.getElementById('mainMenu');\n\nmenuButton.addEventListener('click', (e) => {\n  if (mainMenu.style.left == '0px') {\n    mainMenu.style.left = '-100vw';\n  } else {\n    mainMenu.style.left = '0px';\n  }\n});\n",
+    "content": "/*jshint esversion: 6 */\r\n/**\r\n * @ignore\r\n */\r\nconst menuButton = document.getElementById('menuButton'),\r\n      mainMenu = document.getElementById('mainMenu'),\r\n      contextButtons = document.getElementById('contextButtons'),\r\n      mask = document.getElementById('mask'),\r\n      balanceContent = document.getElementById('balanceContent'),\r\n      floatingFrame = document.getElementById('floatingFrame');\r\n\r\nlet incomesSubmit,\r\n    incomesCancel,\r\n    incomesButton,\r\n    outcomesButton;\r\n\r\nmenuButton.addEventListener('click', menuPos);\r\n\r\nfunction menuPos() {\r\n  if (mainMenu.style.left == '0px') {\r\n    mask.style.pointerEvents = 'none';\r\n    mainMenu.style.left = '-100vw';\r\n    menuButton.classList.remove(\"fa-arrow-left\");\r\n    menuButton.classList.add(\"fa-bars\");\r\n    mask.style.backdropFilter = 'none';\r\n\r\n  } else {\r\n    mainMenu.style.left = '0px';\r\n    mask.style.pointerEvents = 'all';\r\n    menuButton.classList.remove(\"fa-bars\");\r\n    menuButton.classList.add(\"fa-arrow-left\");\r\n    mask.style.backdropFilter = 'blur(5px)';\r\n  }\r\n}\r\nmask.addEventListener('click', () => {\r\n  mask.style.pointerEvents = 'none';\r\n  mainMenu.style.left = '-100vw';\r\n  menuButton.classList.remove(\"fa-arrow-left\");\r\n  menuButton.classList.add(\"fa-bars\");\r\n  mask.style.backdropFilter = 'none';\r\n});\r\n\r\nfunction generateIncomesForm() {\r\n    let cont = `<section class=\"defaultForm\" id=\"incomesForm\"><h2>${lang.incomes.forms.addIncome}</h2>`;\r\n    cont += `<p id=\"incomesFormName\">${lang.incomes.forms.name}</p><input type=\"text\" id=\"incomesFormNameInput\">`;\r\n    cont += `<p id=\"incomesFormAmount\">${lang.incomes.forms.amount}</p><input type=\"number\" id=\"incomesFormAmountInput\" name=\"\" value=\"0\">`;\r\n    cont += `<p id=\"incomesFormDesc\">${lang.incomes.forms.description}</p><input name=\"name\" id=\"incomesFormDescInput\" rows=\"8\" cols=\"80\"></input>`;\r\n    cont +=`<button id=\"incomesFormCancel\">${lang.other.cancel}</button><button id=\"incomesFormSubmit\">${lang.other.submit}</button></section>`;\r\n    floatingFrame.innerHTML = cont;\r\n    incomesSubmit = document.getElementById('incomesFormSubmit');\r\n\r\n    incomesSubmit.addEventListener('click', () => {\r\n      let name = document.getElementById('incomesFormNameInput').value;\r\n      let amount = Number(document.getElementById('incomesFormAmountInput').value);\r\n      let description = document.getElementById('incomesFormDescInput').value;\r\n      if (amount != \"\" && name != \"\") {\r\n        addIncome('income', name, description, amount, 'none', true);\r\n      } else {\r\n        console.log(' continue');\r\n      }\r\n\r\n    });\r\n\r\n    incomesCancel = document.getElementById('incomesFormCancel');\r\n    incomesCancel.addEventListener('click', () => {\r\n      delForm();\r\n      incomesCancel = undefined;\r\n      incomesSubmit = undefined;\r\n    });\r\n}\r\n\r\nfunction delForm() {\r\n  floatingFrame.innerHTML = '';\r\n}\r\n\r\nfunction generateOutcomesForm() {\r\n    let cont = `<section class=\"defaultForm\" id=\"outcomesForm\"><h2>${lang.incomes.forms.addOutcome}</h2>`;\r\n    cont += `<p id=\"outcomesFormName\"> ${lang.incomes.forms.name}</p><input type=\"text\" id=\"outcomesFormNameInput\">`;\r\n    cont += `<p id=\"outcomesFormAmount\">${lang.incomes.forms.amount}</p><input type=\"number\" id=\"outcomesFormAmountInput\" name=\"\" value=\"0\">`;\r\n    cont += `<p id=\"outcomesFormCategory\">${lang.incomes.forms.category}</p><select id=\"outcomesFormCategoryInput\" default=\"4\" ><option value=\"0\">${lang.incomes.categories.other}</option><option value=\"1\">${lang.incomes.categories.dailyExpences}</option><option value=\"2\">${lang.incomes.categories.entertaiment}</option><option value=\"3\">${lang.incomes.categories.houseAndBills}</option><option value=\"4\">${lang.incomes.categories.financeAndInsurance}</option></select>`;\r\n    cont += `<p id=\"outcomesFormDesc\">${lang.incomes.forms.descrdescription}</p><input name=\"name\" id=\"outcomesFormDescInput\" rows=\"8\" cols=\"80\"></input>`;\r\n    cont += `<button id=\"outcomesFormCancel\">${lang.other.cancel}</button><button id=\"outcomesFormSubmit\">${lang.other.submit}</button></section>`;\r\n    floatingFrame.innerHTML = cont;\r\n    outcomesSubmit = document.getElementById('outcomesFormSubmit');\r\n\r\n    outcomesSubmit.addEventListener('click', () => {\r\n      let name = document.getElementById('outcomesFormNameInput').value;\r\n      let amount = Number(document.getElementById('outcomesFormAmountInput').value);\r\n      let category = document.getElementById('outcomesFormCategoryInput').value;\r\n      let description = document.getElementById('outcomesFormDescInput').value;\r\n      if (amount != \"\" && name != \"\" && category != \"\") {\r\n        addIncome('outcome', name, description, amount, category, true);\r\n      } else {\r\n        console.log('continue');\r\n      }\r\n\r\n    });\r\n\r\n    outcomesCancel = document.getElementById('outcomesFormCancel');\r\n    outcomesCancel.addEventListener('click', () => {\r\n      delForm();\r\n      outcomesCancel = undefined;\r\n      outcomesSubmit = undefined;\r\n    });\r\n}\r\n\r\nfunction generateContextButtons(scheme) {\r\n  if (scheme == 'incomes') {\r\n    contextButtons.innerHTML = '<button id=\"incomesButton\" class=\"headerBarButton ripple fa  fa-usd\"><b>+</b></button><button id=\"outcomesButton\" class=\"headerBarButton fa fa-usd ripple\"><b>-</b></button><div>';\r\n    contextButtons.insertAdjacentHTML('afterend', '<div id=\"incomesAmount\"></div>');\r\n    contextButtons.insertAdjacentHTML('afterend', '<div id=\"date\"></div>');\r\n\r\n    incomesButton = document.getElementById('incomesButton');\r\n    outcomesButton = document.getElementById('outcomesButton');\r\n\r\n    incomesButton.addEventListener('click', function (e) {\r\n      if (floatingFrame.innerHTML == '') {\r\n        generateIncomesForm();\r\n      } else if (floatingFrame.innerHTML != '' && !(document.getElementById('incomesForm'))) {\r\n        delForm();\r\n        generateIncomesForm();\r\n      } else if (floatingFrame.innerHTML != '' && (document.getElementById('incomesForm'))) {\r\n        delForm();\r\n      }\r\n    });\r\n\r\n    outcomesButton.addEventListener('click', function (e) {\r\n      if (floatingFrame.innerHTML == '') {\r\n        generateOutcomesForm();\r\n      } else if (floatingFrame.innerHTML != '' && !(document.getElementById('outcomesForm'))) {\r\n        delForm();\r\n        generateOutcomesForm();\r\n      } else if (floatingFrame.innerHTML != '' && (document.getElementById('outcomesForm'))) {\r\n        delForm();\r\n      }\r\n    });\r\n  }\r\n}\r\n\r\nfunction contextIncomesAmount() {\r\n  let amount = month.amount;\r\n  document.getElementById('incomesAmount').innerHTML = `${lang.headerBar.incomes.amount}: ${amount.toFixed(2)} ${config.currencySymbol}`;\r\n}\r\n\r\nfunction contextIncomesDate() {\r\n  let date = new Date(budget.monthsID[budget.lastMonthID].date);\r\n  let dateFormatted = monthYear(date);\r\n  document.getElementById('date').innerHTML = dateFormatted;\r\n}\r\n\r\nfunction generateHistory() {\r\n  let history = budget.monthsID;\r\n  balanceContent.innerHTML = '';\r\n  for (let i = 0; i < history.length; i++) {\r\n    balanceContent.insertAdjacentHTML('afterbegin', `<button class=\"income ripple\" onclick=\"showMonth(${i})\"> <h1> ${monthYear(history[i].date)}</h1><br><p>${history[i].amount.toFixed(2)}</p></button>`);\r\n  }\r\n}\r\n\r\nfunction generateMainMenu() {\r\n  mainMenu.innerHTML = '';\r\n  let buttons = [\r\n    {\r\n      name: lang.menu.budget,\r\n      action: 'lastMth()',\r\n    },\r\n    {\r\n      name: lang.menu.history,\r\n      action: 'generateHistory()',\r\n    },\r\n    {\r\n      name: lang.menu.preferences,\r\n      action: 'generatePreferences()',\r\n    }\r\n  ];\r\n\r\n  for (var i = 0; i < buttons.length; i++) {\r\n    mainMenu.insertAdjacentHTML('beforeend', `<button class=\"mainMenuItem ripple\" onclick=\"${buttons[i].action}; menuPos()\">${buttons[i].name}</button>`);\r\n  }\r\n}\r\n\r\nfunction generatePreferences() {\r\n  balanceContent.innerHTML = '';\r\n  balanceContent.insertAdjacentHTML(\r\n    'beforeend',\r\n    `<h1>${lang.preferences.preferences}</h1>`\r\n   );\r\n}\r\n\r\nfunction refreshIncomes() {\r\n  balanceContent.innerHTML = '';\r\n  let i = 0;\r\n  if (incomes.length > 0) {\r\n\r\n    for (i = 0; i < incomes.length; i++) {\r\n      let cont = `<section class=\"income\" id=\"income${i}\"><h1>${incomes[i].name}</h1>  <p>${incomes[i].amount.toFixed(2)}${config.currencySymbol}</p>`;\r\n      if (incomes[i].description) {\r\n        cont += '<br>';\r\n      }\r\n      cont += `<p>${incomes[i].description}</p>`;\r\n      if (incomes[i].date) {\r\n        cont += `<br><p>${fullDateAndHour(incomes[i].date)}</p>`;\r\n      }\r\n      if (incomes[i].flags.del && editMonth) {\r\n        cont += `<br><button onclick=\"delIncome('income', ${i})\"> ${lang.other.del}</button>`;\r\n      }\r\n      cont += '</section>';\r\n\r\n      if (incomes[i].description == 'bwlflm' && incomes[i].name == 'bwlflm') {\r\n        cont = `<section class=\"income\" id=\"income${i}\"><h1>${lang.incomes.lastAmount}</h1>  <p>${incomes[i].amount.toFixed(2)}${config.currencySymbol}</p><br><p>${lang.incomes.leftFromLastMonth}</p></section>`;\r\n      }\r\n      balanceContent.insertAdjacentHTML('afterbegin', cont);\r\n      cont = '';\r\n    }\r\n\r\n    balanceContent.insertAdjacentHTML('afterbegin', `<div style=\"margin: 0 auto\"><h1>${lang.incomes.incomes}</h1></div>`);\r\n  }\r\n\r\n  if (outcomes.length > 0) {\r\n    for (i = 0; i < outcomes.length; i++) {\r\n      let cont = `<section class=\"income\" id=\"outcome${i}\"><h1>${outcomes[i].name}</h1>  <p>${outcomes[i].amount.toFixed(2)}${config.currencySymbol}</p>`;\r\n      if (outcomes[i].description) {\r\n        cont += '<br>';\r\n      }\r\n      cont += `<p>${outcomes[i].description}</p>`;\r\n      if (outcomes[i].date) {\r\n        cont += `<br><p>${fullDateAndHour(outcomes[i].date)}</p>`;\r\n      }\r\n      if (!isNaN(Number(outcomes[i].cat))) {\r\n        cont += `<br><p>${incomesCategories[Number(outcomes[i].cat)]}</p>`;\r\n      } else {\r\n        cont += `<br><p>${outcomes[i].cat}</p>`;\r\n      }\r\n      if (outcomes[i].flags.del && editMonth) {\r\n        cont += `<br><button onclick=\"delIncome('outcome', ${i})\"> ${lang.other.del}</button>`;\r\n      }\r\n      cont += '</section>';\r\n      balanceContent.insertAdjacentHTML('afterbegin', cont);\r\n      cont = '';\r\n    }\r\n    balanceContent.insertAdjacentHTML('afterbegin', `<div><h1>${lang.incomes.outcomes}</h1></div>`);\r\n  }\r\n  updateMonth();\r\n  contextIncomesAmount();\r\n  contextIncomesDate();\r\n}\r\n\r\ngenerateContextButtons('incomes');\r\ngenerateMainMenu();\r\n",
     "static": true,
-    "longname": "/home/epat/Dokumenty/GitHub/YourHomeBudget/src/frontend/ui.js",
+    "longname": "F:/Programowanie/JS/yourhomebudget/src/frontend/ui.js",
     "access": "public",
     "description": null,
     "lineNumber": 1
   },
   {
-    "__docId__": 94,
+    "__docId__": 112,
     "kind": "variable",
     "name": "menuButton",
     "memberof": "src/frontend/ui.js",
@@ -1643,469 +2044,233 @@
     }
   },
   {
-    "__docId__": 95,
-    "kind": "variable",
-    "name": "mainMenu",
+    "__docId__": 113,
+    "kind": "function",
+    "name": "menuPos",
     "memberof": "src/frontend/ui.js",
+    "generator": false,
+    "async": false,
     "static": true,
-    "longname": "src/frontend/ui.js~mainMenu",
+    "longname": "src/frontend/ui.js~menuPos",
     "access": "public",
     "export": false,
     "importPath": "YourHomeBudget/src/frontend/ui.js",
     "importStyle": null,
-    "description": "",
-    "lineNumber": 9,
-    "ignore": true,
-    "type": {
-      "types": [
-        "*"
-      ]
-    }
-  },
-  {
-    "__docId__": 96,
-    "kind": "file",
-    "name": "src/index.js",
-    "content": "/*jshint esversion: 6 */\n/**\n * @type {node_module}\n * @desc Main electron module (main process)\n */\nconst electron = require('electron');\n/**\n * @type {node_module}\n * @desc (main process)\n */\nconst app = electron.app;\n/**\n * @type {node_module}\n * @desc windows creating and management (main process)\n */\nconst BrowserWindow = electron.BrowserWindow;\n/**\n * @type {node_module}\n * @desc Communication between proceses (main process)\n */\nconst ipcMain = electron.ipcMain;\n/**\n * @type {node_module}\n * @desc main process\n */\nconst path = require('path');\n/**\n * @type {node_module}\n * @desc main process\n */\nconst url = require('url');\n/**\n * @ignore\n * @desc frontend browser window object\n */\nlet mainWin;\n/**\n * @ignore\n * @desc splashscreen\n */\nlet splash;\n/**\n * @ignore\n * @desc backend browser window object\n */\nlet backendWin;\n\n/**\n * Main function, called at startup (Main process)\n *\n * @ignore\n */\nfunction main() {\n\n  require('events').EventEmitter.prototype._maxListeners = 30;\n  createSplash();\n  createMainWindow();\n  createWorker();\n\n}\n\n/**\n * Returns current date and time (Main process)\n *\n * @return {string} current date and time (dd-mm-yyyy hh:mm:ss)\n */\nfunction now() {\n\n  let date = new Date();\n  let hr = String('0' + date.getHours()).slice(-2);\n  let min = String('0' + date.getMinutes()).slice(-2);\n  let sec = String('0' + date.getSeconds()).slice(-2);\n  let yr = date.getFullYear();\n  let mth = String('0' + String(Number(date.getMonth()) + 1)).slice(-2);\n  let day = String('0' + date.getDate()).slice(-2);\n  let ret =  `${day}-${mth}-${yr} ${hr}:${min}:${sec}`;\n  return ret;\n}\n\n/**\n * Logs in console current date and time followed by message (Main process)\n *\n * @param {string} msg message to log in console\n * @example <JavaScript>\n * log('example message');\n * @example Console\n * [dd-mm-yyyy hh:mm:ss]> example message\n */\nfunction log(msg) {\n  console.log(`[${now()}]> ${msg}`);\n}\n\n/**\n * Create new browser window (Main process)\n * @param {undefined} win Variable which will contain BrowserWindow object\n * @param {string} htmlFile Relative path to file to load\n * @param {boolean} frame Specifies whether the window frame is displayed\n * @param {string} icon Relative path to icon for a window\n * @param {boolean} devTools Specifies whether the developer tools are displayed when the window is opened\n * @param {number} width Width of a window\n * @param {number} height Height of a window\n * @param {string} name Name of a window\n * @return {object} Object containing opened window\n * @example <JavaScript>\n *mainWindow = crWin(mainWindow, 'index.html', true, 'res/icon.ico', false, 800, 600, 'Main Window');\n */\nfunction crWin(win, htmlFile, frame, icon, devTools, width, height, name) {\n  // Create the browser window.\n  win = new BrowserWindow({\n      width: width,\n      height: height,\n      show: false,\n      frame: frame,\n      icon: __dirname + icon,\n      webPreferences: { experimentalFeatures: true },\n      autoHideMenuBar: true,\n    });\n\n  log(`creating ${name}`);\n  log(`loading ${htmlFile} to ${name}`);\n\n  win.loadURL(url.format({\n      pathname: path.join(__dirname, htmlFile),\n      protocol: 'file:',\n      slashes: true,\n    }));\n\n  // Open the DevTools.\n  if (devTools) {\n    win.webContents.openDevTools();\n  }\n\n  return win;\n}\n\nlog('launching');\n\n/**\n * @ignore\n */\nfunction createWorker() {\n  let name = 'backendWin';\n  let html = 'backend.html';\n  backendWin = crWin(backendWin, html, true, '/../res/ico/wallet.png', true, 800, 600, name);\n\n  backendWin.on('closed', () => {\n      log('closing backend window');\n      backendWin = null;\n      if (mainWin != null) {\n        createWorker();\n      }\n    });\n\n  backendWin.once('ready-to-show', () => {\n      backendWin.show();\n      log('showing Worker window');\n    });\n}\n\n/**\n * @ignore\n */\nfunction createMainWindow() {\n\n  // Create the browser window.\n  let name = 'MainWin';\n  mainWin = crWin(mainWin, 'index.html', false, '/../res/ico/wallet.png', true, 800, 600, name);\n  mainWin.on('closed', () => {\n\n      log('closing main window');\n      mainWin = null;\n      backendWin.close();\n    });\n\n  mainWin.once('ready-to-show', () => {\n      mainWin.show();\n\n      log('showing main window');\n\n      splash.close();\n    });\n}\n\n/**\n * @ignore\n */\nfunction createSplash() {\n\n  // Create the browser window.\n  let nameSp = 'splash';\n  splash = crWin(splash, 'loading.html', false, '/../res/ico/wallet.png', false, 250, 300, nameSp);\n\n  // Emitted when the window is closed.\n  splash.on('closed', () => {\n\n      log('closing splash screen');\n      splash = null;\n    });\n\n  splash.on('ready-to-show', () => {\n      log('showing splash screen');\n      splash.show();\n    });\n}\n\napp.on('ready', main);\n\n// Quit when all windows are closed.\napp.on('window-all-closed', () => {\n\n    log('closing app');\n\n    // On macOS it is common for applications and their menu bar\n    // to stay active until the user quits explicitly with Cmd + Q\n    if (process.platform !== 'darwin') {\n      app.quit();\n    }\n  });\n\napp.on('activate', () => {\n    // On macOS it's common to re-create a window in the app when the\n    // dock icon is clicked and there are no other windows open.\n    if (mainWin === null) {\n      main();\n    }\n  });\n\n/**\n * Sends data to Browser Window (Main process)\n * @param {object} to Specifies destination of data (BrowserWindow object)\n * @param data Contains data to send\n * @example <JavaScript>\n * send(mainWin, 'data');\n * send(mainWin, {name: 'data', task:'save'})\n */\nfunction send(to, data) {\n  let ch;\n  if (to == backendWin) {\n    ch = 'manipulatedData';\n  } else if (to == mainWin) {\n    ch = 'user-data';\n  } else {\n    return 'illegal channel';\n  }\n\n  to.webContents.send(ch, data);\n}\n\nipcMain.on('manipulatedData', (e, arg) => {\n    log('Odebrano (backend): ');\n    console.log(arg);\n    console.log('');\n    send(mainWin, arg);\n  });\n\nipcMain.on('user-data', (e, arg) => {\n    log('Odebrano (main): ');\n    console.log(arg);\n    console.log('');\n    send(backendWin, arg);\n  });\n",
-    "static": true,
-    "longname": "/home/epat/Dokumenty/GitHub/YourHomeBudget/src/index.js",
-    "access": "public",
     "description": null,
-    "lineNumber": 1
-  },
-  {
-    "__docId__": 97,
-    "kind": "variable",
-    "name": "electron",
-    "memberof": "src/index.js",
-    "static": true,
-    "longname": "src/index.js~electron",
-    "access": "public",
-    "export": false,
-    "importPath": "YourHomeBudget",
-    "importStyle": null,
-    "description": "Main electron module (main process)",
-    "lineNumber": 6,
-    "type": {
-      "nullable": null,
-      "types": [
-        "node_module"
-      ],
-      "spread": false,
-      "description": null
-    }
-  },
-  {
-    "__docId__": 98,
-    "kind": "variable",
-    "name": "app",
-    "memberof": "src/index.js",
-    "static": true,
-    "longname": "src/index.js~app",
-    "access": "public",
-    "export": false,
-    "importPath": "YourHomeBudget",
-    "importStyle": null,
-    "description": "(main process)",
-    "lineNumber": 11,
-    "type": {
-      "nullable": null,
-      "types": [
-        "node_module"
-      ],
-      "spread": false,
-      "description": null
-    }
-  },
-  {
-    "__docId__": 99,
-    "kind": "variable",
-    "name": "BrowserWindow",
-    "memberof": "src/index.js",
-    "static": true,
-    "longname": "src/index.js~BrowserWindow",
-    "access": "public",
-    "export": false,
-    "importPath": "YourHomeBudget",
-    "importStyle": null,
-    "description": "windows creating and management (main process)",
-    "lineNumber": 16,
-    "type": {
-      "nullable": null,
-      "types": [
-        "node_module"
-      ],
-      "spread": false,
-      "description": null
-    }
-  },
-  {
-    "__docId__": 100,
-    "kind": "variable",
-    "name": "ipcMain",
-    "memberof": "src/index.js",
-    "static": true,
-    "longname": "src/index.js~ipcMain",
-    "access": "public",
-    "export": false,
-    "importPath": "YourHomeBudget",
-    "importStyle": null,
-    "description": "Communication between proceses (main process)",
-    "lineNumber": 21,
-    "type": {
-      "nullable": null,
-      "types": [
-        "node_module"
-      ],
-      "spread": false,
-      "description": null
-    }
-  },
-  {
-    "__docId__": 101,
-    "kind": "variable",
-    "name": "path",
-    "memberof": "src/index.js",
-    "static": true,
-    "longname": "src/index.js~path",
-    "access": "public",
-    "export": false,
-    "importPath": "YourHomeBudget",
-    "importStyle": null,
-    "description": "main process",
-    "lineNumber": 26,
-    "type": {
-      "nullable": null,
-      "types": [
-        "node_module"
-      ],
-      "spread": false,
-      "description": null
-    }
-  },
-  {
-    "__docId__": 102,
-    "kind": "variable",
-    "name": "url",
-    "memberof": "src/index.js",
-    "static": true,
-    "longname": "src/index.js~url",
-    "access": "public",
-    "export": false,
-    "importPath": "YourHomeBudget",
-    "importStyle": null,
-    "description": "main process",
-    "lineNumber": 31,
-    "type": {
-      "nullable": null,
-      "types": [
-        "node_module"
-      ],
-      "spread": false,
-      "description": null
-    }
-  },
-  {
-    "__docId__": 103,
-    "kind": "function",
-    "name": "main",
-    "memberof": "src/index.js",
-    "generator": false,
-    "async": false,
-    "static": true,
-    "longname": "src/index.js~main",
-    "access": "public",
-    "export": false,
-    "importPath": "YourHomeBudget",
-    "importStyle": null,
-    "description": "Main function, called at startup (Main process)",
-    "lineNumber": 53,
-    "ignore": true,
+    "lineNumber": 19,
+    "undocument": true,
     "params": [],
     "return": null
   },
   {
-    "__docId__": 104,
+    "__docId__": 114,
     "kind": "function",
-    "name": "now",
-    "memberof": "src/index.js",
+    "name": "generateIncomesForm",
+    "memberof": "src/frontend/ui.js",
     "generator": false,
     "async": false,
     "static": true,
-    "longname": "src/index.js~now",
+    "longname": "src/frontend/ui.js~generateIncomesForm",
     "access": "public",
     "export": false,
-    "importPath": "YourHomeBudget",
+    "importPath": "YourHomeBudget/src/frontend/ui.js",
     "importStyle": null,
-    "description": "Returns current date and time (Main process)",
-    "lineNumber": 67,
-    "return": {
-      "nullable": null,
-      "types": [
-        "string"
-      ],
-      "spread": false,
-      "description": "current date and time (dd-mm-yyyy hh:mm:ss)"
-    },
-    "params": []
-  },
-  {
-    "__docId__": 105,
-    "kind": "function",
-    "name": "log",
-    "memberof": "src/index.js",
-    "generator": false,
-    "async": false,
-    "static": true,
-    "longname": "src/index.js~log",
-    "access": "public",
-    "export": false,
-    "importPath": "YourHomeBudget",
-    "importStyle": null,
-    "description": "Logs in console current date and time followed by message (Main process)",
-    "examples": [
-      "<JavaScript>\nlog('example message');",
-      "Console\n[dd-mm-yyyy hh:mm:ss]> example message"
-    ],
-    "lineNumber": 89,
-    "params": [
-      {
-        "nullable": null,
-        "types": [
-          "string"
-        ],
-        "spread": false,
-        "optional": false,
-        "name": "msg",
-        "description": "message to log in console"
-      }
-    ],
+    "description": null,
+    "lineNumber": 43,
+    "undocument": true,
+    "params": [],
     "return": null
   },
   {
-    "__docId__": 106,
+    "__docId__": 115,
     "kind": "function",
-    "name": "crWin",
-    "memberof": "src/index.js",
+    "name": "delForm",
+    "memberof": "src/frontend/ui.js",
     "generator": false,
     "async": false,
     "static": true,
-    "longname": "src/index.js~crWin",
+    "longname": "src/frontend/ui.js~delForm",
     "access": "public",
     "export": false,
-    "importPath": "YourHomeBudget",
+    "importPath": "YourHomeBudget/src/frontend/ui.js",
     "importStyle": null,
-    "description": "Create new browser window (Main process)",
-    "examples": [
-      "<JavaScript>\nmainWindow = crWin(mainWindow, 'index.html', true, 'res/icon.ico', false, 800, 600, 'Main Window');"
-    ],
+    "description": null,
+    "lineNumber": 72,
+    "undocument": true,
+    "params": [],
+    "return": null
+  },
+  {
+    "__docId__": 116,
+    "kind": "function",
+    "name": "generateOutcomesForm",
+    "memberof": "src/frontend/ui.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/frontend/ui.js~generateOutcomesForm",
+    "access": "public",
+    "export": false,
+    "importPath": "YourHomeBudget/src/frontend/ui.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 76,
+    "undocument": true,
+    "params": [],
+    "return": null
+  },
+  {
+    "__docId__": 117,
+    "kind": "function",
+    "name": "generateContextButtons",
+    "memberof": "src/frontend/ui.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/frontend/ui.js~generateContextButtons",
+    "access": "public",
+    "export": false,
+    "importPath": "YourHomeBudget/src/frontend/ui.js",
+    "importStyle": null,
+    "description": null,
     "lineNumber": 107,
+    "undocument": true,
     "params": [
       {
-        "nullable": null,
-        "types": [
-          "undefined"
-        ],
-        "spread": false,
-        "optional": false,
-        "name": "win",
-        "description": "Variable which will contain BrowserWindow object"
-      },
-      {
-        "nullable": null,
-        "types": [
-          "string"
-        ],
-        "spread": false,
-        "optional": false,
-        "name": "htmlFile",
-        "description": "Relative path to file to load"
-      },
-      {
-        "nullable": null,
-        "types": [
-          "boolean"
-        ],
-        "spread": false,
-        "optional": false,
-        "name": "frame",
-        "description": "Specifies whether the window frame is displayed"
-      },
-      {
-        "nullable": null,
-        "types": [
-          "string"
-        ],
-        "spread": false,
-        "optional": false,
-        "name": "icon",
-        "description": "Relative path to icon for a window"
-      },
-      {
-        "nullable": null,
-        "types": [
-          "boolean"
-        ],
-        "spread": false,
-        "optional": false,
-        "name": "devTools",
-        "description": "Specifies whether the developer tools are displayed when the window is opened"
-      },
-      {
-        "nullable": null,
-        "types": [
-          "number"
-        ],
-        "spread": false,
-        "optional": false,
-        "name": "width",
-        "description": "Width of a window"
-      },
-      {
-        "nullable": null,
-        "types": [
-          "number"
-        ],
-        "spread": false,
-        "optional": false,
-        "name": "height",
-        "description": "Height of a window"
-      },
-      {
-        "nullable": null,
-        "types": [
-          "string"
-        ],
-        "spread": false,
-        "optional": false,
-        "name": "name",
-        "description": "Name of a window"
-      }
-    ],
-    "return": {
-      "nullable": null,
-      "types": [
-        "object"
-      ],
-      "spread": false,
-      "description": "Object containing opened window"
-    }
-  },
-  {
-    "__docId__": 107,
-    "kind": "function",
-    "name": "createWorker",
-    "memberof": "src/index.js",
-    "generator": false,
-    "async": false,
-    "static": true,
-    "longname": "src/index.js~createWorker",
-    "access": "public",
-    "export": false,
-    "importPath": "YourHomeBudget",
-    "importStyle": null,
-    "description": "",
-    "lineNumber": 141,
-    "ignore": true,
-    "params": [],
-    "return": null
-  },
-  {
-    "__docId__": 108,
-    "kind": "function",
-    "name": "createMainWindow",
-    "memberof": "src/index.js",
-    "generator": false,
-    "async": false,
-    "static": true,
-    "longname": "src/index.js~createMainWindow",
-    "access": "public",
-    "export": false,
-    "importPath": "YourHomeBudget",
-    "importStyle": null,
-    "description": "",
-    "lineNumber": 163,
-    "ignore": true,
-    "params": [],
-    "return": null
-  },
-  {
-    "__docId__": 109,
-    "kind": "function",
-    "name": "createSplash",
-    "memberof": "src/index.js",
-    "generator": false,
-    "async": false,
-    "static": true,
-    "longname": "src/index.js~createSplash",
-    "access": "public",
-    "export": false,
-    "importPath": "YourHomeBudget",
-    "importStyle": null,
-    "description": "",
-    "lineNumber": 187,
-    "ignore": true,
-    "params": [],
-    "return": null
-  },
-  {
-    "__docId__": 110,
-    "kind": "function",
-    "name": "send",
-    "memberof": "src/index.js",
-    "generator": false,
-    "async": false,
-    "static": true,
-    "longname": "src/index.js~send",
-    "access": "public",
-    "export": false,
-    "importPath": "YourHomeBudget",
-    "importStyle": null,
-    "description": "Sends data to Browser Window (Main process)",
-    "examples": [
-      "<JavaScript>\nsend(mainWin, 'data');\nsend(mainWin, {name: 'data', task:'save'})"
-    ],
-    "lineNumber": 236,
-    "params": [
-      {
-        "nullable": null,
-        "types": [
-          "object"
-        ],
-        "spread": false,
-        "optional": false,
-        "name": "to",
-        "description": "Specifies destination of data (BrowserWindow object)"
-      },
-      {
-        "nullable": null,
+        "name": "scheme",
         "types": [
           "*"
-        ],
-        "spread": false,
-        "optional": false,
-        "name": "data",
-        "description": "Contains data to send"
+        ]
       }
     ],
-    "return": {
-      "types": [
-        "string"
-      ]
-    }
+    "return": null
+  },
+  {
+    "__docId__": 118,
+    "kind": "function",
+    "name": "contextIncomesAmount",
+    "memberof": "src/frontend/ui.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/frontend/ui.js~contextIncomesAmount",
+    "access": "public",
+    "export": false,
+    "importPath": "YourHomeBudget/src/frontend/ui.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 140,
+    "undocument": true,
+    "params": [],
+    "return": null
+  },
+  {
+    "__docId__": 119,
+    "kind": "function",
+    "name": "contextIncomesDate",
+    "memberof": "src/frontend/ui.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/frontend/ui.js~contextIncomesDate",
+    "access": "public",
+    "export": false,
+    "importPath": "YourHomeBudget/src/frontend/ui.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 145,
+    "undocument": true,
+    "params": [],
+    "return": null
+  },
+  {
+    "__docId__": 120,
+    "kind": "function",
+    "name": "generateHistory",
+    "memberof": "src/frontend/ui.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/frontend/ui.js~generateHistory",
+    "access": "public",
+    "export": false,
+    "importPath": "YourHomeBudget/src/frontend/ui.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 151,
+    "undocument": true,
+    "params": [],
+    "return": null
+  },
+  {
+    "__docId__": 121,
+    "kind": "function",
+    "name": "generateMainMenu",
+    "memberof": "src/frontend/ui.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/frontend/ui.js~generateMainMenu",
+    "access": "public",
+    "export": false,
+    "importPath": "YourHomeBudget/src/frontend/ui.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 159,
+    "undocument": true,
+    "params": [],
+    "return": null
+  },
+  {
+    "__docId__": 122,
+    "kind": "function",
+    "name": "generatePreferences",
+    "memberof": "src/frontend/ui.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/frontend/ui.js~generatePreferences",
+    "access": "public",
+    "export": false,
+    "importPath": "YourHomeBudget/src/frontend/ui.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 181,
+    "undocument": true,
+    "params": [],
+    "return": null
+  },
+  {
+    "__docId__": 123,
+    "kind": "function",
+    "name": "refreshIncomes",
+    "memberof": "src/frontend/ui.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/frontend/ui.js~refreshIncomes",
+    "access": "public",
+    "export": false,
+    "importPath": "YourHomeBudget/src/frontend/ui.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 189,
+    "undocument": true,
+    "params": [],
+    "return": null
   },
   {
     "kind": "index",
-    "content": "# YourHomeBudget\nThis program is designed for simple home budget management\n",
-    "longname": "/home/epat/Dokumenty/GitHub/YourHomeBudget/README.md",
+    "content": "# YourHomeBudget\r\nThis program is designed for simple home budget management\r\n",
+    "longname": "F:\\Programowanie\\JS\\yourhomebudget\\README.md",
     "name": "./README.md",
     "static": true,
     "access": "public"
   },
   {
     "kind": "packageJSON",
-    "content": "{\n  \"name\": \"YourHomeBudget\",\n  \"productName\": \"YourHomeBudget\",\n  \"version\": \"0.0.1\",\n  \"main\": \"src/index.js\",\n  \"icon\": \"res\\\\ico\\\\wallet.png\",\n  \"devDependencies\": {\n    \"devtron\": \"^1.4.0\",\n    \"electron\": \"^1.7.5\",\n    \"electron-packager\": \"^8.7.2\",\n    \"electron-rebuild\": \"^1.6.0\",\n    \"file-system\": \"^2.2.2\",\n    \"fs-extra\": \"^4.0.2\",\n    \"stylelint-config-recommended\": \"^1.0.0\"\n  },\n  \"scripts\": {\n    \"package-mac\": \"electron-packager . --overwrite --platform=darwin --arch=x64 --icon=assets/icons/mac/icon.icns --prune=true --out=release-builds\",\n    \"package-win\": \"electron-packager . --overwrite --asar=true --platform=win32 --arch=ia32 --icon=res/ico/wallet.ico --prune=true --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=\\\"Your Home Budget\\\"\",\n    \"package-linux\": \"electron-packager . --overwrite --platform=linux --arch=x64 --icon=assets/icons/png/1024x1024.png --prune=true --out=release-builds\"\n  },\n  \"dependencies\": {\n    \"electron-titlebar\": \"0.0.3\"\n  }\n}\n",
-    "longname": "/home/epat/Dokumenty/GitHub/YourHomeBudget/package.json",
+    "content": "{\r\n  \"name\": \"YourHomeBudget\",\r\n  \"productName\": \"YourHomeBudget\",\r\n  \"version\": \"0.1.1\",\r\n  \"author\": {\r\n    \"name\": \"Damian Epat Kusmierz\",\r\n    \"email\": \"kamikadze2185@gmail.com\"\r\n  },\r\n  \"main\": \"src/index.js\",\r\n  \"category\": \"Accesories\",\r\n  \"description\": \"Simple home budget manager\",\r\n  \"icon\": \"res\\\\ico\\\\512x512.png\",\r\n  \"build\": {\r\n    \"asar\": false,\r\n    \"linux\": {\r\n      \"target\": \"deb\",\r\n      \"category\": \"Accesories\"\r\n    }\r\n  },\r\n  \"devDependencies\": {\r\n    \"accessibility-developer-tools\": \"^2.12.0\",\r\n    \"concat-stream\": \"^1.6.0\",\r\n    \"devtron\": \"^1.4.0\",\r\n    \"electron\": \"^1.7.5\",\r\n    \"electron-builder\": \"^19.49.0\",\r\n    \"extract-zip\": \"^1.6.6\",\r\n    \"fd-slicer\": \"^1.0.1\",\r\n    \"file-match\": \"^1.0.2\",\r\n    \"file-system\": \"^2.2.2\",\r\n    \"fs-extra\": \"^4.0.2\",\r\n    \"highlight.js\": \"^9.12.0\",\r\n    \"humanize-plus\": \"^1.8.2\",\r\n    \"load-grunt-tasks\": \"^3.5.2\",\r\n    \"stylelint\": \"^8.2.0\",\r\n    \"stylelint-config-recommended\": \"^1.0.0\",\r\n    \"utils-extend\": \"^1.0.8\",\r\n    \"yauzl\": \"^2.9.1\"\r\n  },\r\n  \"scripts\": {\r\n    \"package-win\": \"electron-packager . --overwrite --asar=true --platform=win32 --arch=ia32 --icon=res/ico/wallet.ico --prune=true --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=\\\"Your Home Budget\\\"\",\r\n    \"package-linux\": \"electron-packager . --overwrite --platform=linux --arch=x64 --icon=assets/icons/png/1024x1024.png --prune=true --out=release-builds\"\r\n  },\r\n  \"dependencies\": {\r\n    \"devtron\": \"^1.4.0\",\r\n    \"electron-squirrel-startup\": \"^1.0.0\",\r\n    \"electron-titlebar\": \"^0.0.3\",\r\n    \"file-match\": \"^1.0.2\",\r\n    \"file-system\": \"^2.2.2\",\r\n    \"fs-extra\": \"^4.0.2\"\r\n  }\r\n}\r\n",
+    "longname": "F:\\Programowanie\\JS\\yourhomebudget\\package.json",
     "name": "package.json",
     "static": true,
     "access": "public"
