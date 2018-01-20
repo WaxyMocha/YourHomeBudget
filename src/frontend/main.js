@@ -94,7 +94,7 @@ function checkMonth() {
     let lastMonth = new Date((
       budget.monthsID[budget.monthsID.length - 1].date));
     let now = new Date();
-    if (now.getMonth() > lastMonth.getMonth()) {
+    if (now.getMonth() > lastMonth.getMonth() || now.getMonth() < lastMonth.getMonth() && now.getMonth() == 0) {
       let leftAmount = month.amount;
       resetMonthToDefault();
       budget.monthsID.push({
