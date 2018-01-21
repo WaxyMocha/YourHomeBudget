@@ -70,7 +70,6 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-config">config</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-editMonth">editMonth</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-historyCheck">historyCheck</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-inOut">inOut</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-incomes">incomes</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-month">month</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-outcomes">outcomes</a></span></span></li>
@@ -287,13 +286,14 @@
           <span data-ice="kind-icon" class="kind-function">F</span>
           
           
-          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-read">read</a></span></span><span class="code" data-ice="signature">(filename: <span>*</span>, path: <span>*</span>)</span>
+          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-read">read</a></span></span><span class="code" data-ice="signature">(filename: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, path: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>)</span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Loads data from file</p>
+</div>
       </div>
     </td>
     <td>
@@ -379,7 +379,8 @@
       <div>
         
         
-        
+        <div data-ice="description"><p>Changes content of <span><a href="variable/index.html#static-variable-lang">lang</a></span> and <span><a href="variable/index.html#static-variable-incomesCategories">incomesCategories</a></span> based on loaded laguage</p>
+</div>
       </div>
     </td>
     <td>
@@ -465,7 +466,8 @@
       <div>
         
         
-        
+        <div data-ice="description"><p>Check opened month id</p>
+</div>
       </div>
     </td>
     <td>
@@ -487,13 +489,14 @@
           <span data-ice="kind-icon" class="kind-function">F</span>
           
           
-          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-delIncome">delIncome</a></span></span><span class="code" data-ice="signature">(type: <span>*</span>, id: <span>*</span>)</span>
+          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-delIncome">delIncome</a></span></span><span class="code" data-ice="signature">(type: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>)</span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Deletes 1 income or outcome based on id</p>
+</div>
       </div>
     </td>
     <td>
@@ -521,7 +524,8 @@
       <div>
         
         
-        
+        <div data-ice="description"><p>Returns date and hour in format: DD-MM-YYYY HH:MM:SS</p>
+</div>
       </div>
     </td>
     <td>
@@ -549,7 +553,8 @@
       <div>
         
         
-        
+        <div data-ice="description"><p>Loads last month data</p>
+</div>
       </div>
     </td>
     <td>
@@ -571,13 +576,14 @@
           <span data-ice="kind-icon" class="kind-function">F</span>
           
           
-          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-loadMonth">loadMonth</a></span></span><span class="code" data-ice="signature">(id: <span>*</span>)</span>
+          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-loadMonth">loadMonth</a></span></span><span class="code" data-ice="signature">(id: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>)</span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Loads month, incomes and outcomes data</p>
+</div>
       </div>
     </td>
     <td>
@@ -605,7 +611,8 @@
       <div>
         
         
-        
+        <div data-ice="description"><p>returns date in format: MM:YYYY</p>
+</div>
       </div>
     </td>
     <td>
@@ -633,7 +640,8 @@
       <div>
         
         
-        
+        <div data-ice="description"><p>Sets month, incomes and outcomes data to default values</p>
+</div>
       </div>
     </td>
     <td>
@@ -690,7 +698,8 @@
       <div>
         
         
-        
+        <div data-ice="description"><p>Saves budget.json</p>
+</div>
       </div>
     </td>
     <td>
@@ -718,7 +727,8 @@
       <div>
         
         
-        
+        <div data-ice="description"><p>Saves config.json</p>
+</div>
       </div>
     </td>
     <td>
@@ -746,7 +756,8 @@
       <div>
         
         
-        
+        <div data-ice="description"><p>Sets <span><a href="variable/index.html#static-variable-historyCheck">historyCheck</a></span> depending on the ID of month data and runs <span><a href="function/index.html#static-function-loadMonth">loadMonth</a></span></p>
+</div>
       </div>
     </td>
     <td>
@@ -774,7 +785,8 @@
       <div>
         
         
-        
+        <div data-ice="description"><p>Updates month data, and saves incomes, outcomes and month data</p>
+</div>
       </div>
     </td>
     <td>
@@ -802,7 +814,8 @@
       <div>
         
         
-        
+        <div data-ice="description"><p>Displays month amount on app bar</p>
+</div>
       </div>
     </td>
     <td>
@@ -830,7 +843,8 @@
       <div>
         
         
-        
+        <div data-ice="description"><p>Displays months date on appbar</p>
+</div>
       </div>
     </td>
     <td>
@@ -858,7 +872,8 @@
       <div>
         
         
-        
+        <div data-ice="description"><p>Hides form</p>
+</div>
       </div>
     </td>
     <td>
@@ -880,13 +895,14 @@
           <span data-ice="kind-icon" class="kind-function">F</span>
           
           
-          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-generateContextButtons">generateContextButtons</a></span></span><span class="code" data-ice="signature">(scheme: <span>*</span>)</span>
+          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-generateContextButtons">generateContextButtons</a></span></span><span class="code" data-ice="signature">(scheme: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>)</span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Generates buttons on app bar</p>
+</div>
       </div>
     </td>
     <td>
@@ -914,7 +930,8 @@
       <div>
         
         
-        
+        <div data-ice="description"><p>Generates history of months</p>
+</div>
       </div>
     </td>
     <td>
@@ -942,7 +959,8 @@
       <div>
         
         
-        
+        <div data-ice="description"><p>Generates form used for adding Incomes</p>
+</div>
       </div>
     </td>
     <td>
@@ -970,7 +988,8 @@
       <div>
         
         
-        
+        <div data-ice="description"><p>Generates content of left side manu</p>
+</div>
       </div>
     </td>
     <td>
@@ -998,7 +1017,8 @@
       <div>
         
         
-        
+        <div data-ice="description"><p>Generates form used for adding Outcomes</p>
+</div>
       </div>
     </td>
     <td>
@@ -1026,7 +1046,8 @@
       <div>
         
         
-        
+        <div data-ice="description"><p>Generates content of preferences</p>
+</div>
       </div>
     </td>
     <td>
@@ -1054,7 +1075,8 @@
       <div>
         
         
-        
+        <div data-ice="description"><p>Changes position of menu on the left</p>
+</div>
       </div>
     </td>
     <td>
@@ -1082,7 +1104,8 @@
       <div>
         
         
-        
+        <div data-ice="description"><p>Updates content of budget view</p>
+</div>
       </div>
     </td>
     <td>
@@ -1104,7 +1127,7 @@
           <span data-ice="kind-icon" class="kind-variable">V</span>
           
           
-          <span class="code" data-ice="name"><span><a href="variable/index.html#static-variable-incomesCategories">incomesCategories</a></span></span><span class="code" data-ice="signature">: <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a></span><span>[]</span></span></span>
+          <span class="code" data-ice="name"><span><a href="variable/index.html#static-variable-incomesCategories">incomesCategories</a></span></span><span class="code" data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span></span>
         </p>
       </div>
       <div>
@@ -1132,13 +1155,14 @@
           <span data-ice="kind-icon" class="kind-variable">V</span>
           
           
-          <span class="code" data-ice="name"><span><a href="variable/index.html#static-variable-lang">lang</a></span></span><span class="code" data-ice="signature">: {&quot;menu&quot;: <span>*</span>, &quot;headerBar&quot;: <span>*</span>, &quot;incomes&quot;: <span>*</span>, &quot;other&quot;: <span>*</span>, &quot;preferences&quot;: <span>*</span>}</span>
+          <span class="code" data-ice="name"><span><a href="variable/index.html#static-variable-lang">lang</a></span></span><span class="code" data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Contains all strings used in programs</p>
+</div>
       </div>
     </td>
     <td>
@@ -1247,34 +1271,6 @@
           
           
           <span class="code" data-ice="name"><span><a href="variable/index.html#static-variable-historyCheck">historyCheck</a></span></span><span class="code" data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span></span>
-        </p>
-      </div>
-      <div>
-        
-        
-        
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-          <span data-ice="kind-icon" class="kind-variable">V</span>
-          
-          
-          <span class="code" data-ice="name"><span><a href="variable/index.html#static-variable-inOut">inOut</a></span></span><span class="code" data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span></span>
         </p>
       </div>
       <div>

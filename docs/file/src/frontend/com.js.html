@@ -70,7 +70,6 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-config">config</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-editMonth">editMonth</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-historyCheck">historyCheck</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-inOut">inOut</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-incomes">incomes</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-month">month</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-outcomes">outcomes</a></span></span></li>
@@ -93,6 +92,13 @@ function save(data, filename, path) {
   send({task:&apos;save&apos;, data: data, name: filename, path: path,});
 }
 
+/**
+Loads data from file
+@param {string} filename self explainatory
+@param {string} path relative path to file
+@example &lt;Javascript&gt;
+read( &apos;file.json&apos;, &apos;/path/to/parent/folder&apos;);
+*/
 function read(filename, path) {
   send({task:&apos;read&apos;, name: filename, path: path,});
 }

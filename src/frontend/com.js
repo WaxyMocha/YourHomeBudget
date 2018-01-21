@@ -12,6 +12,13 @@ function save(data, filename, path) {
   send({task:'save', data: data, name: filename, path: path,});
 }
 
+/**
+Loads data from file
+@param {string} filename self explainatory
+@param {string} path relative path to file
+@example <Javascript>
+read( 'file.json', '/path/to/parent/folder');
+*/
 function read(filename, path) {
   send({task:'read', name: filename, path: path,});
 }

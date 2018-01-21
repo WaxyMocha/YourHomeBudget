@@ -581,7 +581,7 @@
     "name": "src/backend/com.js",
     "content": "/*jshint esversion: 6 */\r\n\r\n/**\r\n * Sends data to main process and frontend (backend window)\r\n * @param data Contains data to send\r\n * @example <JavaScript>\r\n * send('data');\r\n */\r\nfunction send(data) {\r\n\r\n  ipcRenderer.send('manipulatedData', data);\r\n}\r\n\r\nipcRenderer.on('manipulatedData', (e, arg) => {\r\n  console.log(arg);\r\n  checkArg(arg);\r\n});\r\n",
     "static": true,
-    "longname": "F:/Programowanie/JS/yourhomebudget/src/backend/com.js",
+    "longname": "F:/Programowanie/JS/YourHomeBudget/src/backend/com.js",
     "access": "public",
     "description": null,
     "lineNumber": 1
@@ -624,7 +624,7 @@
     "name": "src/backend/files.js",
     "content": "/*jshint esversion: 6 */\r\n/**\r\n * @ignore\r\n */\r\nconst appRoot = path.dirname(require.main.filename);\r\n\r\nif (platform == 'win32') {\r\n  var tempPath = os.homedir() + '\\\\.YourHomeBudget\\\\';\r\n} else {\r\n  var tempPath = os.homedir() + '/.YourHomeBudget/';\r\n}\r\n/**\r\n * @ignore\r\n */\r\nconst filesPath = tempPath;\r\n\r\n/**\r\n * @ignore\r\n */\r\nfunction progDir() {\r\n  directory(filesPath);\r\n}\r\n\r\n/**\r\n * Checks if main program directory exists, if it doesn't it creates it (backend window)\r\n * @param {string} path Path to directory\r\n */\r\nfunction directory(path) {\r\n  if (!fs.existsSync(path)) {\r\n    console.log('creating folder');\r\n    fs.mkdirsSync(path);\r\n    return false;\r\n  }\r\n\r\n  console.log('folder already exists');\r\n  return true;\r\n}\r\n\r\n/**\r\n * Get file content (backend window)\r\n * @param {string} relPath Relative path to parent directory of the file\r\n * @param {string} name Name of file\r\n * @return {string} content of loaded file\r\n */\r\nfunction read(relPath, name) {\r\n  progDir();\r\n  let path = filesPath + relPath;\r\n  let appRootPath = `${appRoot}/${relPath}`;\r\n  if (fs.existsSync(`${path}/${name}`)) {\r\n    console.log(`File location: ${path}`);\r\n    return fs.readFileSync(`${path}/${name}`, 'utf8');\r\n  } else if (fs.existsSync(`${appRootPath}/${name}`)) {\r\n    console.log(`File location: ${appRootPath}`);\r\n    return (fs.readFileSync(`${appRootPath}/${name}`, 'utf8'));\r\n  } else if (name == 'config.json' && !fs.existsSync(`${path}/${name}`)) {\r\n    send('firstStartup');\r\n  } else {\r\n    console.log('File does not exist');\r\n    return '';\r\n  }\r\n}\r\n\r\n/**\r\n * Save informations to filesPath (backend window)\r\n * @param {string} relPath Relative path to parent directory of the file\r\n * @param {string} data Content which will be saved to file\r\n * @param {string} name Name of file\r\n */\r\nfunction write(relPath, data, name) {\r\n  progDir();\r\n  if (typeof data == 'object') {\r\n    data = jsonParser(false, data);\r\n  }\r\n\r\n  let path = filesPath + relPath;\r\n  directory(filesPath);\r\n  directory(path);\r\n  fs.writeFileSync(path + name, data, 'utf8');\r\n}\r\n",
     "static": true,
-    "longname": "F:/Programowanie/JS/yourhomebudget/src/backend/files.js",
+    "longname": "F:/Programowanie/JS/YourHomeBudget/src/backend/files.js",
     "access": "public",
     "description": null,
     "lineNumber": 1
@@ -822,7 +822,7 @@
     "name": "src/backend/main.js",
     "content": "/*jshint esversion: 6 */\r\n\r\n/**\r\n * Checks argument sended from backend (backend window)\r\n * @param {object} arg argument to check\r\n */\r\nfunction checkArg(arg) {\r\n  let task = arg.task;\r\n  if (task == 'save') {\r\n    write(arg.path, jsonParser(false, arg.data), arg.name);\r\n    send({ done: 'saved', to: arg.path });\r\n  } else if (task == 'read') {\r\n    send({ task: 'read', data: jsonParser(true, read(arg.path, arg.name)) });\r\n  } else {\r\n    return 'invalid task';\r\n  }\r\n\r\n}\r\n\r\n/**\r\n *Parse or stringify JSON\r\n * @param {boolean} mode If it's true, it will parse JSON to Object or Array, if it's false it will stringify Object or Array to JSON\r\n * @return  if mode is set to true {object}, if mode is set to false {string}\r\n */\r\nfunction jsonParser(mode, arg) { //true parse, false stringify\r\n  if (mode == true) {\r\n    if ((typeof arg == 'string') && (arg.slice(0, 1) == '{' || arg.slice(0, 1) == '[')) {\r\n      arg = JSON.parse(arg);\r\n      console.log('mode: true');\r\n      console.log(arg);\r\n    }\r\n  } else if (mode == false) {\r\n    if (typeof arg == 'object') {\r\n      arg = JSON.stringify(arg, null, '\\t');\r\n      console.log('mode: false');\r\n    }\r\n  } else {\r\n    arg = null;\r\n    console.log('invalid mode');\r\n  }\r\n\r\n  return arg;\r\n}\r\n",
     "static": true,
-    "longname": "F:/Programowanie/JS/yourhomebudget/src/backend/main.js",
+    "longname": "F:/Programowanie/JS/YourHomeBudget/src/backend/main.js",
     "access": "public",
     "description": null,
     "lineNumber": 1
@@ -902,7 +902,7 @@
     "name": "src/backend/requires.js",
     "content": "/*jshint esversion: 6 */\r\n/**\r\n * @ignore\r\n */\r\nconst fs = require('fs-extra');\r\n/**\r\n * @ignore\r\n */\r\nconst electron = require('electron');\r\n/**\r\n * @ignore\r\n */\r\nconst remote = electron.remote;\r\n/**\r\n * @ignore\r\n */\r\nconst app = remote.app;\r\n/**\r\n * @ignore\r\n */\r\nconst { ipcRenderer } = electron;\r\n/**\r\n * @ignore\r\n */\r\nconst os = require('os');\r\n/**\r\n * @ignore\r\n */\r\nconst platform = os.platform();\r\n/**\r\n * @ignore\r\n */\r\nconst readline = require('readline');\r\n/**\r\n * @ignore\r\n */\r\nconst path = require('path');\r\n/**\r\n * @ignore\r\n */\r\nconst mkdirp = require('mkdirp');\r\n",
     "static": true,
-    "longname": "F:/Programowanie/JS/yourhomebudget/src/backend/requires.js",
+    "longname": "F:/Programowanie/JS/YourHomeBudget/src/backend/requires.js",
     "access": "public",
     "description": null,
     "lineNumber": 1
@@ -1111,9 +1111,9 @@
     "__docId__": 73,
     "kind": "file",
     "name": "src/frontend/com.js",
-    "content": "/* jshint esversion:6 */\r\n\r\n/**\r\nSave data to file\r\n@param data stuff to save\r\n@param {string} filename self explainatory\r\n@param {string} path relative path to file\r\n@example <Javascript>\r\nsave('some data to save', 'file.json', '/path/to/parent/folder');\r\n*/\r\nfunction save(data, filename, path) {\r\n  send({task:'save', data: data, name: filename, path: path,});\r\n}\r\n\r\nfunction read(filename, path) {\r\n  send({task:'read', name: filename, path: path,});\r\n}\r\n/**\r\n * Sends data to main process and backend (frontend window)\r\n * @param data Contains data to send\r\n * @example <JavaScript>\r\n * send('data');\r\n * send({task:'save', data: 'data', name:'file.json', path:'relative/path/to/parent/folder'});\r\n * send({task:'read', name:'file.json', path:'relative/path/to/parent/folder'});\r\n */\r\nfunction send(data) {\r\n  ipcRenderer.send('user-data', data);\r\n}\r\n\r\nipcRenderer.on('user-data', (e, arg) => {\r\n  if ((typeof arg == 'string') && (arg.slice(0, 1) == '{' || arg.slice(0, 1) == '[')) {\r\n    arg = JSON.parse(arg);\r\n  }\r\n\r\n  checkArg(arg);\r\n  console.log('Odebrano: ');\r\n  console.log(arg);\r\n  return;\r\n});\r\n",
+    "content": "/* jshint esversion:6 */\r\n\r\n/**\r\nSave data to file\r\n@param data stuff to save\r\n@param {string} filename self explainatory\r\n@param {string} path relative path to file\r\n@example <Javascript>\r\nsave('some data to save', 'file.json', '/path/to/parent/folder');\r\n*/\r\nfunction save(data, filename, path) {\r\n  send({task:'save', data: data, name: filename, path: path,});\r\n}\r\n\r\n/**\r\nLoads data from file\r\n@param {string} filename self explainatory\r\n@param {string} path relative path to file\r\n@example <Javascript>\r\nread( 'file.json', '/path/to/parent/folder');\r\n*/\r\nfunction read(filename, path) {\r\n  send({task:'read', name: filename, path: path,});\r\n}\r\n/**\r\n * Sends data to main process and backend (frontend window)\r\n * @param data Contains data to send\r\n * @example <JavaScript>\r\n * send('data');\r\n * send({task:'save', data: 'data', name:'file.json', path:'relative/path/to/parent/folder'});\r\n * send({task:'read', name:'file.json', path:'relative/path/to/parent/folder'});\r\n */\r\nfunction send(data) {\r\n  ipcRenderer.send('user-data', data);\r\n}\r\n\r\nipcRenderer.on('user-data', (e, arg) => {\r\n  if ((typeof arg == 'string') && (arg.slice(0, 1) == '{' || arg.slice(0, 1) == '[')) {\r\n    arg = JSON.parse(arg);\r\n  }\r\n\r\n  checkArg(arg);\r\n  console.log('Odebrano: ');\r\n  console.log(arg);\r\n  return;\r\n});\r\n",
     "static": true,
-    "longname": "F:/Programowanie/JS/yourhomebudget/src/frontend/com.js",
+    "longname": "F:/Programowanie/JS/YourHomeBudget/src/frontend/com.js",
     "access": "public",
     "description": null,
     "lineNumber": 1
@@ -1183,21 +1183,31 @@
     "export": false,
     "importPath": "YourHomeBudget/src/frontend/com.js",
     "importStyle": null,
-    "description": null,
-    "lineNumber": 15,
-    "undocument": true,
+    "description": "Loads data from file",
+    "examples": [
+      "<Javascript>\nread( 'file.json', '/path/to/parent/folder');"
+    ],
+    "lineNumber": 22,
     "params": [
       {
-        "name": "filename",
+        "nullable": null,
         "types": [
-          "*"
-        ]
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "filename",
+        "description": "self explainatory"
       },
       {
-        "name": "path",
+        "nullable": null,
         "types": [
-          "*"
-        ]
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "path",
+        "description": "relative path to file"
       }
     ],
     "return": null
@@ -1219,7 +1229,7 @@
     "examples": [
       "<JavaScript>\nsend('data');\nsend({task:'save', data: 'data', name:'file.json', path:'relative/path/to/parent/folder'});\nsend({task:'read', name:'file.json', path:'relative/path/to/parent/folder'});"
     ],
-    "lineNumber": 26,
+    "lineNumber": 33,
     "params": [
       {
         "nullable": null,
@@ -1238,9 +1248,9 @@
     "__docId__": 77,
     "kind": "file",
     "name": "src/frontend/lang.js",
-    "content": "/*jshint esversion:6*/\r\nlet lang = {\r\n  menu: {\r\n    budget: 'Budget',\r\n    history: 'History',\r\n    preferences: 'Preferences',\r\n  },\r\n  headerBar: {\r\n    incomes: {\r\n      amount: 'Amount',\r\n    },\r\n  },\r\n  incomes: {\r\n    incomes: 'Incomes',\r\n    outcomes: 'Outcomes',\r\n    lastAmount: 'Last Amount',\r\n    leftFromLastMonth: 'Left from last month',\r\n    forms: {\r\n      addIncome: 'Add income',\r\n      addOutcome: 'Add outcome',\r\n      name: 'Name',\r\n      amount: 'Amount',\r\n      category: 'Category',\r\n      description: 'Description'\r\n    },\r\n    categories: {\r\n      other: 'Other',\r\n      dailyExpences: 'Daily expences',\r\n      entertaiment: 'Entertaiment',\r\n      houseAndBills: 'House and bills',\r\n      financeAndInsurance: 'Finance and insurance',\r\n    },\r\n  },\r\n  other: {\r\n    submit: 'Submit',\r\n    save: 'Save',\r\n    cancel: 'Cancel',\r\n    del: 'Delete',\r\n  },\r\n  preferences: {\r\n    preferences: 'Preferences',\r\n    currencySymbol: 'Currency symbol',\r\n    lang: 'Language',\r\n    makeLang: 'Make a translation'\r\n  }\r\n};\r\n\r\nlet incomesCategories = [\r\n  lang.incomes.categories.other,\r\n  lang.incomes.categories.dailyExpences,\r\n  lang.incomes.categories.entertaiment,\r\n  lang.incomes.categories.houseAndBills,\r\n  lang.incomes.categories.financeAndInsurance\r\n];\r\n\r\nfunction changeLang(data) {\r\n  lang = data;\r\n  incomesCategories = [\r\n    lang.incomes.categories.other,\r\n    lang.incomes.categories.dailyExpences,\r\n    lang.incomes.categories.entertaiment,\r\n    lang.incomes.categories.houseAndBills,\r\n    lang.incomes.categories.financeAndInsurance\r\n  ];\r\n  refreshIncomes();\r\n  generateMainMenu();\r\n}\r\n",
+    "content": "/*jshint esversion:6*/\r\n\r\n/**\r\n  * Contains all strings used in programs\r\n  * @type {Object}\r\n  */\r\nlet lang = {\r\n  menu: {\r\n    budget: 'Budget',\r\n    history: 'History',\r\n    preferences: 'Preferences',\r\n  },\r\n  headerBar: {\r\n    incomes: {\r\n      amount: 'Amount',\r\n    },\r\n  },\r\n  incomes: {\r\n    incomes: 'Incomes',\r\n    outcomes: 'Outcomes',\r\n    lastAmount: 'Last Amount',\r\n    leftFromLastMonth: 'Left from last month',\r\n    forms: {\r\n      addIncome: 'Add income',\r\n      addOutcome: 'Add outcome',\r\n      name: 'Name',\r\n      amount: 'Amount',\r\n      category: 'Category',\r\n      description: 'Description'\r\n    },\r\n    categories: {\r\n      other: 'Other',\r\n      dailyExpences: 'Daily expences',\r\n      entertaiment: 'Entertaiment',\r\n      houseAndBills: 'House and bills',\r\n      financeAndInsurance: 'Finance and insurance',\r\n    },\r\n  },\r\n  other: {\r\n    submit: 'Submit',\r\n    save: 'Save',\r\n    cancel: 'Cancel',\r\n    del: 'Delete',\r\n  },\r\n  preferences: {\r\n    preferences: 'Preferences',\r\n    currencySymbol: 'Currency symbol',\r\n    lang: 'Language',\r\n    makeLang: 'Make a translation'\r\n  }\r\n};\r\n\r\n/**\r\n  * @type {Array}\r\n  * Contains categories\r\n  */\r\nlet incomesCategories = [\r\n  lang.incomes.categories.other,\r\n  lang.incomes.categories.dailyExpences,\r\n  lang.incomes.categories.entertaiment,\r\n  lang.incomes.categories.houseAndBills,\r\n  lang.incomes.categories.financeAndInsurance\r\n];\r\n\r\n/**\r\n  * Changes content of {@link lang} and {@link incomesCategories} based on loaded laguage\r\n  */\r\nfunction changeLang(data) {\r\n  lang = data;\r\n  incomesCategories = [\r\n    lang.incomes.categories.other,\r\n    lang.incomes.categories.dailyExpences,\r\n    lang.incomes.categories.entertaiment,\r\n    lang.incomes.categories.houseAndBills,\r\n    lang.incomes.categories.financeAndInsurance\r\n  ];\r\n  refreshIncomes();\r\n  generateMainMenu();\r\n}\r\n",
     "static": true,
-    "longname": "F:/Programowanie/JS/yourhomebudget/src/frontend/lang.js",
+    "longname": "F:/Programowanie/JS/YourHomeBudget/src/frontend/lang.js",
     "access": "public",
     "description": null,
     "lineNumber": 1
@@ -1256,13 +1266,15 @@
     "export": false,
     "importPath": "YourHomeBudget/src/frontend/lang.js",
     "importStyle": null,
-    "description": null,
-    "lineNumber": 2,
-    "undocument": true,
+    "description": "Contains all strings used in programs",
+    "lineNumber": 7,
     "type": {
+      "nullable": null,
       "types": [
-        "{\"menu\": *, \"headerBar\": *, \"incomes\": *, \"other\": *, \"preferences\": *}"
-      ]
+        "Object"
+      ],
+      "spread": false,
+      "description": null
     }
   },
   {
@@ -1276,13 +1288,15 @@
     "export": false,
     "importPath": "YourHomeBudget/src/frontend/lang.js",
     "importStyle": null,
-    "description": null,
-    "lineNumber": 48,
-    "undocument": true,
+    "description": "",
+    "lineNumber": 57,
     "type": {
+      "nullable": null,
       "types": [
-        "undefined[]"
-      ]
+        "Array"
+      ],
+      "spread": false,
+      "description": null
     }
   },
   {
@@ -1298,9 +1312,8 @@
     "export": false,
     "importPath": "YourHomeBudget/src/frontend/lang.js",
     "importStyle": null,
-    "description": null,
-    "lineNumber": 56,
-    "undocument": true,
+    "description": "Changes content of {@link lang} and {@link incomesCategories} based on loaded laguage",
+    "lineNumber": 68,
     "params": [
       {
         "name": "data",
@@ -1315,9 +1328,9 @@
     "__docId__": 81,
     "kind": "file",
     "name": "src/frontend/main.js",
-    "content": "/* jshint esversion: 6 */\r\n/**\r\n * @type {object}\r\n * @desc Contains configuration (frontend)\r\n */\r\nlet config = {\r\n  lastBudgetID: 0,\r\n  currencySymbol: '$',\r\n};\r\n/**\r\n * @type {array}\r\n * @desc Contains informations about incomes (frontend)\r\n */\r\nlet incomes = [];\r\n/**\r\n * @type {array}\r\n * @desc Contains informations about outcomes (frontend)\r\n */\r\nlet outcomes = [];\r\n/**\r\n * @type {object}\r\n * @desc Contains informations about budget (frontend)\r\n */\r\nlet budget = {\r\n  id: 0,\r\n  place: 'disk',\r\n  monthsID: [{\r\n    amount: 0,\r\n    date: new Date(),\r\n  },\r\n ],\r\n  lastMonthID: 0,\r\n};\r\n\r\nlet inOut = 0;\r\n/**\r\n * @type {object}\r\n * @desc Contains informations about settlement period (frontend)\r\n */\r\nlet month = {\r\n  amount: 0,\r\n  id: 0,\r\n  name: '',\r\n  descr: '',\r\n};\r\n\r\nlet editMonth = true;\r\nlet historyCheck = false;\r\n\r\n/**\r\n * Saves all informations about budget and config (frontend)\r\n */\r\nfunction saveAll() {\r\n  saveConfig();\r\n  saveBudget();\r\n  updateMonth();\r\n}\r\n\r\nfunction saveConfig() {\r\n  send({\r\n    task: 'save',\r\n    data: {\r\n      name: 'config',\r\n      data: config\r\n    },\r\n    path: '',\r\n    name: 'config.json',\r\n  });\r\n}\r\n\r\nfunction saveBudget() {\r\n  send({\r\n    task: 'save',\r\n    data: {\r\n      name: 'budget',\r\n      data: budget\r\n    },\r\n    path: `budgets/budget-${budget.id}/`,\r\n    name: 'budget.json',\r\n  });\r\n}\r\n\r\nfunction lastMth() {\r\n  budget.lastMonthID = budget.monthsID.length - 1;\r\n  loadMonth(budget.monthsID.length - 1);\r\n  historyCheck = false;\r\n  editMonth = true;\r\n}\r\n\r\nfunction checkMonth() {\r\n  if (historyCheck) {\r\n    return;\r\n  } else {\r\n    let lastMonth = new Date((\r\n      budget.monthsID[budget.monthsID.length - 1].date));\r\n    let now = new Date();\r\n    if (now.getMonth() > lastMonth.getMonth()) {\r\n      let leftAmount = month.amount;\r\n      resetMonthToDefault();\r\n      budget.monthsID.push({\r\n        date: new Date(),\r\n      });\r\n      budget.lastMonthID = budget.monthsID.length - 1;\r\n      updateMonth();\r\n      addIncome('income', 'bwlflm', 'bwlflm', leftAmount);\r\n      saveAll();\r\n      updateMonth();\r\n      refreshIncomes();\r\n    }\r\n    saveAll();\r\n    return;\r\n  }\r\n}\r\n\r\nfunction resetMonthToDefault() {\r\n  month = {\r\n    amount: 0,\r\n    id: 0,\r\n    name: '',\r\n    descr: '',\r\n  };\r\n  outcomes = [];\r\n  incomes = [];\r\n  return;\r\n}\r\n\r\nfunction updateMonth() {\r\n  let amount = 0;\r\n  let i;\r\n  for (i = 0; i < incomes.length; i++) {\r\n    amount += Number(incomes[i].amount);\r\n  }\r\n  for (i = 0; i < outcomes.length; i++) {\r\n    amount -= Number(outcomes[i].amount);\r\n  }\r\n  month.amount = amount;\r\n  budget.monthsID[budget.monthsID.length - 1].amount = amount;\r\n\r\n  save({\r\n    name: 'month',\r\n    data: month\r\n  }, 'month.json', `budgets/budget-${budget.id}/month-${budget.lastMonthID}/`);\r\n\r\n  save({\r\n    name: 'incomes',\r\n    data: incomes\r\n  }, 'incomes.json', `budgets/budget-${budget.id}/month-${budget.lastMonthID}/`);\r\n\r\n  save({\r\n    name: 'outcomes',\r\n    data: outcomes\r\n  }, 'outcomes.json', `budgets/budget-${budget.id}/month-${budget.lastMonthID}/`);\r\n}\r\n\r\nfunction monthYear(date = new Date()) {\r\n  date = new Date(date);\r\n  let dateFormatted = `${date.getMonth() + 1}-${date.getYear() + 1900}`;\r\n  return dateFormatted;\r\n}\r\n\r\n/**\r\n * Checks argument sended from backend (frontend window)\r\n * @param {object} arg argument from communication channel to check\r\n */\r\nfunction checkArg(arg) {\r\n\r\n  if (arg == 'start') {\r\n    startup();\r\n  } else if (arg == 'firstStartup') {\r\n    saveAll();\r\n    return;\r\n  } else if (typeof arg == 'object' && arg.task == 'read') {\r\n    let name = arg.data.name;\r\n    let data = arg.data.data;\r\n    if (name == 'budget') {\r\n      budget = data;\r\n      startup('month');\r\n    } else if (name == 'month') {\r\n      month = data;\r\n      startup('incomes');\r\n      startup('outcomes');\r\n    } else if (name == 'incomes') {\r\n      incomes = data;\r\n      refreshIncomes();\r\n      inOut++;\r\n      if (inOut >= 2) {\r\n        checkMonth();\r\n        inOut = 0;\r\n      }\r\n    } else if (name == 'outcomes') {\r\n      outcomes = data;\r\n      refreshIncomes();\r\n      inOut++;\r\n      if (inOut >= 2) {\r\n        checkMonth();\r\n        inOut = 0;\r\n      }\r\n    } else if (name == 'config') {\r\n      config = data;\r\n      startup('budget');\r\n    } else if (name == 'lang') {\r\n      changeLang(data);\r\n    } else {\r\n      console.log('invalid name');\r\n    }\r\n  }\r\n}\r\n\r\n\r\n/**\r\n * @ignore\r\n * @param {string} arg Determines what needs to be loaded (called by checkArg) (frontend window)\r\n */\r\nfunction startup(arg) {\r\n\r\n  if (arg == 'config' || arg == undefined) {\r\n    send({\r\n      task: 'read',\r\n      path: '',\r\n      name: 'config.json',\r\n    });\r\n  } else if (arg == 'budget') {\r\n    send({\r\n      task: 'read',\r\n      path: `budgets/budget-${config.lastBudgetID}/`,\r\n      name: 'budget.json',\r\n    });\r\n  } else if (arg == 'month') {\r\n    send({\r\n      task: 'read',\r\n      path: `budgets/budget-${budget.id}/month-${budget.lastMonthID}/`,\r\n      name: 'month.json',\r\n    });\r\n  } else if (arg == 'incomes') {\r\n    send({\r\n      task: 'read',\r\n      path: `budgets/budget-${budget.id}/month-${budget.lastMonthID}/`,\r\n      name: 'incomes.json',\r\n    });\r\n  } else if (arg == 'outcomes') {\r\n    send({\r\n      task: 'read',\r\n      path: `budgets/budget-${budget.id}/month-${budget.lastMonthID}/`,\r\n      name: 'outcomes.json',\r\n    });\r\n  }\r\n\r\n}\r\n\r\nfunction fullDateAndHour(date = new Date()) {\r\n  date = new Date(date);\r\n  let hr = String('0' + date.getHours()).slice(-2);\r\n  let min = String('0' + date.getMinutes()).slice(-2);\r\n  let sec = String('0' + date.getSeconds()).slice(-2);\r\n  let yr = date.getFullYear();\r\n  let mth = String('0' + String(Number(date.getMonth()) + 1)).slice(-2);\r\n  let day = String('0' + date.getDate()).slice(-2);\r\n  let ret = `${day}-${mth}-${yr} ${hr}:${min}:${sec}`;\r\n  return ret;\r\n}\r\n\r\nfunction loadMonth(id) {\r\n  budget.lastMonthID = id;\r\n  read('month.json', `budgets/budget-${budget.id}/month-${id}/`);\r\n  read('incomes.json', `budgets/budget-${budget.id}/month-${id}/`);\r\n  read('outcomes.json', `budgets/budget-${budget.id}/month-${id}/`);\r\n  if (id != budget.monthsID.length - 1) {\r\n    editMonth = false;\r\n  } else {\r\n    editMonth = true;\r\n  }\r\n}\r\n\r\nfunction showMonth(id) {\r\n  if (id != budget.monthsID.length - 1) {\r\n    historyCheck = true;\r\n  } else {\r\n    historyCheck = false;\r\n  }\r\n  loadMonth(id);\r\n}\r\n\r\nfunction delIncome(type, id) {\r\n  let tempArr = [];\r\n  if (!confirm('Are you shure?')) {\r\n    return;\r\n  }\r\n  if (type == 'income') {\r\n\r\n    for (let i = 0; i < incomes.length; i++) {\r\n      if (i != id) {\r\n        tempArr.push(incomes[i]);\r\n      }\r\n    }\r\n    incomes = tempArr;\r\n  } else if (type == 'outcome') {\r\n    for (let i = 0; i < outcomes.length; i++) {\r\n      if (i != id) {\r\n        tempArr.push(outcomes[i]);\r\n      }\r\n    }\r\n    outcomes = tempArr;\r\n  }\r\n  updateMonth();\r\n  saveAll();\r\n  refreshIncomes();\r\n  contextIncomesAmount();\r\n}\r\n\r\n/**\r\n * Add an income or an outcome\r\n * @param {string} type income or outcome\r\n * @param {string} name Name / title of income or outcome\r\n * @param {string} desc Description of income or outcome\r\n * @param {number} amount Value of income or outcome\r\n * @param {number} cat Id of category\r\n * @example <JavaScript>\r\n * addIncome('income', 'Payment', 'From my employer', 2000, 1);\r\n */\r\nfunction addIncome(type, name, desc, amount, cat, canDelete) {\r\n  if (!editMonth) {\r\n    delForm();\r\n    if (type == 'income') {\r\n      incomesCancel = undefined;\r\n      incomesSubmit = undefined;\r\n    } else if (type == 'outcome') {\r\n      outcomesCancel = undefined;\r\n      outcomesSubmit = undefined;\r\n    }\r\n    alert(\"You can't edit this month\");\r\n    return;\r\n  }\r\n  let tmpArr;\r\n  if (type == 'income') {\r\n    tmpArr = incomes;\r\n  } else if (type == 'outcome') {\r\n    tmpArr = outcomes;\r\n  } else {\r\n    console.log('Invalid type');\r\n    return;\r\n  }\r\n\r\n  let tmpObj = {\r\n    amount: amount,\r\n    name: name,\r\n    description: desc,\r\n    cat: cat,\r\n    date: new Date(),\r\n    id: (tmpArr.length),\r\n    flags: {\r\n      del: false,\r\n    },\r\n  };\r\n  if (canDelete) {\r\n    tmpObj.flags.del = true;\r\n  }\r\n\r\n  tmpArr.push(tmpObj);\r\n  updateMonth();\r\n  refreshIncomes();\r\n}\r\n\r\nif ((document.getElementById('')) !== null) {\r\n  send({\r\n    task: ''\r\n  });\r\n}\r\n\r\nsend('reset');\r\n",
+    "content": "/* jshint esversion: 6 */\r\n/**\r\n * @type {object}\r\n * @desc Contains configuration (frontend)\r\n */\r\nlet config = {\r\n  lastBudgetID: 0,\r\n  currencySymbol: '$',\r\n};\r\n/**\r\n * @type {array}\r\n * @desc Contains informations about incomes (frontend)\r\n */\r\nlet incomes = [];\r\n/**\r\n * @type {array}\r\n * @desc Contains informations about outcomes (frontend)\r\n */\r\nlet outcomes = [];\r\n/**\r\n * @type {object}\r\n * @desc Contains informations about budget (frontend)\r\n */\r\nlet budget = {\r\n  id: 0,\r\n  place: 'disk',\r\n  monthsID: [{\r\n    amount: 0,\r\n    date: new Date(),\r\n  },\r\n ],\r\n  lastMonthID: 0,\r\n};\r\n\r\n/**\r\n  * @ignore\r\n  */\r\nlet inOut = 0;\r\n/**\r\n * @type {object}\r\n * @desc Contains informations about settlement period (frontend)\r\n */\r\nlet month = {\r\n  amount: 0,\r\n  id: 0,\r\n  name: '',\r\n  descr: '',\r\n};\r\n/**\r\n  * @type {boolean}\r\n  * Allows editing month data\r\n  */\r\nlet editMonth = true;\r\n\r\n/**\r\n  * @type {boolean}\r\n  * It is true when you program isn't showing latest data\r\n  */\r\nlet historyCheck = false;\r\n\r\n/**\r\n * Saves all informations about budget and config (frontend)\r\n */\r\nfunction saveAll() {\r\n  saveConfig();\r\n  saveBudget();\r\n  updateMonth();\r\n}\r\n\r\n/**\r\n  * Saves config.json\r\n  */\r\nfunction saveConfig() {\r\n  send({\r\n    task: 'save',\r\n    data: {\r\n      name: 'config',\r\n      data: config\r\n    },\r\n    path: '',\r\n    name: 'config.json',\r\n  });\r\n}\r\n\r\n/**\r\n  * Saves budget.json\r\n  */\r\nfunction saveBudget() {\r\n  send({\r\n    task: 'save',\r\n    data: {\r\n      name: 'budget',\r\n      data: budget\r\n    },\r\n    path: `budgets/budget-${budget.id}/`,\r\n    name: 'budget.json',\r\n  });\r\n}\r\n\r\n/**\r\n  * Loads last month data\r\n  */\r\nfunction lastMth() {\r\n  budget.lastMonthID = budget.monthsID.length - 1;\r\n  loadMonth(budget.monthsID.length - 1);\r\n  historyCheck = false;\r\n  editMonth = true;\r\n}\r\n\r\n/**\r\n  * Check opened month id\r\n  */\r\nfunction checkMonth() {\r\n  if (historyCheck) {\r\n    return;\r\n  } else {\r\n    let lastMonth = new Date((\r\n      budget.monthsID[budget.monthsID.length - 1].date));\r\n    let now = new Date();\r\n    if (now.getMonth() > lastMonth.getMonth() || now.getMonth() < lastMonth.getMonth() && now.getMonth() == 0) {\r\n      let leftAmount = month.amount;\r\n      resetMonthToDefault();\r\n      budget.monthsID.push({\r\n        date: new Date(),\r\n      });\r\n      budget.lastMonthID = budget.monthsID.length - 1;\r\n      updateMonth();\r\n      addIncome('income', 'bwlflm', 'bwlflm', leftAmount);\r\n      saveAll();\r\n      updateMonth();\r\n      refreshIncomes();\r\n    }\r\n    saveAll();\r\n    return;\r\n  }\r\n}\r\n\r\n/**\r\n  * Sets month, incomes and outcomes data to default values\r\n  */\r\nfunction resetMonthToDefault() {\r\n  month = {\r\n    amount: 0,\r\n    id: 0,\r\n    name: '',\r\n    descr: '',\r\n  };\r\n  outcomes = [];\r\n  incomes = [];\r\n  return;\r\n}\r\n\r\n/**\r\n  * Updates month data, and saves incomes, outcomes and month data\r\n  */\r\nfunction updateMonth() {\r\n  let amount = 0;\r\n  let i;\r\n  for (i = 0; i < incomes.length; i++) {\r\n    amount += Number(incomes[i].amount);\r\n  }\r\n  for (i = 0; i < outcomes.length; i++) {\r\n    amount -= Number(outcomes[i].amount);\r\n  }\r\n  month.amount = amount;\r\n  budget.monthsID[budget.monthsID.length - 1].amount = amount;\r\n\r\n  save({\r\n    name: 'month',\r\n    data: month\r\n  }, 'month.json', `budgets/budget-${budget.id}/month-${budget.lastMonthID}/`);\r\n\r\n  save({\r\n    name: 'incomes',\r\n    data: incomes\r\n  }, 'incomes.json', `budgets/budget-${budget.id}/month-${budget.lastMonthID}/`);\r\n\r\n  save({\r\n    name: 'outcomes',\r\n    data: outcomes\r\n  }, 'outcomes.json', `budgets/budget-${budget.id}/month-${budget.lastMonthID}/`);\r\n}\r\n\r\n/**\r\n  * returns date in format: MM:YYYY\r\n  */\r\nfunction monthYear(date = new Date()) {\r\n  date = new Date(date);\r\n  let dateFormatted = `${date.getMonth() + 1}-${date.getYear() + 1900}`;\r\n  return dateFormatted;\r\n}\r\n\r\n/**\r\n * Checks argument sended from backend (frontend window)\r\n * @param {object} arg argument from communication channel to check\r\n */\r\nfunction checkArg(arg) {\r\n\r\n  if (arg == 'start') {\r\n    startup();\r\n  } else if (arg == 'firstStartup') {\r\n    saveAll();\r\n    return;\r\n  } else if (typeof arg == 'object' && arg.task == 'read') {\r\n    let name = arg.data.name;\r\n    let data = arg.data.data;\r\n    if (name == 'budget') {\r\n      budget = data;\r\n      startup('month');\r\n    } else if (name == 'month') {\r\n      month = data;\r\n      startup('incomes');\r\n      startup('outcomes');\r\n    } else if (name == 'incomes') {\r\n      incomes = data;\r\n      refreshIncomes();\r\n      inOut++;\r\n      if (inOut >= 2) {\r\n        checkMonth();\r\n        inOut = 0;\r\n      }\r\n    } else if (name == 'outcomes') {\r\n      outcomes = data;\r\n      refreshIncomes();\r\n      inOut++;\r\n      if (inOut >= 2) {\r\n        checkMonth();\r\n        inOut = 0;\r\n      }\r\n    } else if (name == 'config') {\r\n      config = data;\r\n      startup('budget');\r\n    } else if (name == 'lang') {\r\n      changeLang(data);\r\n    } else {\r\n      console.log('invalid name');\r\n    }\r\n  }\r\n}\r\n\r\n\r\n/**\r\n * @ignore\r\n * @param {string} arg Determines what needs to be loaded (called by checkArg) (frontend window)\r\n */\r\nfunction startup(arg) {\r\n\r\n  if (arg == 'config' || arg == undefined) {\r\n    send({\r\n      task: 'read',\r\n      path: '',\r\n      name: 'config.json',\r\n    });\r\n  } else if (arg == 'budget') {\r\n    send({\r\n      task: 'read',\r\n      path: `budgets/budget-${config.lastBudgetID}/`,\r\n      name: 'budget.json',\r\n    });\r\n  } else if (arg == 'month') {\r\n    send({\r\n      task: 'read',\r\n      path: `budgets/budget-${budget.id}/month-${budget.lastMonthID}/`,\r\n      name: 'month.json',\r\n    });\r\n  } else if (arg == 'incomes') {\r\n    send({\r\n      task: 'read',\r\n      path: `budgets/budget-${budget.id}/month-${budget.lastMonthID}/`,\r\n      name: 'incomes.json',\r\n    });\r\n  } else if (arg == 'outcomes') {\r\n    send({\r\n      task: 'read',\r\n      path: `budgets/budget-${budget.id}/month-${budget.lastMonthID}/`,\r\n      name: 'outcomes.json',\r\n    });\r\n  }\r\n\r\n}\r\n/**\r\n  * Returns date and hour in format: DD-MM-YYYY HH:MM:SS\r\n  */\r\nfunction fullDateAndHour(date = new Date()) {\r\n  date = new Date(date);\r\n  let hr = String('0' + date.getHours()).slice(-2);\r\n  let min = String('0' + date.getMinutes()).slice(-2);\r\n  let sec = String('0' + date.getSeconds()).slice(-2);\r\n  let yr = date.getFullYear();\r\n  let mth = String('0' + String(Number(date.getMonth()) + 1)).slice(-2);\r\n  let day = String('0' + date.getDate()).slice(-2);\r\n  let ret = `${day}-${mth}-${yr} ${hr}:${min}:${sec}`;\r\n  return ret;\r\n}\r\n\r\n/**\r\n  * Loads month, incomes and outcomes data\r\n  * @param {number} id ID of data to load\r\n  */\r\nfunction loadMonth(id) {\r\n  budget.lastMonthID = id;\r\n  read('month.json', `budgets/budget-${budget.id}/month-${id}/`);\r\n  read('incomes.json', `budgets/budget-${budget.id}/month-${id}/`);\r\n  read('outcomes.json', `budgets/budget-${budget.id}/month-${id}/`);\r\n  if (id != budget.monthsID.length - 1) {\r\n    editMonth = false;\r\n  } else {\r\n    editMonth = true;\r\n  }\r\n}\r\n\r\n/**\r\n  * Sets {@link historyCheck} depending on the ID of month data and runs {@link loadMonth}\r\n  * @param id ID of data to load\r\n  */\r\nfunction showMonth(id) {\r\n  if (id != budget.monthsID.length - 1) {\r\n    historyCheck = true;\r\n  } else {\r\n    historyCheck = false;\r\n  }\r\n  loadMonth(id);\r\n}\r\n\r\n/**\r\n  * Deletes 1 income or outcome based on id\r\n  * @param {string} type \"income\" or \"outcome\", determines which type function will delete\r\n  */\r\nfunction delIncome(type, id) {\r\n  let tempArr = [];\r\n  if (!confirm('Are you shure?')) {\r\n    return;\r\n  }\r\n  if (type == 'income') {\r\n    incomes.splice(id, 1);\r\n  } else if (type == 'outcome') {\r\n    outcomes.splice(id, 1);\r\n  }\r\n  updateMonth();\r\n  saveAll();\r\n  refreshIncomes();\r\n  contextIncomesAmount();\r\n}\r\n\r\n/**\r\n * Add an income or an outcome\r\n * @param {string} type income or outcome\r\n * @param {string} name Name / title of income or outcome\r\n * @param {string} desc Description of income or outcome\r\n * @param {number} amount Value of income or outcome\r\n * @param {number} cat Id of category\r\n * @example <JavaScript>\r\n * addIncome('income', 'Payment', 'From my employer', 2000, 1);\r\n */\r\nfunction addIncome(type, name, desc, amount, cat, canDelete) {\r\n  if (!editMonth) {\r\n    delForm();\r\n    if (type == 'income') {\r\n      incomesCancel = undefined;\r\n      incomesSubmit = undefined;\r\n    } else if (type == 'outcome') {\r\n      outcomesCancel = undefined;\r\n      outcomesSubmit = undefined;\r\n    }\r\n    alert(\"You can't edit this month\");\r\n    return;\r\n  }\r\n  let tmpArr;\r\n  if (type == 'income') {\r\n    tmpArr = incomes;\r\n  } else if (type == 'outcome') {\r\n    tmpArr = outcomes;\r\n  } else {\r\n    console.log('Invalid type');\r\n    return;\r\n  }\r\n\r\n  let tmpObj = {\r\n    amount: amount,\r\n    name: name,\r\n    description: desc,\r\n    cat: cat,\r\n    date: new Date(),\r\n    id: (tmpArr.length),\r\n    flags: {\r\n      del: false,\r\n    },\r\n  };\r\n  if (canDelete) {\r\n    tmpObj.flags.del = true;\r\n  }\r\n\r\n  tmpArr.push(tmpObj);\r\n  updateMonth();\r\n  refreshIncomes();\r\n}\r\n\r\nif ((document.getElementById('')) !== null) {\r\n  send({\r\n    task: ''\r\n  });\r\n}\r\n\r\nsend('reset');\r\n",
     "static": true,
-    "longname": "F:/Programowanie/JS/yourhomebudget/src/frontend/main.js",
+    "longname": "F:/Programowanie/JS/YourHomeBudget/src/frontend/main.js",
     "access": "public",
     "description": null,
     "lineNumber": 1
@@ -1421,9 +1434,9 @@
     "export": false,
     "importPath": "YourHomeBudget/src/frontend/main.js",
     "importStyle": null,
-    "description": null,
-    "lineNumber": 35,
-    "undocument": true,
+    "description": "",
+    "lineNumber": 38,
+    "ignore": true,
     "type": {
       "types": [
         "number"
@@ -1442,7 +1455,7 @@
     "importPath": "YourHomeBudget/src/frontend/main.js",
     "importStyle": null,
     "description": "Contains informations about settlement period (frontend)",
-    "lineNumber": 40,
+    "lineNumber": 43,
     "type": {
       "nullable": null,
       "types": [
@@ -1463,13 +1476,15 @@
     "export": false,
     "importPath": "YourHomeBudget/src/frontend/main.js",
     "importStyle": null,
-    "description": null,
-    "lineNumber": 47,
-    "undocument": true,
+    "description": "",
+    "lineNumber": 53,
     "type": {
+      "nullable": null,
       "types": [
         "boolean"
-      ]
+      ],
+      "spread": false,
+      "description": null
     }
   },
   {
@@ -1483,13 +1498,15 @@
     "export": false,
     "importPath": "YourHomeBudget/src/frontend/main.js",
     "importStyle": null,
-    "description": null,
-    "lineNumber": 48,
-    "undocument": true,
+    "description": "",
+    "lineNumber": 59,
     "type": {
+      "nullable": null,
       "types": [
         "boolean"
-      ]
+      ],
+      "spread": false,
+      "description": null
     }
   },
   {
@@ -1506,7 +1523,7 @@
     "importPath": "YourHomeBudget/src/frontend/main.js",
     "importStyle": null,
     "description": "Saves all informations about budget and config (frontend)",
-    "lineNumber": 53,
+    "lineNumber": 64,
     "params": [],
     "return": null
   },
@@ -1523,9 +1540,8 @@
     "export": false,
     "importPath": "YourHomeBudget/src/frontend/main.js",
     "importStyle": null,
-    "description": null,
-    "lineNumber": 59,
-    "undocument": true,
+    "description": "Saves config.json",
+    "lineNumber": 73,
     "params": [],
     "return": null
   },
@@ -1542,9 +1558,8 @@
     "export": false,
     "importPath": "YourHomeBudget/src/frontend/main.js",
     "importStyle": null,
-    "description": null,
-    "lineNumber": 71,
-    "undocument": true,
+    "description": "Saves budget.json",
+    "lineNumber": 88,
     "params": [],
     "return": null
   },
@@ -1561,9 +1576,8 @@
     "export": false,
     "importPath": "YourHomeBudget/src/frontend/main.js",
     "importStyle": null,
-    "description": null,
-    "lineNumber": 83,
-    "undocument": true,
+    "description": "Loads last month data",
+    "lineNumber": 103,
     "params": [],
     "return": null
   },
@@ -1580,9 +1594,8 @@
     "export": false,
     "importPath": "YourHomeBudget/src/frontend/main.js",
     "importStyle": null,
-    "description": null,
-    "lineNumber": 90,
-    "undocument": true,
+    "description": "Check opened month id",
+    "lineNumber": 113,
     "params": [],
     "return": null
   },
@@ -1599,9 +1612,8 @@
     "export": false,
     "importPath": "YourHomeBudget/src/frontend/main.js",
     "importStyle": null,
-    "description": null,
-    "lineNumber": 115,
-    "undocument": true,
+    "description": "Sets month, incomes and outcomes data to default values",
+    "lineNumber": 141,
     "params": [],
     "return": null
   },
@@ -1618,9 +1630,8 @@
     "export": false,
     "importPath": "YourHomeBudget/src/frontend/main.js",
     "importStyle": null,
-    "description": null,
-    "lineNumber": 127,
-    "undocument": true,
+    "description": "Updates month data, and saves incomes, outcomes and month data",
+    "lineNumber": 156,
     "params": [],
     "return": null
   },
@@ -1637,9 +1648,8 @@
     "export": false,
     "importPath": "YourHomeBudget/src/frontend/main.js",
     "importStyle": null,
-    "description": null,
-    "lineNumber": 155,
-    "undocument": true,
+    "description": "returns date in format: MM:YYYY",
+    "lineNumber": 187,
     "params": [
       {
         "name": "date",
@@ -1669,7 +1679,7 @@
     "importPath": "YourHomeBudget/src/frontend/main.js",
     "importStyle": null,
     "description": "Checks argument sended from backend (frontend window)",
-    "lineNumber": 165,
+    "lineNumber": 197,
     "params": [
       {
         "nullable": null,
@@ -1698,7 +1708,7 @@
     "importPath": "YourHomeBudget/src/frontend/main.js",
     "importStyle": null,
     "description": "",
-    "lineNumber": 214,
+    "lineNumber": 246,
     "ignore": true,
     "params": [
       {
@@ -1727,9 +1737,8 @@
     "export": false,
     "importPath": "YourHomeBudget/src/frontend/main.js",
     "importStyle": null,
-    "description": null,
-    "lineNumber": 250,
-    "undocument": true,
+    "description": "Returns date and hour in format: DD-MM-YYYY HH:MM:SS",
+    "lineNumber": 284,
     "params": [
       {
         "name": "date",
@@ -1758,15 +1767,18 @@
     "export": false,
     "importPath": "YourHomeBudget/src/frontend/main.js",
     "importStyle": null,
-    "description": null,
-    "lineNumber": 262,
-    "undocument": true,
+    "description": "Loads month, incomes and outcomes data",
+    "lineNumber": 300,
     "params": [
       {
-        "name": "id",
+        "nullable": null,
         "types": [
-          "*"
-        ]
+          "number"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "id",
+        "description": "ID of data to load"
       }
     ],
     "return": null
@@ -1784,15 +1796,18 @@
     "export": false,
     "importPath": "YourHomeBudget/src/frontend/main.js",
     "importStyle": null,
-    "description": null,
-    "lineNumber": 274,
-    "undocument": true,
+    "description": "Sets {@link historyCheck} depending on the ID of month data and runs {@link loadMonth}",
+    "lineNumber": 316,
     "params": [
       {
-        "name": "id",
+        "nullable": null,
         "types": [
           "*"
-        ]
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "id",
+        "description": "ID of data to load"
       }
     ],
     "return": null
@@ -1810,21 +1825,18 @@
     "export": false,
     "importPath": "YourHomeBudget/src/frontend/main.js",
     "importStyle": null,
-    "description": null,
-    "lineNumber": 283,
-    "undocument": true,
+    "description": "Deletes 1 income or outcome based on id",
+    "lineNumber": 329,
     "params": [
       {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
         "name": "type",
-        "types": [
-          "*"
-        ]
-      },
-      {
-        "name": "id",
-        "types": [
-          "*"
-        ]
+        "description": "\"income\" or \"outcome\", determines which type function will delete"
       }
     ],
     "return": null
@@ -1846,7 +1858,7 @@
     "examples": [
       "<JavaScript>\naddIncome('income', 'Payment', 'From my employer', 2000, 1);"
     ],
-    "lineNumber": 320,
+    "lineNumber": 355,
     "params": [
       {
         "nullable": null,
@@ -1907,7 +1919,7 @@
     "name": "src/frontend/requires.js",
     "content": "/* jshint esversion: 6 */\r\n/**\r\n * @ignore\r\n */\r\nconst electron = require('electron');\r\n/**\r\n * @ignore\r\n */\r\nconst remote = electron.remote;\r\n/**\r\n * @ignore\r\n */\r\nconst app = remote.app;\r\n/**\r\n * @ignore\r\n */\r\nconst { ipcRenderer } = electron;\r\n/**\r\n * @ignore\r\n */\r\nconst electronTitlebar = require('electron-titlebar');\r\n",
     "static": true,
-    "longname": "F:/Programowanie/JS/yourhomebudget/src/frontend/requires.js",
+    "longname": "F:/Programowanie/JS/YourHomeBudget/src/frontend/requires.js",
     "access": "public",
     "description": null,
     "lineNumber": 1
@@ -2016,9 +2028,9 @@
     "__docId__": 111,
     "kind": "file",
     "name": "src/frontend/ui.js",
-    "content": "/*jshint esversion: 6 */\r\n/**\r\n * @ignore\r\n */\r\nconst menuButton = document.getElementById('menuButton'),\r\n      mainMenu = document.getElementById('mainMenu'),\r\n      contextButtons = document.getElementById('contextButtons'),\r\n      mask = document.getElementById('mask'),\r\n      balanceContent = document.getElementById('balanceContent'),\r\n      floatingFrame = document.getElementById('floatingFrame');\r\n\r\nlet incomesSubmit,\r\n    incomesCancel,\r\n    incomesButton,\r\n    outcomesButton;\r\n\r\nmenuButton.addEventListener('click', menuPos);\r\n\r\nfunction menuPos() {\r\n  if (mainMenu.style.left == '0px') {\r\n    mask.style.pointerEvents = 'none';\r\n    mainMenu.style.left = '-100vw';\r\n    menuButton.classList.remove(\"fa-arrow-left\");\r\n    menuButton.classList.add(\"fa-bars\");\r\n    mask.style.backdropFilter = 'none';\r\n\r\n  } else {\r\n    mainMenu.style.left = '0px';\r\n    mask.style.pointerEvents = 'all';\r\n    menuButton.classList.remove(\"fa-bars\");\r\n    menuButton.classList.add(\"fa-arrow-left\");\r\n    mask.style.backdropFilter = 'blur(5px)';\r\n  }\r\n}\r\nmask.addEventListener('click', () => {\r\n  mask.style.pointerEvents = 'none';\r\n  mainMenu.style.left = '-100vw';\r\n  menuButton.classList.remove(\"fa-arrow-left\");\r\n  menuButton.classList.add(\"fa-bars\");\r\n  mask.style.backdropFilter = 'none';\r\n});\r\n\r\nfunction generateIncomesForm() {\r\n    let cont = `<section class=\"defaultForm\" id=\"incomesForm\"><h2>${lang.incomes.forms.addIncome}</h2>`;\r\n    cont += `<p id=\"incomesFormName\">${lang.incomes.forms.name}</p><input type=\"text\" id=\"incomesFormNameInput\">`;\r\n    cont += `<p id=\"incomesFormAmount\">${lang.incomes.forms.amount}</p><input type=\"number\" id=\"incomesFormAmountInput\" name=\"\" value=\"0\">`;\r\n    cont += `<p id=\"incomesFormDesc\">${lang.incomes.forms.description}</p><input name=\"name\" id=\"incomesFormDescInput\" rows=\"8\" cols=\"80\"></input>`;\r\n    cont +=`<button id=\"incomesFormCancel\">${lang.other.cancel}</button><button id=\"incomesFormSubmit\">${lang.other.submit}</button></section>`;\r\n    floatingFrame.innerHTML = cont;\r\n    incomesSubmit = document.getElementById('incomesFormSubmit');\r\n\r\n    incomesSubmit.addEventListener('click', () => {\r\n      let name = document.getElementById('incomesFormNameInput').value;\r\n      let amount = Number(document.getElementById('incomesFormAmountInput').value);\r\n      let description = document.getElementById('incomesFormDescInput').value;\r\n      if (amount != \"\" && name != \"\") {\r\n        addIncome('income', name, description, amount, 'none', true);\r\n      } else {\r\n        console.log(' continue');\r\n      }\r\n\r\n    });\r\n\r\n    incomesCancel = document.getElementById('incomesFormCancel');\r\n    incomesCancel.addEventListener('click', () => {\r\n      delForm();\r\n      incomesCancel = undefined;\r\n      incomesSubmit = undefined;\r\n    });\r\n}\r\n\r\nfunction delForm() {\r\n  floatingFrame.innerHTML = '';\r\n}\r\n\r\nfunction generateOutcomesForm() {\r\n    let cont = `<section class=\"defaultForm\" id=\"outcomesForm\"><h2>${lang.incomes.forms.addOutcome}</h2>`;\r\n    cont += `<p id=\"outcomesFormName\"> ${lang.incomes.forms.name}</p><input type=\"text\" id=\"outcomesFormNameInput\">`;\r\n    cont += `<p id=\"outcomesFormAmount\">${lang.incomes.forms.amount}</p><input type=\"number\" id=\"outcomesFormAmountInput\" name=\"\" value=\"0\">`;\r\n    cont += `<p id=\"outcomesFormCategory\">${lang.incomes.forms.category}</p><select id=\"outcomesFormCategoryInput\" default=\"4\" ><option value=\"0\">${lang.incomes.categories.other}</option><option value=\"1\">${lang.incomes.categories.dailyExpences}</option><option value=\"2\">${lang.incomes.categories.entertaiment}</option><option value=\"3\">${lang.incomes.categories.houseAndBills}</option><option value=\"4\">${lang.incomes.categories.financeAndInsurance}</option></select>`;\r\n    cont += `<p id=\"outcomesFormDesc\">${lang.incomes.forms.descrdescription}</p><input name=\"name\" id=\"outcomesFormDescInput\" rows=\"8\" cols=\"80\"></input>`;\r\n    cont += `<button id=\"outcomesFormCancel\">${lang.other.cancel}</button><button id=\"outcomesFormSubmit\">${lang.other.submit}</button></section>`;\r\n    floatingFrame.innerHTML = cont;\r\n    outcomesSubmit = document.getElementById('outcomesFormSubmit');\r\n\r\n    outcomesSubmit.addEventListener('click', () => {\r\n      let name = document.getElementById('outcomesFormNameInput').value;\r\n      let amount = Number(document.getElementById('outcomesFormAmountInput').value);\r\n      let category = document.getElementById('outcomesFormCategoryInput').value;\r\n      let description = document.getElementById('outcomesFormDescInput').value;\r\n      if (amount != \"\" && name != \"\" && category != \"\") {\r\n        addIncome('outcome', name, description, amount, category, true);\r\n      } else {\r\n        console.log('continue');\r\n      }\r\n\r\n    });\r\n\r\n    outcomesCancel = document.getElementById('outcomesFormCancel');\r\n    outcomesCancel.addEventListener('click', () => {\r\n      delForm();\r\n      outcomesCancel = undefined;\r\n      outcomesSubmit = undefined;\r\n    });\r\n}\r\n\r\nfunction generateContextButtons(scheme) {\r\n  if (scheme == 'incomes') {\r\n    contextButtons.innerHTML = '<button id=\"incomesButton\" class=\"headerBarButton ripple fa  fa-usd\"><b>+</b></button><button id=\"outcomesButton\" class=\"headerBarButton fa fa-usd ripple\"><b>-</b></button><div>';\r\n    contextButtons.insertAdjacentHTML('afterend', '<div id=\"incomesAmount\"></div>');\r\n    contextButtons.insertAdjacentHTML('afterend', '<div id=\"date\"></div>');\r\n\r\n    incomesButton = document.getElementById('incomesButton');\r\n    outcomesButton = document.getElementById('outcomesButton');\r\n\r\n    incomesButton.addEventListener('click', function (e) {\r\n      if (floatingFrame.innerHTML == '') {\r\n        generateIncomesForm();\r\n      } else if (floatingFrame.innerHTML != '' && !(document.getElementById('incomesForm'))) {\r\n        delForm();\r\n        generateIncomesForm();\r\n      } else if (floatingFrame.innerHTML != '' && (document.getElementById('incomesForm'))) {\r\n        delForm();\r\n      }\r\n    });\r\n\r\n    outcomesButton.addEventListener('click', function (e) {\r\n      if (floatingFrame.innerHTML == '') {\r\n        generateOutcomesForm();\r\n      } else if (floatingFrame.innerHTML != '' && !(document.getElementById('outcomesForm'))) {\r\n        delForm();\r\n        generateOutcomesForm();\r\n      } else if (floatingFrame.innerHTML != '' && (document.getElementById('outcomesForm'))) {\r\n        delForm();\r\n      }\r\n    });\r\n  }\r\n}\r\n\r\nfunction contextIncomesAmount() {\r\n  let amount = month.amount;\r\n  document.getElementById('incomesAmount').innerHTML = `${lang.headerBar.incomes.amount}: ${amount.toFixed(2)} ${config.currencySymbol}`;\r\n}\r\n\r\nfunction contextIncomesDate() {\r\n  let date = new Date(budget.monthsID[budget.lastMonthID].date);\r\n  let dateFormatted = monthYear(date);\r\n  document.getElementById('date').innerHTML = dateFormatted;\r\n}\r\n\r\nfunction generateHistory() {\r\n  let history = budget.monthsID;\r\n  balanceContent.innerHTML = '';\r\n  for (let i = 0; i < history.length; i++) {\r\n    balanceContent.insertAdjacentHTML('afterbegin', `<button class=\"income ripple\" onclick=\"showMonth(${i})\"> <h1> ${monthYear(history[i].date)}</h1><br><p>${history[i].amount.toFixed(2)}</p></button>`);\r\n  }\r\n}\r\n\r\nfunction generateMainMenu() {\r\n  mainMenu.innerHTML = '';\r\n  let buttons = [\r\n    {\r\n      name: lang.menu.budget,\r\n      action: 'lastMth()',\r\n    },\r\n    {\r\n      name: lang.menu.history,\r\n      action: 'generateHistory()',\r\n    },\r\n    {\r\n      name: lang.menu.preferences,\r\n      action: 'generatePreferences()',\r\n    }\r\n  ];\r\n\r\n  for (var i = 0; i < buttons.length; i++) {\r\n    mainMenu.insertAdjacentHTML('beforeend', `<button class=\"mainMenuItem ripple\" onclick=\"${buttons[i].action}; menuPos()\">${buttons[i].name}</button>`);\r\n  }\r\n}\r\n\r\nfunction generatePreferences() {\r\n  balanceContent.innerHTML = '';\r\n  balanceContent.insertAdjacentHTML(\r\n    'beforeend',\r\n    `<h1>${lang.preferences.preferences}</h1>`\r\n   );\r\n}\r\n\r\nfunction refreshIncomes() {\r\n  balanceContent.innerHTML = '';\r\n  let i = 0;\r\n  if (incomes.length > 0) {\r\n\r\n    for (i = 0; i < incomes.length; i++) {\r\n      let cont = `<section class=\"income\" id=\"income${i}\"><h1>${incomes[i].name}</h1>  <p>${incomes[i].amount.toFixed(2)}${config.currencySymbol}</p>`;\r\n      if (incomes[i].description) {\r\n        cont += '<br>';\r\n      }\r\n      cont += `<p>${incomes[i].description}</p>`;\r\n      if (incomes[i].date) {\r\n        cont += `<br><p>${fullDateAndHour(incomes[i].date)}</p>`;\r\n      }\r\n      if (incomes[i].flags.del && editMonth) {\r\n        cont += `<br><button onclick=\"delIncome('income', ${i})\"> ${lang.other.del}</button>`;\r\n      }\r\n      cont += '</section>';\r\n\r\n      if (incomes[i].description == 'bwlflm' && incomes[i].name == 'bwlflm') {\r\n        cont = `<section class=\"income\" id=\"income${i}\"><h1>${lang.incomes.lastAmount}</h1>  <p>${incomes[i].amount.toFixed(2)}${config.currencySymbol}</p><br><p>${lang.incomes.leftFromLastMonth}</p></section>`;\r\n      }\r\n      balanceContent.insertAdjacentHTML('afterbegin', cont);\r\n      cont = '';\r\n    }\r\n\r\n    balanceContent.insertAdjacentHTML('afterbegin', `<div style=\"margin: 0 auto\"><h1>${lang.incomes.incomes}</h1></div>`);\r\n  }\r\n\r\n  if (outcomes.length > 0) {\r\n    for (i = 0; i < outcomes.length; i++) {\r\n      let cont = `<section class=\"income\" id=\"outcome${i}\"><h1>${outcomes[i].name}</h1>  <p>${outcomes[i].amount.toFixed(2)}${config.currencySymbol}</p>`;\r\n      if (outcomes[i].description) {\r\n        cont += '<br>';\r\n      }\r\n      cont += `<p>${outcomes[i].description}</p>`;\r\n      if (outcomes[i].date) {\r\n        cont += `<br><p>${fullDateAndHour(outcomes[i].date)}</p>`;\r\n      }\r\n      if (!isNaN(Number(outcomes[i].cat))) {\r\n        cont += `<br><p>${incomesCategories[Number(outcomes[i].cat)]}</p>`;\r\n      } else {\r\n        cont += `<br><p>${outcomes[i].cat}</p>`;\r\n      }\r\n      if (outcomes[i].flags.del && editMonth) {\r\n        cont += `<br><button onclick=\"delIncome('outcome', ${i})\"> ${lang.other.del}</button>`;\r\n      }\r\n      cont += '</section>';\r\n      balanceContent.insertAdjacentHTML('afterbegin', cont);\r\n      cont = '';\r\n    }\r\n    balanceContent.insertAdjacentHTML('afterbegin', `<div><h1>${lang.incomes.outcomes}</h1></div>`);\r\n  }\r\n  updateMonth();\r\n  contextIncomesAmount();\r\n  contextIncomesDate();\r\n}\r\n\r\ngenerateContextButtons('incomes');\r\ngenerateMainMenu();\r\n",
+    "content": "/*jshint esversion: 6 */\r\n/**\r\n * @ignore\r\n */\r\nconst menuButton = document.getElementById('menuButton'),\r\n      mainMenu = document.getElementById('mainMenu'),\r\n      contextButtons = document.getElementById('contextButtons'),\r\n      mask = document.getElementById('mask'),\r\n      balanceContent = document.getElementById('balanceContent'),\r\n      floatingFrame = document.getElementById('floatingFrame');\r\n\r\n/**\r\n * @ignore\r\n */\r\nlet incomesSubmit,\r\n    incomesCancel,\r\n    incomesButton,\r\n    outcomesButton;\r\n\r\nmenuButton.addEventListener('click', menuPos);\r\n\r\n/**\r\n  * Changes position of menu on the left\r\n  */\r\nfunction menuPos() {\r\n  if (mainMenu.style.left == '0px') {\r\n    mask.style.pointerEvents = 'none';\r\n    mainMenu.style.left = '-100vw';\r\n    menuButton.classList.remove(\"fa-arrow-left\");\r\n    menuButton.classList.add(\"fa-bars\");\r\n    mask.style.backdropFilter = 'none';\r\n\r\n  } else {\r\n    mainMenu.style.left = '0px';\r\n    mask.style.pointerEvents = 'all';\r\n    menuButton.classList.remove(\"fa-bars\");\r\n    menuButton.classList.add(\"fa-arrow-left\");\r\n    mask.style.backdropFilter = 'blur(5px)';\r\n  }\r\n}\r\nmask.addEventListener('click', () => {\r\n  mask.style.pointerEvents = 'none';\r\n  mainMenu.style.left = '-100vw';\r\n  menuButton.classList.remove(\"fa-arrow-left\");\r\n  menuButton.classList.add(\"fa-bars\");\r\n  mask.style.backdropFilter = 'none';\r\n});\r\n\r\n/**\r\n  * Generates form used for adding Incomes\r\n  */\r\nfunction generateIncomesForm() {\r\n    let cont = `<section class=\"defaultForm\" id=\"incomesForm\"><h2>${lang.incomes.forms.addIncome}</h2>`;\r\n    cont += `<p id=\"incomesFormName\">${lang.incomes.forms.name}</p><input type=\"text\" id=\"incomesFormNameInput\">`;\r\n    cont += `<p id=\"incomesFormAmount\">${lang.incomes.forms.amount}</p><input type=\"number\" id=\"incomesFormAmountInput\" name=\"\" value=\"0\">`;\r\n    cont += `<p id=\"incomesFormDesc\">${lang.incomes.forms.description}</p><input name=\"name\" id=\"incomesFormDescInput\" rows=\"8\" cols=\"80\"></input>`;\r\n    cont +=`<button id=\"incomesFormCancel\">${lang.other.cancel}</button><button id=\"incomesFormSubmit\">${lang.other.submit}</button></section>`;\r\n    floatingFrame.innerHTML = cont;\r\n    incomesSubmit = document.getElementById('incomesFormSubmit');\r\n\r\n    incomesSubmit.addEventListener('click', () => {\r\n      let name = document.getElementById('incomesFormNameInput').value;\r\n      let amount = Number(document.getElementById('incomesFormAmountInput').value);\r\n      let description = document.getElementById('incomesFormDescInput').value;\r\n      if (amount != \"\" && name != \"\") {\r\n        addIncome('income', name, description, amount, 'none', true);\r\n      } else {\r\n        console.log(' continue');\r\n      }\r\n\r\n    });\r\n\r\n    incomesCancel = document.getElementById('incomesFormCancel');\r\n    incomesCancel.addEventListener('click', () => {\r\n      delForm();\r\n      incomesCancel = undefined;\r\n      incomesSubmit = undefined;\r\n    });\r\n}\r\n\r\n/**\r\n  * Hides form\r\n  */\r\nfunction delForm() {\r\n  floatingFrame.innerHTML = '';\r\n}\r\n\r\n/**\r\n  * Generates form used for adding Outcomes\r\n  */\r\nfunction generateOutcomesForm() {\r\n    let cont = `<section class=\"defaultForm\" id=\"outcomesForm\"><h2>${lang.incomes.forms.addOutcome}</h2>`;\r\n    cont += `<p id=\"outcomesFormName\"> ${lang.incomes.forms.name}</p><input type=\"text\" id=\"outcomesFormNameInput\">`;\r\n    cont += `<p id=\"outcomesFormAmount\">${lang.incomes.forms.amount}</p><input type=\"number\" id=\"outcomesFormAmountInput\" name=\"\" value=\"0\">`;\r\n    cont += `<p id=\"outcomesFormCategory\">${lang.incomes.forms.category}</p><select id=\"outcomesFormCategoryInput\" default=\"4\" ><option value=\"0\">${lang.incomes.categories.other}</option><option value=\"1\">${lang.incomes.categories.dailyExpences}</option><option value=\"2\">${lang.incomes.categories.entertaiment}</option><option value=\"3\">${lang.incomes.categories.houseAndBills}</option><option value=\"4\">${lang.incomes.categories.financeAndInsurance}</option></select>`;\r\n    cont += `<p id=\"outcomesFormDesc\">${lang.incomes.forms.description}</p><input name=\"name\" id=\"outcomesFormDescInput\" rows=\"8\" cols=\"80\"></input>`;\r\n    cont += `<button id=\"outcomesFormCancel\">${lang.other.cancel}</button><button id=\"outcomesFormSubmit\">${lang.other.submit}</button></section>`;\r\n    floatingFrame.innerHTML = cont;\r\n    outcomesSubmit = document.getElementById('outcomesFormSubmit');\r\n\r\n    outcomesSubmit.addEventListener('click', () => {\r\n      let name = document.getElementById('outcomesFormNameInput').value;\r\n      let amount = Number(document.getElementById('outcomesFormAmountInput').value);\r\n      let category = document.getElementById('outcomesFormCategoryInput').value;\r\n      let description = document.getElementById('outcomesFormDescInput').value;\r\n      if (amount != \"\" && name != \"\" && category != \"\") {\r\n        addIncome('outcome', name, description, amount, category, true);\r\n      } else {\r\n        console.log('continue');\r\n      }\r\n\r\n    });\r\n\r\n    outcomesCancel = document.getElementById('outcomesFormCancel');\r\n    outcomesCancel.addEventListener('click', () => {\r\n      delForm();\r\n      outcomesCancel = undefined;\r\n      outcomesSubmit = undefined;\r\n    });\r\n}\r\n\r\n/**\r\n  * Generates buttons on app bar\r\n  * @param {string} scheme determines which buttons needs be displayed: 'incomes',\r\n  */\r\nfunction generateContextButtons(scheme) {\r\n  contextButtons.innerHTML = '';\r\n  if (scheme == 'incomes') {\r\n    contextButtons.innerHTML = '<button id=\"incomesButton\" class=\"headerBarButton ripple fa  fa-usd\"><b>+</b></button><button id=\"outcomesButton\" class=\"headerBarButton fa fa-usd ripple\"><b>-</b></button><div>';\r\n    contextButtons.insertAdjacentHTML('afterend', '<div id=\"incomesAmount\"></div>');\r\n    contextButtons.insertAdjacentHTML('afterend', '<div id=\"date\"></div>');\r\n\r\n    incomesButton = document.getElementById('incomesButton');\r\n    outcomesButton = document.getElementById('outcomesButton');\r\n\r\n    incomesButton.addEventListener('click', function (e) {\r\n      if (floatingFrame.innerHTML == '') {\r\n        generateIncomesForm();\r\n      } else if (floatingFrame.innerHTML != '' && !(document.getElementById('incomesForm'))) {\r\n        delForm();\r\n        generateIncomesForm();\r\n      } else if (floatingFrame.innerHTML != '' && (document.getElementById('incomesForm'))) {\r\n        delForm();\r\n      }\r\n    });\r\n\r\n    outcomesButton.addEventListener('click', function (e) {\r\n      if (floatingFrame.innerHTML == '') {\r\n        generateOutcomesForm();\r\n      } else if (floatingFrame.innerHTML != '' && !(document.getElementById('outcomesForm'))) {\r\n        delForm();\r\n        generateOutcomesForm();\r\n      } else if (floatingFrame.innerHTML != '' && (document.getElementById('outcomesForm'))) {\r\n        delForm();\r\n      }\r\n    });\r\n  }\r\n}\r\n\r\n/**\r\n * Displays month amount on app bar\r\n */\r\nfunction contextIncomesAmount() {\r\n  let amount = month.amount;\r\n  document.getElementById('incomesAmount').innerHTML = `${lang.headerBar.incomes.amount}: ${amount.toFixed(2)} ${config.currencySymbol}`;\r\n}\r\n\r\n/**\r\n * Displays months date on appbar\r\n */\r\nfunction contextIncomesDate() {\r\n  let date = new Date(budget.monthsID[budget.lastMonthID].date);\r\n  let dateFormatted = monthYear(date);\r\n  document.getElementById('date').innerHTML = dateFormatted;\r\n}\r\n\r\n/**\r\n * Generates history of months\r\n */\r\nfunction generateHistory() {\r\n  let history = budget.monthsID;\r\n  balanceContent.innerHTML = '';\r\n  for (let i = 0; i < history.length; i++) {\r\n    balanceContent.insertAdjacentHTML('afterbegin', `<button class=\"income ripple\" onclick=\"showMonth(${i})\"> <h1> ${monthYear(history[i].date)}</h1><br><p>${history[i].amount.toFixed(2)}</p></button>`);\r\n  }\r\n}\r\n\r\n/**\r\n * Generates content of left side manu\r\n */\r\nfunction generateMainMenu() {\r\n  mainMenu.innerHTML = '';\r\n  let buttons = [\r\n    {\r\n      name: lang.menu.budget,\r\n      action: 'lastMth()',\r\n    },\r\n    {\r\n      name: lang.menu.history,\r\n      action: 'generateHistory()',\r\n    },\r\n    {\r\n      name: lang.menu.preferences,\r\n      action: 'generatePreferences()',\r\n    }\r\n  ];\r\n\r\n  for (var i = 0; i < buttons.length; i++) {\r\n    mainMenu.insertAdjacentHTML('beforeend', `<button class=\"mainMenuItem ripple\" onclick=\"${buttons[i].action}; menuPos()\">${buttons[i].name}</button>`);\r\n  }\r\n}\r\n\r\n/**\r\n * Generates content of preferences\r\n */\r\nfunction generatePreferences() {\r\n  balanceContent.innerHTML = '';\r\n  balanceContent.insertAdjacentHTML(\r\n    'beforeend',\r\n    `<h1>${lang.preferences.preferences}</h1>`\r\n   );\r\n}\r\n\r\n/**\r\n * Updates content of budget view\r\n */\r\nfunction refreshIncomes() {\r\n  balanceContent.innerHTML = '';\r\n  let i = 0;\r\n  if (incomes.length > 0) {\r\n\r\n    for (i = 0; i < incomes.length; i++) {\r\n      let cont = `<section class=\"income\" id=\"income${i}\"><h1>${incomes[i].name}</h1>  <p>${incomes[i].amount.toFixed(2)}${config.currencySymbol}</p>`;\r\n      if (incomes[i].description) {\r\n        cont += '<br>';\r\n      }\r\n      cont += `<p>${incomes[i].description}</p>`;\r\n      if (incomes[i].date) {\r\n        cont += `<br><p>${fullDateAndHour(incomes[i].date)}</p>`;\r\n      }\r\n      if (incomes[i].flags.del && editMonth) {\r\n        cont += `<br><button onclick=\"delIncome('income', ${i})\"> ${lang.other.del}</button>`;\r\n      }\r\n      cont += '</section>';\r\n\r\n      if (incomes[i].description == 'bwlflm' && incomes[i].name == 'bwlflm') {\r\n        cont = `<section class=\"income\" id=\"income${i}\"><h1>${lang.incomes.lastAmount}</h1>  <p>${incomes[i].amount.toFixed(2)}${config.currencySymbol}</p><br><p>${lang.incomes.leftFromLastMonth}</p></section>`;\r\n      }\r\n      balanceContent.insertAdjacentHTML('afterbegin', cont);\r\n      cont = '';\r\n    }\r\n\r\n    balanceContent.insertAdjacentHTML('afterbegin', `<div style=\"margin: 0 auto\"><h1>${lang.incomes.incomes}</h1></div>`);\r\n  }\r\n\r\n  if (outcomes.length > 0) {\r\n    for (i = 0; i < outcomes.length; i++) {\r\n      let cont = `<section class=\"income\" id=\"outcome${i}\"><h1>${outcomes[i].name}</h1>  <p>${outcomes[i].amount.toFixed(2)}${config.currencySymbol}</p>`;\r\n      if (outcomes[i].description) {\r\n        cont += '<br>';\r\n      }\r\n      cont += `<p>${outcomes[i].description}</p>`;\r\n      if (outcomes[i].date) {\r\n        cont += `<br><p>${fullDateAndHour(outcomes[i].date)}</p>`;\r\n      }\r\n      if (!isNaN(Number(outcomes[i].cat))) {\r\n        cont += `<br><p>${incomesCategories[Number(outcomes[i].cat)]}</p>`;\r\n      } else {\r\n        cont += `<br><p>${outcomes[i].cat}</p>`;\r\n      }\r\n      if (outcomes[i].flags.del && editMonth) {\r\n        cont += `<br><button onclick=\"delIncome('outcome', ${i})\"> ${lang.other.del}</button>`;\r\n      }\r\n      cont += '</section>';\r\n      balanceContent.insertAdjacentHTML('afterbegin', cont);\r\n      cont = '';\r\n    }\r\n    balanceContent.insertAdjacentHTML('afterbegin', `<div><h1>${lang.incomes.outcomes}</h1></div>`);\r\n  }\r\n  updateMonth();\r\n  contextIncomesAmount();\r\n  contextIncomesDate();\r\n}\r\n\r\ngenerateContextButtons('incomes');\r\ngenerateMainMenu();\r\n",
     "static": true,
-    "longname": "F:/Programowanie/JS/yourhomebudget/src/frontend/ui.js",
+    "longname": "F:/Programowanie/JS/YourHomeBudget/src/frontend/ui.js",
     "access": "public",
     "description": null,
     "lineNumber": 1
@@ -2056,9 +2068,8 @@
     "export": false,
     "importPath": "YourHomeBudget/src/frontend/ui.js",
     "importStyle": null,
-    "description": null,
-    "lineNumber": 19,
-    "undocument": true,
+    "description": "Changes position of menu on the left",
+    "lineNumber": 25,
     "params": [],
     "return": null
   },
@@ -2075,9 +2086,8 @@
     "export": false,
     "importPath": "YourHomeBudget/src/frontend/ui.js",
     "importStyle": null,
-    "description": null,
-    "lineNumber": 43,
-    "undocument": true,
+    "description": "Generates form used for adding Incomes",
+    "lineNumber": 52,
     "params": [],
     "return": null
   },
@@ -2094,9 +2104,8 @@
     "export": false,
     "importPath": "YourHomeBudget/src/frontend/ui.js",
     "importStyle": null,
-    "description": null,
-    "lineNumber": 72,
-    "undocument": true,
+    "description": "Hides form",
+    "lineNumber": 84,
     "params": [],
     "return": null
   },
@@ -2113,9 +2122,8 @@
     "export": false,
     "importPath": "YourHomeBudget/src/frontend/ui.js",
     "importStyle": null,
-    "description": null,
-    "lineNumber": 76,
-    "undocument": true,
+    "description": "Generates form used for adding Outcomes",
+    "lineNumber": 91,
     "params": [],
     "return": null
   },
@@ -2132,15 +2140,18 @@
     "export": false,
     "importPath": "YourHomeBudget/src/frontend/ui.js",
     "importStyle": null,
-    "description": null,
-    "lineNumber": 107,
-    "undocument": true,
+    "description": "Generates buttons on app bar",
+    "lineNumber": 126,
     "params": [
       {
-        "name": "scheme",
+        "nullable": null,
         "types": [
-          "*"
-        ]
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "scheme",
+        "description": "determines which buttons needs be displayed: 'incomes',"
       }
     ],
     "return": null
@@ -2158,9 +2169,8 @@
     "export": false,
     "importPath": "YourHomeBudget/src/frontend/ui.js",
     "importStyle": null,
-    "description": null,
-    "lineNumber": 140,
-    "undocument": true,
+    "description": "Displays month amount on app bar",
+    "lineNumber": 163,
     "params": [],
     "return": null
   },
@@ -2177,9 +2187,8 @@
     "export": false,
     "importPath": "YourHomeBudget/src/frontend/ui.js",
     "importStyle": null,
-    "description": null,
-    "lineNumber": 145,
-    "undocument": true,
+    "description": "Displays months date on appbar",
+    "lineNumber": 171,
     "params": [],
     "return": null
   },
@@ -2196,9 +2205,8 @@
     "export": false,
     "importPath": "YourHomeBudget/src/frontend/ui.js",
     "importStyle": null,
-    "description": null,
-    "lineNumber": 151,
-    "undocument": true,
+    "description": "Generates history of months",
+    "lineNumber": 180,
     "params": [],
     "return": null
   },
@@ -2215,9 +2223,8 @@
     "export": false,
     "importPath": "YourHomeBudget/src/frontend/ui.js",
     "importStyle": null,
-    "description": null,
-    "lineNumber": 159,
-    "undocument": true,
+    "description": "Generates content of left side manu",
+    "lineNumber": 191,
     "params": [],
     "return": null
   },
@@ -2234,9 +2241,8 @@
     "export": false,
     "importPath": "YourHomeBudget/src/frontend/ui.js",
     "importStyle": null,
-    "description": null,
-    "lineNumber": 181,
-    "undocument": true,
+    "description": "Generates content of preferences",
+    "lineNumber": 216,
     "params": [],
     "return": null
   },
@@ -2253,24 +2259,23 @@
     "export": false,
     "importPath": "YourHomeBudget/src/frontend/ui.js",
     "importStyle": null,
-    "description": null,
-    "lineNumber": 189,
-    "undocument": true,
+    "description": "Updates content of budget view",
+    "lineNumber": 227,
     "params": [],
     "return": null
   },
   {
     "kind": "index",
     "content": "# YourHomeBudget\r\nThis program is designed for simple home budget management\r\n",
-    "longname": "F:\\Programowanie\\JS\\yourhomebudget\\README.md",
+    "longname": "F:\\Programowanie\\JS\\YourHomeBudget\\README.md",
     "name": "./README.md",
     "static": true,
     "access": "public"
   },
   {
     "kind": "packageJSON",
-    "content": "{\r\n  \"name\": \"YourHomeBudget\",\r\n  \"productName\": \"YourHomeBudget\",\r\n  \"version\": \"0.1.1\",\r\n  \"author\": {\r\n    \"name\": \"Damian Epat Kusmierz\",\r\n    \"email\": \"kamikadze2185@gmail.com\"\r\n  },\r\n  \"main\": \"src/index.js\",\r\n  \"category\": \"Accesories\",\r\n  \"description\": \"Simple home budget manager\",\r\n  \"icon\": \"res\\\\ico\\\\512x512.png\",\r\n  \"build\": {\r\n    \"asar\": false,\r\n    \"linux\": {\r\n      \"target\": \"deb\",\r\n      \"category\": \"Accesories\"\r\n    }\r\n  },\r\n  \"devDependencies\": {\r\n    \"accessibility-developer-tools\": \"^2.12.0\",\r\n    \"concat-stream\": \"^1.6.0\",\r\n    \"devtron\": \"^1.4.0\",\r\n    \"electron\": \"^1.7.5\",\r\n    \"electron-builder\": \"^19.49.0\",\r\n    \"extract-zip\": \"^1.6.6\",\r\n    \"fd-slicer\": \"^1.0.1\",\r\n    \"file-match\": \"^1.0.2\",\r\n    \"file-system\": \"^2.2.2\",\r\n    \"fs-extra\": \"^4.0.2\",\r\n    \"highlight.js\": \"^9.12.0\",\r\n    \"humanize-plus\": \"^1.8.2\",\r\n    \"load-grunt-tasks\": \"^3.5.2\",\r\n    \"stylelint\": \"^8.2.0\",\r\n    \"stylelint-config-recommended\": \"^1.0.0\",\r\n    \"utils-extend\": \"^1.0.8\",\r\n    \"yauzl\": \"^2.9.1\"\r\n  },\r\n  \"scripts\": {\r\n    \"package-win\": \"electron-packager . --overwrite --asar=true --platform=win32 --arch=ia32 --icon=res/ico/wallet.ico --prune=true --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=\\\"Your Home Budget\\\"\",\r\n    \"package-linux\": \"electron-packager . --overwrite --platform=linux --arch=x64 --icon=assets/icons/png/1024x1024.png --prune=true --out=release-builds\"\r\n  },\r\n  \"dependencies\": {\r\n    \"devtron\": \"^1.4.0\",\r\n    \"electron-squirrel-startup\": \"^1.0.0\",\r\n    \"electron-titlebar\": \"^0.0.3\",\r\n    \"file-match\": \"^1.0.2\",\r\n    \"file-system\": \"^2.2.2\",\r\n    \"fs-extra\": \"^4.0.2\"\r\n  }\r\n}\r\n",
-    "longname": "F:\\Programowanie\\JS\\yourhomebudget\\package.json",
+    "content": "{\r\n  \"name\": \"YourHomeBudget\",\r\n  \"productName\": \"YourHomeBudget\",\r\n  \"version\": \"0.1.1b\",\r\n  \"author\": {\r\n    \"name\": \"Damian Epat Kusmierz\",\r\n    \"email\": \"kamikadze2185@gmail.com\"\r\n  },\r\n  \"main\": \"src/index.js\",\r\n  \"category\": \"Utility\",\r\n  \"description\": \"Simple home budget manager\",\r\n  \"icon\": \"res\\\\ico\\\\512x512.png\",\r\n  \"build\": {\r\n    \"asar\": false,\r\n    \"linux\": {\r\n      \"target\": \"deb\",\r\n      \"category\": \"Utility\"\r\n    }\r\n  },\r\n  \"devDependencies\": {\r\n    \"accessibility-developer-tools\": \"^2.12.0\",\r\n    \"concat-stream\": \"^1.6.0\",\r\n    \"devtron\": \"^1.4.0\",\r\n    \"electron\": \"^1.7.5\",\r\n    \"electron-builder\": \"^19.49.0\",\r\n    \"extract-zip\": \"^1.6.6\",\r\n    \"fd-slicer\": \"^1.0.1\",\r\n    \"file-match\": \"^1.0.2\",\r\n    \"file-system\": \"^2.2.2\",\r\n    \"fs-extra\": \"^4.0.2\",\r\n    \"highlight.js\": \"^9.12.0\",\r\n    \"humanize-plus\": \"^1.8.2\",\r\n    \"load-grunt-tasks\": \"^3.5.2\",\r\n    \"stylelint\": \"^8.2.0\",\r\n    \"stylelint-config-recommended\": \"^1.0.0\",\r\n    \"utils-extend\": \"^1.0.8\",\r\n    \"yauzl\": \"^2.9.1\"\r\n  },\r\n  \"scripts\": {\r\n  },\r\n  \"dependencies\": {\r\n    \"devtron\": \"^1.4.0\",\r\n    \"electron-squirrel-startup\": \"^1.0.0\",\r\n    \"electron-titlebar\": \"^0.0.3\",\r\n    \"file-match\": \"^1.0.2\",\r\n    \"file-system\": \"^2.2.2\",\r\n    \"fs-extra\": \"^4.0.2\"\r\n  }\r\n}\r\n",
+    "longname": "F:\\Programowanie\\JS\\YourHomeBudget\\package.json",
     "name": "package.json",
     "static": true,
     "access": "public"

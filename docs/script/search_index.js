@@ -126,12 +126,6 @@ window.esdocSearchIndex = [
     "variable"
   ],
   [
-    "yourhomebudget/src/frontend/main.js~inout",
-    "variable/index.html#static-variable-inOut",
-    "<span>inOut</span> <span class=\"search-result-import-path\">YourHomeBudget/src/frontend/main.js</span>",
-    "variable"
-  ],
-  [
     "yourhomebudget/src/frontend/main.js~incomes",
     "variable/index.html#static-variable-incomes",
     "<span>incomes</span> <span class=\"search-result-import-path\">YourHomeBudget/src/frontend/main.js</span>",

@@ -9,6 +9,9 @@ const menuButton = document.getElementById('menuButton'),
       balanceContent = document.getElementById('balanceContent'),
       floatingFrame = document.getElementById('floatingFrame');
 
+/**
+ * @ignore
+ */
 let incomesSubmit,
     incomesCancel,
     incomesButton,
@@ -16,6 +19,9 @@ let incomesSubmit,
 
 menuButton.addEventListener('click', menuPos);
 
+/**
+  * Changes position of menu on the left
+  */
 function menuPos() {
   if (mainMenu.style.left == '0px') {
     mask.style.pointerEvents = 'none';
@@ -40,6 +46,9 @@ mask.addEventListener('click', () => {
   mask.style.backdropFilter = 'none';
 });
 
+/**
+  * Generates form used for adding Incomes
+  */
 function generateIncomesForm() {
     let cont = `<section class="defaultForm" id="incomesForm"><h2>${lang.incomes.forms.addIncome}</h2>`;
     cont += `<p id="incomesFormName">${lang.incomes.forms.name}</p><input type="text" id="incomesFormNameInput">`;
@@ -69,16 +78,22 @@ function generateIncomesForm() {
     });
 }
 
+/**
+  * Hides form
+  */
 function delForm() {
   floatingFrame.innerHTML = '';
 }
 
+/**
+  * Generates form used for adding Outcomes
+  */
 function generateOutcomesForm() {
     let cont = `<section class="defaultForm" id="outcomesForm"><h2>${lang.incomes.forms.addOutcome}</h2>`;
     cont += `<p id="outcomesFormName"> ${lang.incomes.forms.name}</p><input type="text" id="outcomesFormNameInput">`;
     cont += `<p id="outcomesFormAmount">${lang.incomes.forms.amount}</p><input type="number" id="outcomesFormAmountInput" name="" value="0">`;
     cont += `<p id="outcomesFormCategory">${lang.incomes.forms.category}</p><select id="outcomesFormCategoryInput" default="4" ><option value="0">${lang.incomes.categories.other}</option><option value="1">${lang.incomes.categories.dailyExpences}</option><option value="2">${lang.incomes.categories.entertaiment}</option><option value="3">${lang.incomes.categories.houseAndBills}</option><option value="4">${lang.incomes.categories.financeAndInsurance}</option></select>`;
-    cont += `<p id="outcomesFormDesc">${lang.incomes.forms.descrdescription}</p><input name="name" id="outcomesFormDescInput" rows="8" cols="80"></input>`;
+    cont += `<p id="outcomesFormDesc">${lang.incomes.forms.description}</p><input name="name" id="outcomesFormDescInput" rows="8" cols="80"></input>`;
     cont += `<button id="outcomesFormCancel">${lang.other.cancel}</button><button id="outcomesFormSubmit">${lang.other.submit}</button></section>`;
     floatingFrame.innerHTML = cont;
     outcomesSubmit = document.getElementById('outcomesFormSubmit');
@@ -104,7 +119,12 @@ function generateOutcomesForm() {
     });
 }
 
+/**
+  * Generates buttons on app bar
+  * @param {string} scheme determines which buttons needs be displayed: 'incomes',
+  */
 function generateContextButtons(scheme) {
+  contextButtons.innerHTML = '';
   if (scheme == 'incomes') {
     contextButtons.innerHTML = '<button id="incomesButton" class="headerBarButton ripple fa  fa-usd"><b>+</b></button><button id="outcomesButton" class="headerBarButton fa fa-usd ripple"><b>-</b></button><div>';
     contextButtons.insertAdjacentHTML('afterend', '<div id="incomesAmount"></div>');
@@ -137,17 +157,26 @@ function generateContextButtons(scheme) {
   }
 }
 
+/**
+ * Displays month amount on app bar
+ */
 function contextIncomesAmount() {
   let amount = month.amount;
   document.getElementById('incomesAmount').innerHTML = `${lang.headerBar.incomes.amount}: ${amount.toFixed(2)} ${config.currencySymbol}`;
 }
 
+/**
+ * Displays months date on appbar
+ */
 function contextIncomesDate() {
   let date = new Date(budget.monthsID[budget.lastMonthID].date);
   let dateFormatted = monthYear(date);
   document.getElementById('date').innerHTML = dateFormatted;
 }
 
+/**
+ * Generates history of months
+ */
 function generateHistory() {
   let history = budget.monthsID;
   balanceContent.innerHTML = '';
@@ -156,6 +185,9 @@ function generateHistory() {
   }
 }
 
+/**
+ * Generates content of left side manu
+ */
 function generateMainMenu() {
   mainMenu.innerHTML = '';
   let buttons = [
@@ -178,6 +210,9 @@ function generateMainMenu() {
   }
 }
 
+/**
+ * Generates content of preferences
+ */
 function generatePreferences() {
   balanceContent.innerHTML = '';
   balanceContent.insertAdjacentHTML(
@@ -186,6 +221,9 @@ function generatePreferences() {
    );
 }
 
+/**
+ * Updates content of budget view
+ */
 function refreshIncomes() {
   balanceContent.innerHTML = '';
   let i = 0;

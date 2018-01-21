@@ -37,51 +37,84 @@
     ]
   },
   {
+    "name": "delIncome",
+    "filePath": "src/frontend/main.js",
+    "lines": [
+      {
+        "lineNumber": 324,
+        "line": "/**\r"
+      },
+      {
+        "lineNumber": 325,
+        "line": "  * Deletes 1 income or outcome based on id\r"
+      },
+      {
+        "lineNumber": 326,
+        "line": "  * @param {string} type \"income\" or \"outcome\", determines which type function will delete\r"
+      },
+      {
+        "lineNumber": 327,
+        "line": "  */\r"
+      },
+      {
+        "lineNumber": 328,
+        "line": "function delIncome(type, id) {\r"
+      }
+    ],
+    "codeParams": [
+      "type",
+      "id"
+    ],
+    "docParams": [
+      "type"
+    ]
+  },
+  {
     "name": "addIncome",
     "filePath": "src/frontend/main.js",
     "lines": [
       {
-        "lineNumber": 309,
+        "lineNumber": 344,
         "line": "/**\r"
       },
       {
-        "lineNumber": 310,
+        "lineNumber": 345,
         "line": " * Add an income or an outcome\r"
       },
       {
-        "lineNumber": 311,
+        "lineNumber": 346,
         "line": " * @param {string} type income or outcome\r"
       },
       {
-        "lineNumber": 312,
+        "lineNumber": 347,
         "line": " * @param {string} name Name / title of income or outcome\r"
       },
       {
-        "lineNumber": 313,
+        "lineNumber": 348,
         "line": " * @param {string} desc Description of income or outcome\r"
       },
       {
-        "lineNumber": 314,
+        "lineNumber": 349,
         "line": " * @param {number} amount Value of income or outcome\r"
       },
       {
-        "lineNumber": 315,
+        "lineNumber": 350,
         "line": " * @param {number} cat Id of category\r"
       },
       {
-        "lineNumber": 316,
+        "lineNumber": 351,
         "line": " * @example <JavaScript>\r"
       },
       {
-        "lineNumber": 317,
+        "lineNumber": 352,
         "line": " * addIncome('income', 'Payment', 'From my employer', 2000, 1);\r"
       },
       {
-        "lineNumber": 318,
+        "lineNumber": 353,
         "line": " */\r"
       },
       {
-        "lineNumber": 319,
+        "lineNumber": 354,
         "line": "function addIncome(type, name, desc, amount, cat, canDelete) {\r"
       }
     ],

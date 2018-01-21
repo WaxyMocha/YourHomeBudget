@@ -1,4 +1,9 @@
 /*jshint esversion:6*/
+
+/**
+  * Contains all strings used in programs
+  * @type {Object}
+  */
 let lang = {
   menu: {
     budget: 'Budget',
@@ -45,6 +50,10 @@ let lang = {
   }
 };
 
+/**
+  * @type {Array}
+  * Contains categories
+  */
 let incomesCategories = [
   lang.incomes.categories.other,
   lang.incomes.categories.dailyExpences,
@@ -53,6 +62,9 @@ let incomesCategories = [
   lang.incomes.categories.financeAndInsurance
 ];
 
+/**
+  * Changes content of {@link lang} and {@link incomesCategories} based on loaded laguage
+  */
 function changeLang(data) {
   lang = data;
   incomesCategories = [

@@ -70,7 +70,6 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-config">config</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-editMonth">editMonth</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-historyCheck">historyCheck</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-inOut">inOut</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-incomes">incomes</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-month">month</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-outcomes">outcomes</a></span></span></li>
@@ -90,6 +89,9 @@ const menuButton = document.getElementById(&apos;menuButton&apos;),
       balanceContent = document.getElementById(&apos;balanceContent&apos;),
       floatingFrame = document.getElementById(&apos;floatingFrame&apos;);
 
+/**
+ * @ignore
+ */
 let incomesSubmit,
     incomesCancel,
     incomesButton,
@@ -97,6 +99,9 @@ let incomesSubmit,
 
 menuButton.addEventListener(&apos;click&apos;, menuPos);
 
+/**
+  * Changes position of menu on the left
+  */
 function menuPos() {
   if (mainMenu.style.left == &apos;0px&apos;) {
     mask.style.pointerEvents = &apos;none&apos;;
@@ -121,6 +126,9 @@ mask.addEventListener(&apos;click&apos;, () =&gt; {
   mask.style.backdropFilter = &apos;none&apos;;
 });
 
+/**
+  * Generates form used for adding Incomes
+  */
 function generateIncomesForm() {
     let cont = `&lt;section class=&quot;defaultForm&quot; id=&quot;incomesForm&quot;&gt;&lt;h2&gt;${lang.incomes.forms.addIncome}&lt;/h2&gt;`;
     cont += `&lt;p id=&quot;incomesFormName&quot;&gt;${lang.incomes.forms.name}&lt;/p&gt;&lt;input type=&quot;text&quot; id=&quot;incomesFormNameInput&quot;&gt;`;
@@ -150,16 +158,22 @@ function generateIncomesForm() {
     });
 }
 
+/**
+  * Hides form
+  */
 function delForm() {
   floatingFrame.innerHTML = &apos;&apos;;
 }
 
+/**
+  * Generates form used for adding Outcomes
+  */
 function generateOutcomesForm() {
     let cont = `&lt;section class=&quot;defaultForm&quot; id=&quot;outcomesForm&quot;&gt;&lt;h2&gt;${lang.incomes.forms.addOutcome}&lt;/h2&gt;`;
     cont += `&lt;p id=&quot;outcomesFormName&quot;&gt; ${lang.incomes.forms.name}&lt;/p&gt;&lt;input type=&quot;text&quot; id=&quot;outcomesFormNameInput&quot;&gt;`;
     cont += `&lt;p id=&quot;outcomesFormAmount&quot;&gt;${lang.incomes.forms.amount}&lt;/p&gt;&lt;input type=&quot;number&quot; id=&quot;outcomesFormAmountInput&quot; name=&quot;&quot; value=&quot;0&quot;&gt;`;
     cont += `&lt;p id=&quot;outcomesFormCategory&quot;&gt;${lang.incomes.forms.category}&lt;/p&gt;&lt;select id=&quot;outcomesFormCategoryInput&quot; default=&quot;4&quot; &gt;&lt;option value=&quot;0&quot;&gt;${lang.incomes.categories.other}&lt;/option&gt;&lt;option value=&quot;1&quot;&gt;${lang.incomes.categories.dailyExpences}&lt;/option&gt;&lt;option value=&quot;2&quot;&gt;${lang.incomes.categories.entertaiment}&lt;/option&gt;&lt;option value=&quot;3&quot;&gt;${lang.incomes.categories.houseAndBills}&lt;/option&gt;&lt;option value=&quot;4&quot;&gt;${lang.incomes.categories.financeAndInsurance}&lt;/option&gt;&lt;/select&gt;`;
-    cont += `&lt;p id=&quot;outcomesFormDesc&quot;&gt;${lang.incomes.forms.descrdescription}&lt;/p&gt;&lt;input name=&quot;name&quot; id=&quot;outcomesFormDescInput&quot; rows=&quot;8&quot; cols=&quot;80&quot;&gt;&lt;/input&gt;`;
+    cont += `&lt;p id=&quot;outcomesFormDesc&quot;&gt;${lang.incomes.forms.description}&lt;/p&gt;&lt;input name=&quot;name&quot; id=&quot;outcomesFormDescInput&quot; rows=&quot;8&quot; cols=&quot;80&quot;&gt;&lt;/input&gt;`;
     cont += `&lt;button id=&quot;outcomesFormCancel&quot;&gt;${lang.other.cancel}&lt;/button&gt;&lt;button id=&quot;outcomesFormSubmit&quot;&gt;${lang.other.submit}&lt;/button&gt;&lt;/section&gt;`;
     floatingFrame.innerHTML = cont;
     outcomesSubmit = document.getElementById(&apos;outcomesFormSubmit&apos;);
@@ -185,7 +199,12 @@ function generateOutcomesForm() {
     });
 }
 
+/**
+  * Generates buttons on app bar
+  * @param {string} scheme determines which buttons needs be displayed: &apos;incomes&apos;,
+  */
 function generateContextButtons(scheme) {
+  contextButtons.innerHTML = &apos;&apos;;
   if (scheme == &apos;incomes&apos;) {
     contextButtons.innerHTML = &apos;&lt;button id=&quot;incomesButton&quot; class=&quot;headerBarButton ripple fa  fa-usd&quot;&gt;&lt;b&gt;+&lt;/b&gt;&lt;/button&gt;&lt;button id=&quot;outcomesButton&quot; class=&quot;headerBarButton fa fa-usd ripple&quot;&gt;&lt;b&gt;-&lt;/b&gt;&lt;/button&gt;&lt;div&gt;&apos;;
     contextButtons.insertAdjacentHTML(&apos;afterend&apos;, &apos;&lt;div id=&quot;incomesAmount&quot;&gt;&lt;/div&gt;&apos;);
@@ -218,17 +237,26 @@ function generateContextButtons(scheme) {
   }
 }
 
+/**
+ * Displays month amount on app bar
+ */
 function contextIncomesAmount() {
   let amount = month.amount;
   document.getElementById(&apos;incomesAmount&apos;).innerHTML = `${lang.headerBar.incomes.amount}: ${amount.toFixed(2)} ${config.currencySymbol}`;
 }
 
+/**
+ * Displays months date on appbar
+ */
 function contextIncomesDate() {
   let date = new Date(budget.monthsID[budget.lastMonthID].date);
   let dateFormatted = monthYear(date);
   document.getElementById(&apos;date&apos;).innerHTML = dateFormatted;
 }
 
+/**
+ * Generates history of months
+ */
 function generateHistory() {
   let history = budget.monthsID;
   balanceContent.innerHTML = &apos;&apos;;
@@ -237,6 +265,9 @@ function generateHistory() {
   }
 }
 
+/**
+ * Generates content of left side manu
+ */
 function generateMainMenu() {
   mainMenu.innerHTML = &apos;&apos;;
   let buttons = [
@@ -259,6 +290,9 @@ function generateMainMenu() {
   }
 }
 
+/**
+ * Generates content of preferences
+ */
 function generatePreferences() {
   balanceContent.innerHTML = &apos;&apos;;
   balanceContent.insertAdjacentHTML(
@@ -267,6 +301,9 @@ function generatePreferences() {
    );
 }
 
+/**
+ * Updates content of budget view
+ */
 function refreshIncomes() {
   balanceContent.innerHTML = &apos;&apos;;
   let i = 0;

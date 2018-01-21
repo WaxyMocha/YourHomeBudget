@@ -32,6 +32,9 @@ let budget = {
   lastMonthID: 0,
 };
 
+/**
+  * @ignore
+  */
 let inOut = 0;
 /**
  * @type {object}
@@ -43,8 +46,16 @@ let month = {
   name: '',
   descr: '',
 };
-
+/**
+  * @type {boolean}
+  * Allows editing month data
+  */
 let editMonth = true;
+
+/**
+  * @type {boolean}
+  * It is true when you program isn't showing latest data
+  */
 let historyCheck = false;
 
 /**
@@ -56,6 +67,9 @@ function saveAll() {
   updateMonth();
 }
 
+/**
+  * Saves config.json
+  */
 function saveConfig() {
   send({
     task: 'save',
@@ -68,6 +82,9 @@ function saveConfig() {
   });
 }
 
+/**
+  * Saves budget.json
+  */
 function saveBudget() {
   send({
     task: 'save',
@@ -80,6 +97,9 @@ function saveBudget() {
   });
 }
 
+/**
+  * Loads last month data
+  */
 function lastMth() {
   budget.lastMonthID = budget.monthsID.length - 1;
   loadMonth(budget.monthsID.length - 1);
@@ -87,6 +107,9 @@ function lastMth() {
   editMonth = true;
 }
 
+/**
+  * Check opened month id
+  */
 function checkMonth() {
   if (historyCheck) {
     return;
@@ -112,6 +135,9 @@ function checkMonth() {
   }
 }
 
+/**
+  * Sets month, incomes and outcomes data to default values
+  */
 function resetMonthToDefault() {
   month = {
     amount: 0,
@@ -124,6 +150,9 @@ function resetMonthToDefault() {
   return;
 }
 
+/**
+  * Updates month data, and saves incomes, outcomes and month data
+  */
 function updateMonth() {
   let amount = 0;
   let i;
@@ -152,6 +181,9 @@ function updateMonth() {
   }, 'outcomes.json', `budgets/budget-${budget.id}/month-${budget.lastMonthID}/`);
 }
 
+/**
+  * returns date in format: MM:YYYY
+  */
 function monthYear(date = new Date()) {
   date = new Date(date);
   let dateFormatted = `${date.getMonth() + 1}-${date.getYear() + 1900}`;
@@ -246,7 +278,9 @@ function startup(arg) {
   }
 
 }
-
+/**
+  * Returns date and hour in format: DD-MM-YYYY HH:MM:SS
+  */
 function fullDateAndHour(date = new Date()) {
   date = new Date(date);
   let hr = String('0' + date.getHours()).slice(-2);
@@ -259,6 +293,10 @@ function fullDateAndHour(date = new Date()) {
   return ret;
 }
 
+/**
+  * Loads month, incomes and outcomes data
+  * @param {number} id ID of data to load
+  */
 function loadMonth(id) {
   budget.lastMonthID = id;
   read('month.json', `budgets/budget-${budget.id}/month-${id}/`);
@@ -271,6 +309,10 @@ function loadMonth(id) {
   }
 }
 
+/**
+  * Sets {@link historyCheck} depending on the ID of month data and runs {@link loadMonth}
+  * @param id ID of data to load
+  */
 function showMonth(id) {
   if (id != budget.monthsID.length - 1) {
     historyCheck = true;
@@ -280,26 +322,19 @@ function showMonth(id) {
   loadMonth(id);
 }
 
+/**
+  * Deletes 1 income or outcome based on id
+  * @param {string} type "income" or "outcome", determines which type function will delete
+  */
 function delIncome(type, id) {
   let tempArr = [];
   if (!confirm('Are you shure?')) {
     return;
   }
   if (type == 'income') {
-
-    for (let i = 0; i < incomes.length; i++) {
-      if (i != id) {
-        tempArr.push(incomes[i]);
-      }
-    }
-    incomes = tempArr;
+    incomes.splice(id, 1);
   } else if (type == 'outcome') {
-    for (let i = 0; i < outcomes.length; i++) {
-      if (i != id) {
-        tempArr.push(outcomes[i]);
-      }
-    }
-    outcomes = tempArr;
+    outcomes.splice(id, 1);
   }
   updateMonth();
   saveAll();

@@ -70,7 +70,6 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-config">config</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-editMonth">editMonth</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-historyCheck">historyCheck</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-inOut">inOut</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-incomes">incomes</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-month">month</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-outcomes">outcomes</a></span></span></li>
@@ -113,6 +112,9 @@ let budget = {
   lastMonthID: 0,
 };
 
+/**
+  * @ignore
+  */
 let inOut = 0;
 /**
  * @type {object}
@@ -124,8 +126,16 @@ let month = {
   name: &apos;&apos;,
   descr: &apos;&apos;,
 };
-
+/**
+  * @type {boolean}
+  * Allows editing month data
+  */
 let editMonth = true;
+
+/**
+  * @type {boolean}
+  * It is true when you program isn&apos;t showing latest data
+  */
 let historyCheck = false;
 
 /**
@@ -137,6 +147,9 @@ function saveAll() {
   updateMonth();
 }
 
+/**
+  * Saves config.json
+  */
 function saveConfig() {
   send({
     task: &apos;save&apos;,
@@ -149,6 +162,9 @@ function saveConfig() {
   });
 }
 
+/**
+  * Saves budget.json
+  */
 function saveBudget() {
   send({
     task: &apos;save&apos;,
@@ -161,6 +177,9 @@ function saveBudget() {
   });
 }
 
+/**
+  * Loads last month data
+  */
 function lastMth() {
   budget.lastMonthID = budget.monthsID.length - 1;
   loadMonth(budget.monthsID.length - 1);
@@ -168,6 +187,9 @@ function lastMth() {
   editMonth = true;
 }
 
+/**
+  * Check opened month id
+  */
 function checkMonth() {
   if (historyCheck) {
     return;
@@ -175,7 +197,7 @@ function checkMonth() {
     let lastMonth = new Date((
       budget.monthsID[budget.monthsID.length - 1].date));
     let now = new Date();
-    if (now.getMonth() &gt; lastMonth.getMonth()) {
+    if (now.getMonth() &gt; lastMonth.getMonth() || now.getMonth() &lt; lastMonth.getMonth() &amp;&amp; now.getMonth() == 0) {
       let leftAmount = month.amount;
       resetMonthToDefault();
       budget.monthsID.push({
@@ -193,6 +215,9 @@ function checkMonth() {
   }
 }
 
+/**
+  * Sets month, incomes and outcomes data to default values
+  */
 function resetMonthToDefault() {
   month = {
     amount: 0,
@@ -205,6 +230,9 @@ function resetMonthToDefault() {
   return;
 }
 
+/**
+  * Updates month data, and saves incomes, outcomes and month data
+  */
 function updateMonth() {
   let amount = 0;
   let i;
@@ -233,6 +261,9 @@ function updateMonth() {
   }, &apos;outcomes.json&apos;, `budgets/budget-${budget.id}/month-${budget.lastMonthID}/`);
 }
 
+/**
+  * returns date in format: MM:YYYY
+  */
 function monthYear(date = new Date()) {
   date = new Date(date);
   let dateFormatted = `${date.getMonth() + 1}-${date.getYear() + 1900}`;
@@ -327,7 +358,9 @@ function startup(arg) {
   }
 
 }
-
+/**
+  * Returns date and hour in format: DD-MM-YYYY HH:MM:SS
+  */
 function fullDateAndHour(date = new Date()) {
   date = new Date(date);
   let hr = String(&apos;0&apos; + date.getHours()).slice(-2);
@@ -340,6 +373,10 @@ function fullDateAndHour(date = new Date()) {
   return ret;
 }
 
+/**
+  * Loads month, incomes and outcomes data
+  * @param {number} id ID of data to load
+  */
 function loadMonth(id) {
   budget.lastMonthID = id;
   read(&apos;month.json&apos;, `budgets/budget-${budget.id}/month-${id}/`);
@@ -352,6 +389,10 @@ function loadMonth(id) {
   }
 }
 
+/**
+  * Sets {@link historyCheck} depending on the ID of month data and runs {@link loadMonth}
+  * @param id ID of data to load
+  */
 function showMonth(id) {
   if (id != budget.monthsID.length - 1) {
     historyCheck = true;
@@ -361,26 +402,19 @@ function showMonth(id) {
   loadMonth(id);
 }
 
+/**
+  * Deletes 1 income or outcome based on id
+  * @param {string} type &quot;income&quot; or &quot;outcome&quot;, determines which type function will delete
+  */
 function delIncome(type, id) {
   let tempArr = [];
   if (!confirm(&apos;Are you shure?&apos;)) {
     return;
   }
   if (type == &apos;income&apos;) {
-
-    for (let i = 0; i &lt; incomes.length; i++) {
-      if (i != id) {
-        tempArr.push(incomes[i]);
-      }
-    }
-    incomes = tempArr;
+    incomes.splice(id, 1);
   } else if (type == &apos;outcome&apos;) {
-    for (let i = 0; i &lt; outcomes.length; i++) {
-      if (i != id) {
-        tempArr.push(outcomes[i]);
-      }
-    }
-    outcomes = tempArr;
+    outcomes.splice(id, 1);
   }
   updateMonth();
   saveAll();
