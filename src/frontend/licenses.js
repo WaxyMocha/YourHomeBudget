@@ -399,7 +399,4 @@ let licenses = [
       Library.`,
       website: 'https://github.com/Menci/electron-titlebar',
   },
-  {
-    
-  }
 ];
