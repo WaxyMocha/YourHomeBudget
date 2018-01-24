@@ -46,8 +46,15 @@ let lang = {
     preferences: 'Preferences',
     currencySymbol: 'Currency symbol',
     lang: 'Language',
-    makeLang: 'Make a translation'
-  }
+    makeLang: 'Make a translation',
+    licenses: {
+      licenses: 'Licenses',
+      website: 'Website',
+      license: 'Licence',
+      show: "Show License",
+      hide: "Hide",
+    },
+  },
 };
 
 /**

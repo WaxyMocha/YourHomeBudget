@@ -243,3 +243,46 @@ body {
   float: right;
   margin: 15px 10px;
 }
+
+#licensesArea {
+  display: none;
+  position: fixed;
+  width: 45vw;
+  height: 55vh;
+  top: 22.5vh;
+  left: 27.5vw;
+  overflow-y: hidden;
+  background-color: var(--masterColor);
+  border-color: var(--masterAccentColor);
+  border-width: 3px;
+  border-radius: 5px;
+  border-style: solid;
+  box-shadow: 0 3px 10px 0 black;
+}
+
+#licTitle {
+  background-color: var(--masterAccentColor);
+  height: 30px;
+  color: white;
+}
+
+#licenseField {
+  overflow-y: scroll;
+  height: calc(55vh - 30px);
+  border-radius: 4px;
+}
+
+.licenseField {
+  height: 0;
+  overflow: hidden;
+  transition: 0.3s;
+}
+
+.lic {
+  margin: 5px;
+  margin-top: 10px;
+  background-color: white;
+  border-radius: 5px;
+  padding: 5px;
+  box-shadow: 0 2px 5px 1px lightgrey;
+}

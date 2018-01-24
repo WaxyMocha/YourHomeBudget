@@ -210,6 +210,36 @@ function generateMainMenu() {
   }
 }
 
+function genLicenceField() {
+  floatingFrame.innerHTML = `<section id="licensesArea"><section id="licTitle"></section><section id="licenseField"></section></section> `;
+  let licTitle = document.getElementById('licTitle');
+  let licenseField = document.getElementById('licenseField');
+  licTitle.innerHTML = `${lang.preferences.licenses.licenses} <button onclick="hideLicField()">${lang.preferences.licenses.hide}</button>`;
+  licenseField.innerHTML = '';
+  for(let i = 0; i < licenses.length; i++) {
+    let name = `<p class="licName">${licenses[i].name}`;
+    let lic = `<p id="lic${i}" class="licenseField">${licenses[i].license}`;
+    let webpage = `<p class="licName">${licenses[i].webpage}`;
+    licenseField.insertAdjacentHTML('beforeend', `<section id="license${i}" class="lic"></section>`);
+    document.getElementById(`license${i}`).insertAdjacentHTML('beforeend', `${name} <button onclick="showLic(${i})">${lang.preferences.licenses.show}</button> ${lic} ${webpage}`);
+  }
+  let licAr = document.getElementById('licensesArea');
+  licAr.style.display = 'block';
+}
+
+function hideLicField() {
+  floatingFrame.innerHTML = '';
+}
+
+function showLic(id) {
+  let lic = document.getElementById(`lic${id}`);
+  if (lic.style.height == 0 || lic.style.height == '0px') {
+    lic.style.height = "auto";
+  } else {
+    lic.style.height = 0;
+  }
+}
+
 /**
  * Generates content of preferences
  */
@@ -219,6 +249,10 @@ function generatePreferences() {
     'beforeend',
     `<h1>${lang.preferences.preferences}</h1>`
    );
+   balanceContent.insertAdjacentHTML(
+     'beforeend',
+     `<button onclick="genLicenceField()">${lang.preferences.licenses.licenses}</button>`
+    );
 }
 
 /**
