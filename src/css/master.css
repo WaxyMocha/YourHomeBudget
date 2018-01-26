@@ -127,11 +127,7 @@ body {
 
 .contentItem {
   display: grid;
-  grid-template:
-    "img title title" 30px
-    "img amount cat" 30px
-    "img desc desc" 1fr
-    /50px 1fr 1fr;
+  grid-template: "img title title" 30px "img amount cat" 30px "img desc desc" 1fr /50px 1fr 1fr;
   background-color: rgb(237, 237, 237);
   max-width: 700px;
   margin: 3px auto;
@@ -187,14 +183,7 @@ body {
 }
 
 #incomesForm {
-  grid-template:
-    "title title" 1fr
-    "name nameVal" 1fr
-    "amount amountVal" 1fr
-    "desc descVal" 1fr
-    "cancel submit" 1fr
-    / 1fr 3fr;
-
+  grid-template: "title title" 1fr "name nameVal" 1fr "amount amountVal" 1fr "desc descVal" 1fr "cancel submit" 1fr / 1fr 3fr;
 }
 
 .slideOut {
@@ -207,40 +196,53 @@ body {
   animation-duration: 0.3s;
 }
 
-.fadeOut{
+.fadeOut {
   animation-name: fadeOut;
   animation-duration: 0.3s;
 }
 
 @keyframes scale {
-  from {transform: scale(0);}
-  to {transform: scale(1);}
+  from {
+    transform: scale(0);
+  }
+
+  to {
+    transform: scale(1);
+  }
 }
 
 @keyframes fadeOut {
-  from {transform: scale(1);}
-  to {transform: scale(0);}
+  from {
+    transform: scale(1);
+  }
+
+  to {
+    transform: scale(0);
+  }
 }
 
 @keyframes slideOut {
-  from {left: 0vw;}
-  to {left: -100vw;}
+  from {
+    left: 0;
+  }
+
+  to {
+    left: -100vw;
+  }
 }
 
 @keyframes slideIn {
-  from {left: -100vw;}
-  to {left: 0vw;}
+  from {
+    left: -100vw;
+  }
+
+  to {
+    left: 0;
+  }
 }
 
 #outcomesForm {
-  grid-template:
-    "title title" 1fr
-    "name nameVal" 1fr
-    "amount amountVal" 1fr
-    "cat catVal" 1fr
-    "desc descVal" 1fr
-    "cancel submit" 1fr
-    / 1fr 3fr;
+  grid-template: "title title" 1fr "name nameVal" 1fr "amount amountVal" 1fr "cat catVal" 1fr "desc descVal" 1fr "cancel submit" 1fr / 1fr 3fr;
 }
 
 .defaultForm h2 {
@@ -299,6 +301,7 @@ body {
   border-radius: 5px;
   border-style: solid;
   box-shadow: 0 3px 10px 0 black;
+  animation: scale 0.3s;
 }
 
 #licTitle {
