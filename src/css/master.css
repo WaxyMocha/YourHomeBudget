@@ -1,6 +1,7 @@
 * {
   margin: 0;
   padding: 0;
+  outline: none;
 }
 
 :root {
@@ -15,6 +16,7 @@
   /* wielkości */
   --headerBarHeight: 79px;
   --headerButtonSize: 50px;
+  --mainDuration: 0.3s;
 }
 
 body {
@@ -71,14 +73,14 @@ body {
   max-width: 400px;
   position: fixed;
   height: calc(100vh - var(--headerBarHeight) - 1px);
-  background-color: rgb(218, 218, 218);
+  background-color: white;
   z-index: 1000;
 
   /* transition: left 0.2s; */
 }
 
 #mask {
-  background-color: rgba(54, 201, 48, 0);
+  background-color: rgba(134, 134, 134, 0);
   position: fixed;
   height: 100vh;
   left: 0;
@@ -95,10 +97,10 @@ body {
   margin-top: 1px;
   width: 100%;
   background-color: transparent;
+  border: 0;
+  border-bottom: 1px;
   border-style: solid;
-  border-width: 2px;
-  border-radius: 5px;
-  border-color: rgb(113, 113, 113);
+  border-color: #a4a4a4;
 }
 
 #electron-titlebar {
@@ -113,6 +115,7 @@ body {
   display: flex;
   align-items: center;
   flex-direction: column;
+  background-color: rgb(244, 241, 241);
 }
 
 #main {
@@ -123,17 +126,6 @@ body {
   border-style: solid;
   border-color: var(--masterAccentColor);
   border-width: 1px;
-}
-
-.contentItem {
-  display: grid;
-  grid-template: "img title title" 30px "img amount cat" 30px "img desc desc" 1fr /50px 1fr 1fr;
-  background-color: rgb(237, 237, 237);
-  max-width: 700px;
-  margin: 3px auto;
-  border-radius: 5px;
-  grid-gap: 5px;
-  padding: 5px;
 }
 
 .cItemImg {
@@ -179,7 +171,7 @@ body {
   grid-gap: 4px;
   box-shadow: 0 3px 5px 3px lightgrey;
   animation-name: scale;
-  animation-duration: 0.3s;
+  animation-duration: var(--mainDuration);
 }
 
 #incomesForm {
@@ -242,7 +234,14 @@ body {
 }
 
 #outcomesForm {
-  grid-template: "title title" 1fr "name nameVal" 1fr "amount amountVal" 1fr "cat catVal" 1fr "desc descVal" 1fr "cancel submit" 1fr / 1fr 3fr;
+  grid-template:
+    "title title" 1fr
+    "name nameVal" 1fr
+    "amount amountVal" 1fr
+    "cat catVal" 1fr
+    "desc descVal" 1fr
+    "cancel submit" 1fr
+    / 1fr 3fr;
 }
 
 .defaultForm h2 {
@@ -259,16 +258,17 @@ body {
 }
 
 .income {
-  background-color: rgba(227, 227, 227, 0.8);
   width: 60vw;
   min-width: 380px;
 
   /* margin: 0 calc(20vw - 6px); */
-  border-radius: 3px;
-  border-style: solid;
-  border-width: 3px;
-  border-color: rgba(94, 94, 94, 0.52);
-  margin-top: 3px;
+  margin: 5px;
+  border-style: none;
+  margin-top: 10px;
+  background-color: white;
+  border-radius: 5px;
+  padding: 5px;
+  box-shadow: 0 2px 5px 1px lightgrey;
 }
 
 .income * {
@@ -301,7 +301,7 @@ body {
   border-radius: 5px;
   border-style: solid;
   box-shadow: 0 3px 10px 0 black;
-  animation: scale 0.3s;
+  animation: scale var(--mainDuration);
 }
 
 #licTitle {
@@ -319,7 +319,7 @@ body {
 .licenseField {
   height: 0;
   overflow: hidden;
-  transition: 0.3s;
+  transition: var(--mainDuration);
 }
 
 .lic {
