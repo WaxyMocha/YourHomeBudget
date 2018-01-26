@@ -186,7 +186,7 @@ function updateMonth() {
   */
 function monthYear(date = new Date()) {
   date = new Date(date);
-  let dateFormatted = `${date.getMonth() + 1}-${date.getYear() + 1900}`;
+  let dateFormatted = `${date.getMonth() + 1}-${date.getFullYear()}`;
   return dateFormatted;
 }
 
