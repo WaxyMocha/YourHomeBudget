@@ -185,7 +185,6 @@ function updateMonth() {
   * returns date in format: MM:YYYY
   */
 function monthYear(date = new Date()) {
-  date = new Date(date);
   let dateFormatted = `${date.getMonth() + 1}-${date.getFullYear()}`;
   return dateFormatted;
 }

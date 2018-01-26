@@ -15,6 +15,8 @@
   /* wielkości */
   --headerBarHeight: 79px;
   --headerButtonSize: 50px;
+
+  --masterDuration: 0.3s;
 }
 
 body {
@@ -194,26 +196,21 @@ body {
     "desc descVal" 1fr
     "cancel submit" 1fr
     / 1fr 3fr;
-
 }
 
-.fadeIn {
-
-}
-
-.fadeOut{
+.fadeOut {
   animation-name: fadeOut;
   animation-duration: 0.3s;
 }
 
 @keyframes scale {
-  from {transform: scale(0);}
-  to {transform: scale(1);}
+  from { transform: scale(0); }
+  to { transform: scale(1); }
 }
 
 @keyframes fadeOut {
-  from {transform: scale(1);}
-  to {transform: scale(0);}
+  from { transform: scale(1); }
+  to { transform: scale(0); }
 }
 
 #outcomesForm {
@@ -283,6 +280,7 @@ body {
   border-radius: 5px;
   border-style: solid;
   box-shadow: 0 3px 10px 0 black;
+  animation: scale 0.2s;
 }
 
 #licTitle {
