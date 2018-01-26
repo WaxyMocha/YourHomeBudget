@@ -172,13 +172,18 @@ body {
   height: 70vh;
   top: 100px;
   left: 30vw;
-  background-color: rgb(117, 131, 173);
+  background-color: white;
+  border-color: var(--masterAccentColor);
+  border-width: 3px;
+  border-style: solid;
   padding: 8px;
   border-radius: 5px;
   min-height: 50px;
   max-height: 200px;
   grid-gap: 4px;
   box-shadow: 0 3px 5px 3px lightgrey;
+  animation-name: scale;
+  animation-duration: 0.3s;
 }
 
 #incomesForm {
@@ -189,13 +194,16 @@ body {
     "desc descVal" 1fr
     "cancel submit" 1fr
     / 1fr 3fr;
-  animation-name: scale;
-  animation-duration: 0.5s;
+
+}
+
+.fadeIn {
+
 }
 
 .fadeOut{
   animation-name: fadeOut;
-  animation-duration: 0.5s;
+  animation-duration: 0.3s;
 }
 
 @keyframes scale {
@@ -217,8 +225,6 @@ body {
     "desc descVal" 1fr
     "cancel submit" 1fr
     / 1fr 3fr;
-  animation-name: scale;
-  animation-duration: 0.5s;
 }
 
 .defaultForm h2 {
