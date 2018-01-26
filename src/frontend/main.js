@@ -281,7 +281,11 @@ function startup(arg) {
 /**
   * Returns date and hour in format: DD-MM-YYYY HH:MM:SS
   */
-function fullDateAndHour(date = new Date()) {
+function fullDateAndHour(date = -1) {
+  if (typeof(date) != "object")
+  {
+    date = new Date();
+  }
   date = new Date(date);
   let hr = String('0' + date.getHours()).slice(-2);
   let min = String('0' + date.getMinutes()).slice(-2);
