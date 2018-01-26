@@ -28,8 +28,6 @@ function menuPos() {
     mainMenu.style.left = '-100vw';
     menuButton.classList.remove("fa-arrow-left");
     menuButton.classList.add("fa-bars");
-    mainMenu.classList.remove("slideIn");
-    mainMenu.classList.add("slideOut");
     mask.style.backdropFilter = 'none';
 
   } else {
@@ -37,8 +35,6 @@ function menuPos() {
     mask.style.pointerEvents = 'all';
     menuButton.classList.remove("fa-bars");
     menuButton.classList.add("fa-arrow-left");
-    mainMenu.classList.remove("slideOut");
-    mainMenu.classList.add("slideIn");
     mask.style.backdropFilter = 'blur(5px)';
   }
 }
@@ -47,8 +43,6 @@ mask.addEventListener('click', () => {
   mainMenu.style.left = '-100vw';
   menuButton.classList.remove("fa-arrow-left");
   menuButton.classList.add("fa-bars");
-  mainMenu.classList.remove("slideIn");
-  mainMenu.classList.add("slideOut");
   mask.style.backdropFilter = 'none';
 });
 
