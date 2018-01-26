@@ -189,6 +189,23 @@ body {
     "desc descVal" 1fr
     "cancel submit" 1fr
     / 1fr 3fr;
+  animation-name: scale;
+  animation-duration: 0.5s;
+}
+
+.fadeOut{
+  animation-name: fadeOut;
+  animation-duration: 0.5s;
+}
+
+@keyframes scale {
+  from {transform: scale(0);}
+  to {transform: scale(1);}
+}
+
+@keyframes fadeOut {
+  from {transform: scale(1);}
+  to {transform: scale(0);}
 }
 
 #outcomesForm {
@@ -200,6 +217,8 @@ body {
     "desc descVal" 1fr
     "cancel submit" 1fr
     / 1fr 3fr;
+  animation-name: scale;
+  animation-duration: 0.5s;
 }
 
 .defaultForm h2 {

@@ -82,6 +82,7 @@ function generateIncomesForm() {
   * Hides form
   */
 function delForm() {
+  floatingFrame.className += " fadeOut";//bug: before the animation starts, frame is cleared
   floatingFrame.innerHTML = '';
 }
 
