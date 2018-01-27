@@ -89,15 +89,6 @@ function generateIncomesForm() {
   * Hides form
   */
 function delForm() {
-  //bug: before the animation starts, frame is cleared
-  // setTimeout( () => {
-  //   //floatingFrame.className += " fadeOut";
-  //   floatingFrame.style.animationName = 'fadeOut';
-  // },
-  // 400);
-  //mainMenu.classList.remove("slideIn");
-  //document.getElementById("incomesForm").style.scale = "0";
-  //incomesForm.style.scale = "0";
   incomesForm.classList.add("fadeOut");
 }
 
