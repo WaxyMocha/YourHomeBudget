@@ -56,6 +56,7 @@ mask.addEventListener('click', () => {
   * Generates form used for adding Incomes
   */
 function generateIncomesForm() {
+    floatingFrame.innerHTML = '';
     let cont = `<section class="defaultForm" id="incomesForm"><h2>${lang.incomes.forms.addIncome}</h2>`;
     cont += `<p id="incomesFormName">${lang.incomes.forms.name}</p><input type="text" id="incomesFormNameInput">`;
     cont += `<p id="incomesFormAmount">${lang.incomes.forms.amount}</p><input type="number" id="incomesFormAmountInput" name="" value="0">`;
@@ -94,13 +95,17 @@ function delForm() {
   //   floatingFrame.style.animationName = 'fadeOut';
   // },
   // 400);
-  floatingFrame.innerHTML = '';
+  //mainMenu.classList.remove("slideIn");
+  //document.getElementById("incomesForm").style.scale = "0";
+  //incomesForm.style.scale = "0";
+  incomesForm.classList.add("fadeOut");
 }
 
 /**
   * Generates form used for adding Outcomes
   */
 function generateOutcomesForm() {
+    //floatingFrame.innerHTML = '';
     let cont = `<section class="defaultForm" id="outcomesForm"><h2>${lang.incomes.forms.addOutcome}</h2>`;
     cont += `<p id="outcomesFormName"> ${lang.incomes.forms.name}</p><input type="text" id="outcomesFormNameInput">`;
     cont += `<p id="outcomesFormAmount">${lang.incomes.forms.amount}</p><input type="number" id="outcomesFormAmountInput" name="" value="0">`;
@@ -146,24 +151,26 @@ function generateContextButtons(scheme) {
     outcomesButton = document.getElementById('outcomesButton');
 
     incomesButton.addEventListener('click', function (e) {
-      if (floatingFrame.innerHTML == '') {
+      defaultForm = document.getElementsByClassName("defaultForm")[0];
+      if (floatingFrame.innerHTML == '' || defaultForm.classList.contains("fadeOut")) {
         generateIncomesForm();
-      } else if (floatingFrame.innerHTML != '' && !(document.getElementById('incomesForm'))) {
-        delForm();
+      } else if ((defaultForm.classList.contains("fadeOut") && (!(document.getElementById('incomesForm')))) || (!defaultForm.classList.contains("fadeOut") && (document.getElementById('outcomesForm')))) {
+        floatingFrame.innerHTML = '';
         generateIncomesForm();
-      } else if (floatingFrame.innerHTML != '' && (document.getElementById('incomesForm'))) {
-        delForm();
+      } else if (!defaultForm.classList.contains("fadeOut") && (document.getElementById('incomesForm'))) {
+        defaultForm.classList.add("fadeOut");
       }
     });
 
     outcomesButton.addEventListener('click', function (e) {
-      if (floatingFrame.innerHTML == '') {
+      defaultForm = document.getElementsByClassName("defaultForm")[0];
+      if (floatingFrame.innerHTML == '' || defaultForm.classList.contains("fadeOut")) {
         generateOutcomesForm();
-      } else if (floatingFrame.innerHTML != '' && !(document.getElementById('outcomesForm'))) {
-        delForm();
+      } else if ((defaultForm.classList.contains("fadeOut") && (!(document.getElementById('outcomesForm')))) || (!defaultForm.classList.contains("fadeOut") && (document.getElementById('incomesForm')))) {
+        floatingFrame.innerHTML = '';
         generateOutcomesForm();
-      } else if (floatingFrame.innerHTML != '' && (document.getElementById('outcomesForm'))) {
-        delForm();
+      } else if (!defaultForm.classList.contains("fadeOut") && (document.getElementById('outcomesForm'))) {
+        defaultForm.classList.add("fadeOut");
       }
     });
   }
