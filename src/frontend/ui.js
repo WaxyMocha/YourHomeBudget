@@ -56,7 +56,6 @@ mask.addEventListener('click', () => {
   * Generates form used for adding Incomes
   */
 function generateIncomesForm() {
-    floatingFrame.innerHTML = '';
     let cont = `<section class="defaultForm" id="incomesForm"><h2>${lang.incomes.forms.addIncome}</h2>`;
     cont += `<p id="incomesFormName">${lang.incomes.forms.name}</p><input type="text" id="incomesFormNameInput">`;
     cont += `<p id="incomesFormAmount">${lang.incomes.forms.amount}</p><input type="number" id="incomesFormAmountInput" name="" value="0">`;
@@ -89,15 +88,6 @@ function generateIncomesForm() {
   * Hides form
   */
 function delForm() {
-  //bug: before the animation starts, frame is cleared
-  // setTimeout( () => {
-  //   //floatingFrame.className += " fadeOut";
-  //   floatingFrame.style.animationName = 'fadeOut';
-  // },
-  // 400);
-  //mainMenu.classList.remove("slideIn");
-  //document.getElementById("incomesForm").style.scale = "0";
-  //incomesForm.style.scale = "0";
   incomesForm.classList.add("fadeOut");
 }
 
@@ -105,7 +95,6 @@ function delForm() {
   * Generates form used for adding Outcomes
   */
 function generateOutcomesForm() {
-    //floatingFrame.innerHTML = '';
     let cont = `<section class="defaultForm" id="outcomesForm"><h2>${lang.incomes.forms.addOutcome}</h2>`;
     cont += `<p id="outcomesFormName"> ${lang.incomes.forms.name}</p><input type="text" id="outcomesFormNameInput">`;
     cont += `<p id="outcomesFormAmount">${lang.incomes.forms.amount}</p><input type="number" id="outcomesFormAmountInput" name="" value="0">`;
